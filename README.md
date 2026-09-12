@@ -6,7 +6,8 @@ ESP32 と Lontium **LT86104SX**(HDMI 1.4 1入力→4出力スプリッタ IC)を
 
 | 役割 | 担当 | 備考 |
 |---|---|---|
-| Full HD 映像の生成 | **外部 HDMI ソース**(PC / プレーヤー / RK3588 など) | ESP32 単体では不可 |
+| Full HD 映像の生成 | PC(ffmpeg) | [docs/video-source.md](docs/video-source.md) |
+| Full HD 映像の再生(HDMI ソース) | **Raspberry Pi 4/5 など**(mpv) | ESP32 単体では不可 |
 | 1→4 分配、HDCP リピータ、EDID 処理 | LT86104SX | 1080p60 まで、3.4 Gbps/ch |
 | IC の初期化・EDID 管理・入力監視・出力 ON/OFF | ESP32(I2C マスタ) | Wi-Fi 経由でリモート制御も可 |
 
@@ -25,15 +26,29 @@ ESP32-P4 は MIPI-DSI(2 レーン)と H.264 デコーダを持つため、`ESP32
 ## ブロック図
 
 ```
-[HDMI ソース] --HDMI--> [LT86104SX] --HDMI--> OUT1
-                           |   |------HDMI--> OUT2
-                           |   |------HDMI--> OUT3
-                           |   '------HDMI--> OUT4
-                           | I2C (SDA/SCL), RESET, INT
-                        [ESP32] <--Wi-Fi--> OBS-RemoteControl 等
+[PC: ffmpeg で生成] --master.mp4--> [Raspberry Pi: mpv でループ再生]
+                                              | HDMI 1080p
+                                        [LT86104SX] --HDMI--> OUT1
+                                           |   |------HDMI--> OUT2
+                                           |   |------HDMI--> OUT3
+                                           |   '------HDMI--> OUT4
+                                           | I2C (SDA/SCL), RESET, INT
+                                        [ESP32] <--Wi-Fi--> OBS-RemoteControl 等
 ```
 
 ## 最小構成の BOM
+
+### 映像ソース
+
+| 部品 | 数 | 備考 |
+|---|---|---|
+| Raspberry Pi 4(2 GB 以上)または Pi 5 | 1 | mpv でループ再生 |
+| microSD 16 GB 以上 | 1 | Raspberry Pi OS Lite 64bit |
+| micro HDMI → HDMI ケーブル | 1 | LT86104SX 入力へ |
+| 5V 3A(Pi4)/ 5V 5A(Pi5)電源 | 1 | |
+| 生成用 PC(ffmpeg) | 1 | 手元の PC で可 |
+
+### スプリッタ + 制御
 
 | 部品 | 数 | 備考 |
 |---|---|---|
@@ -48,14 +63,28 @@ ESP32-P4 は MIPI-DSI(2 レーン)と H.264 デコーダを持つため、`ESP32
 
 完成品の 1×4 スプリッタ基板(LT86104 搭載)を購入し、基板上の I2C を ESP32 に引き出す方法が最も安価で確実です。
 
+## 使い方(映像の生成と再生)
+
+```
+# PC で生成 (ffmpeg 必須)
+tools/generate-test-video.sh out/test-video 3
+
+# Raspberry Pi に master.mp4 をコピーしてループ再生 (mpv 必須)
+tools/play-loop.sh master.mp4
+# セグメントごとに HDMI 出力モードを切替してテストする場合
+tools/play-loop.sh --native segments
+```
+
 ## 詳細
 
+- [docs/video-source.md](docs/video-source.md): 映像の生成と再生機に必要なもの
 - [docs/feasibility.md](docs/feasibility.md): 可否判断の根拠、帯域計算
 - [docs/hardware.md](docs/hardware.md): 配線、電源、注意点
 - [docs/i2c-control.md](docs/i2c-control.md): ESP32 からの制御シーケンス
+- [tools/](tools/): テスト映像の生成・再生スクリプト
 - [firmware/](firmware/): ESP-IDF 用 I2C 制御の雛形
 
 ## 関連
 
-- テスト映像の生成スクリプト: [OBS-RemoteControl `scripts/generate-test-video.sh`](https://github.com/gyuhooo/OBS-RemoteControl)
+- [OBS-RemoteControl](https://github.com/gyuhooo/OBS-RemoteControl)(テスト映像スクリプトの元)
 - [LT86104SXE Product Brief (Lontium)](https://www.lontiumsemi.com/UploadFiles/2021-03/LT86104SXE_brief_R1.pdf)
