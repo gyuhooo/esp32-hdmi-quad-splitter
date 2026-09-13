@@ -1,6 +1,36 @@
 # esp32-hdmi-quad-splitter
 
-ESP32 と Lontium **LT86104SX**(HDMI 1.4 1入力→4出力スプリッタ IC)を組み合わせ、Full HD 映像を HDMI 4 本に出力する構成の検討メモと設計情報。
+Full HD のテスト映像を **1 台のデバイス内で生成し、HDMI 4 本に出力する**装置の検討メモと設計情報。
+
+> リポジトリ名は初期案(ESP32 + 分配器)に由来します。現在の方針は分配器を使わず、
+> 4 本の独立した表示出力を持つ SoC で生成から出力まで完結させる構成です。
+> 詳細は [docs/self-contained.md](docs/self-contained.md) を参照してください。
+
+## 現在の方針(自己完結型)
+
+| 項目 | 内容 |
+|---|---|
+| 推奨チップ | **Rockchip RK3588**(表示出力 4 本: HDMI×2 ネイティブ + DP→HDMI 変換 IC×2) |
+| 映像生成 | 本体の Linux 上で ffmpeg により生成、mpv で再生 |
+| 4 本の出し方 | 4 つの独立 CRTC。同一映像のミラーも個別映像も可。分配器不要 |
+| 代替 | 純粋なパターン発生器なら FPGA + HDMI TX IC×4。最短で動かすなら 4 画面対応の x86 ミニ PC |
+| 不採用 | ESP32 系(帯域なし)、ESP32-P4(1080p30・1 出力)、Ambarella A7(HDMI 1 本・NDA)、分配器 IC |
+
+```
+              +------------------ RK3588 ------------------+
+              | ffmpeg で生成 -> mpv/DRM で 4 CRTC へ出力    |
+              |  HDMI TX0 ---------------------------------> OUT1
+              |  HDMI TX1 ---------------------------------> OUT2
+              |  DP TX0 --> [DP→HDMI IC] ------------------> OUT3
+              |  DP TX1 --> [DP→HDMI IC] ------------------> OUT4
+              +--------------------------------------------+
+```
+
+---
+
+## 初期案(参考): ESP32 + LT86104SX 分配器
+
+以下は「外部 HDMI ソース + 分配器を ESP32 で制御する」初期案の記録です。同一映像の 4 分配だけが目的ならこの構成でも成立します。
 
 ## 結論: 実現可能(ただし ESP32 は「制御担当」)
 
@@ -77,7 +107,8 @@ tools/play-loop.sh --native segments
 
 ## 詳細
 
-- [docs/video-source.md](docs/video-source.md): 映像の生成と再生機に必要なもの
+- [docs/self-contained.md](docs/self-contained.md): **現在の方針**。デバイス内で生成して 4 本出す構成
+- [docs/video-source.md](docs/video-source.md): 映像の生成と再生機に必要なもの(初期案)
 - [docs/feasibility.md](docs/feasibility.md): 可否判断の根拠、帯域計算
 - [docs/hardware.md](docs/hardware.md): 配線、電源、注意点
 - [docs/i2c-control.md](docs/i2c-control.md): ESP32 からの制御シーケンス
