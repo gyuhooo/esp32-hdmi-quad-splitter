@@ -1,30 +1,59 @@
 # esp32-hdmi-quad-splitter
 
-Full HD のテスト映像を **1 台のデバイス内で生成し、HDMI 4 本に出力する**装置の検討メモと設計情報。
+Full HD のテスト映像を **1 台のデバイス内で生成し、HDMI 4 本に出力する**装置の設計。
 
-> リポジトリ名は初期案(ESP32 + 分配器)に由来します。現在の方針は分配器を使わず、
-> 4 本の独立した表示出力を持つ SoC で生成から出力まで完結させる構成です。
-> 詳細は [docs/self-contained.md](docs/self-contained.md) を参照してください。
+> リポジトリ名は初期案(ESP32 + 分配器)に由来します。現在の方針は **FPGA によるテストパターン発生器**です。
+> mp4 の再生は行わず、カラーバー・フレームカウンタ・タイムコードをロジックで生成して 4 本を独立したタイミングで出します。
 
-## 現在の方針(自己完結型)
+## 現在の方針: FPGA 4 出力テストパターン発生器
 
 | 項目 | 内容 |
 |---|---|
-| 推奨チップ | **Rockchip RK3588**(表示出力 4 本: HDMI×2 ネイティブ + DP→HDMI 変換 IC×2) |
-| 映像生成 | 本体の Linux 上で ffmpeg により生成、mpv で再生 |
-| 4 本の出し方 | 4 つの独立 CRTC。同一映像のミラーも個別映像も可。分配器不要 |
-| 代替 | 純粋なパターン発生器なら FPGA + HDMI TX IC×4。最短で動かすなら 4 画面対応の x86 ミニ PC |
-| 不採用 | ESP32 系(帯域なし)、ESP32-P4(1080p30・1 出力)、Ambarella A7(HDMI 1 本・NDA)、分配器 IC |
+| FPGA | Xilinx Artix-7 XC7A35T 以上(無償 Vivado、MMCM ×4 で 6 種のピクセルクロックを 1 ppm 以内で生成) |
+| HDMI 送信 | ADI ADV7513 ×4(24bit RGB パラレル入力 → HDMI 1.4、1080p60 対応、資料公開) |
+| 出力 | 1080p / 720p / 480p × 29.97p / 59.94p / 30p / 60p を出力ごとに独立して設定 |
+| 画面 | 75% カラーバー、動くボックス(コマ落ち検出)、グレースケール、外枠、ラベル、6 桁フレームカウンタ、タイムコード |
+| 状態 | HDL 一式と iverilog シミュレーション済み。実機基板は未作成 |
 
 ```
-              +------------------ RK3588 ------------------+
-              | ffmpeg で生成 -> mpv/DRM で 4 CRTC へ出力    |
-              |  HDMI TX0 ---------------------------------> OUT1
-              |  HDMI TX1 ---------------------------------> OUT2
-              |  DP TX0 --> [DP→HDMI IC] ------------------> OUT3
-              |  DP TX1 --> [DP→HDMI IC] ------------------> OUT4
-              +--------------------------------------------+
+100 MHz --> [Artix-7: MMCM x4 -> timing -> pattern] --24bit RGB--> [ADV7513] --> HDMI OUT1
+                                   |                              [ADV7513] --> HDMI OUT2
+                                   |                              [ADV7513] --> HDMI OUT3
+                                   +---------- I2C 初期化 ------->[ADV7513] --> HDMI OUT4
 ```
+
+シミュレーション結果(1080p 59.94 / 480p 59.94):
+
+![1080p](docs/images/sim-1080p59.94.png)
+
+![480p](docs/images/sim-480p59.94.png)
+
+詳細は [docs/fpga-pattern-generator.md](docs/fpga-pattern-generator.md)。
+
+### 試す
+
+```
+cd sim && make MODE=1 FRAME=2     # iverilog で 1080p59.94 の 1 フレームを frame.ppm に保存
+```
+
+### ディレクトリ
+
+| パス | 内容 |
+|---|---|
+| hdl/ | Verilog ソース(タイミング、パターン、文字重畳、MMCM、ADV7513 初期化、トップ) |
+| sim/ | iverilog テストベンチと Makefile |
+| constraints/ | Vivado 制約ファイルの例 |
+| tools/make-font.py | フォント ROM 生成 |
+| docs/ | 設計文書 |
+
+## 検討経緯
+
+| 案 | 判定 | 理由 |
+|---|---|---|
+| ESP32 + LT86104SX 分配器 | 不採用 | ESP32 は映像を生成できない。分配器は同一映像しか出せない |
+| RK3588 で mp4 を再生し 4 CRTC へ | 代替案 | 自己完結するが、Linux と SoM が要り、出力ごとの独立タイミングは難しい。[docs/self-contained.md](docs/self-contained.md) |
+| Ambarella A7 | 不採用 | HDMI 1 本、SDK は NDA |
+| **FPGA パターン発生器** | **採用** | テストパターンで十分。出力ごとに独立したクロックを持て、BOM が小さい |
 
 ---
 
@@ -32,7 +61,7 @@ Full HD のテスト映像を **1 台のデバイス内で生成し、HDMI 4 本
 
 以下は「外部 HDMI ソース + 分配器を ESP32 で制御する」初期案の記録です。同一映像の 4 分配だけが目的ならこの構成でも成立します。
 
-## 結論: 実現可能(ただし ESP32 は「制御担当」)
+### 結論: 実現可能(ただし ESP32 は「制御担当」)
 
 | 役割 | 担当 | 備考 |
 |---|---|---|
@@ -53,7 +82,7 @@ Full HD のテスト映像を **1 台のデバイス内で生成し、HDMI 4 本
 
 ESP32-P4 は MIPI-DSI(2 レーン)と H.264 デコーダを持つため、`ESP32-P4 → LT9611 / LT8912B (DSI→HDMI) → LT86104SX` で **1080p30 程度のテストパターン/静止画** を出すことは原理的に可能です。ただし 1080p60(RGB888 で約 3.56 Gbps)は DSI 帯域を超えるため、59.94p / 60p のテストは不可です。本リポジトリでは扱いません。
 
-## ブロック図
+### ブロック図
 
 ```
 [PC: ffmpeg で生成] --master.mp4--> [Raspberry Pi: mpv でループ再生]
@@ -66,7 +95,7 @@ ESP32-P4 は MIPI-DSI(2 レーン)と H.264 デコーダを持つため、`ESP32
                                         [ESP32] <--Wi-Fi--> OBS-RemoteControl 等
 ```
 
-## 最小構成の BOM
+### 最小構成の BOM
 
 ### 映像ソース
 
@@ -93,7 +122,7 @@ ESP32-P4 は MIPI-DSI(2 レーン)と H.264 デコーダを持つため、`ESP32
 
 完成品の 1×4 スプリッタ基板(LT86104 搭載)を購入し、基板上の I2C を ESP32 に引き出す方法が最も安価で確実です。
 
-## 使い方(映像の生成と再生)
+### 使い方(映像の生成と再生)
 
 ```
 # PC で生成 (ffmpeg 必須)
@@ -105,7 +134,7 @@ tools/play-loop.sh master.mp4
 tools/play-loop.sh --native segments
 ```
 
-## 詳細
+### 詳細
 
 - [docs/self-contained.md](docs/self-contained.md): **現在の方針**。デバイス内で生成して 4 本出す構成
 - [docs/video-source.md](docs/video-source.md): 映像の生成と再生機に必要なもの(初期案)
@@ -115,7 +144,7 @@ tools/play-loop.sh --native segments
 - [tools/](tools/): テスト映像の生成・再生スクリプト
 - [firmware/](firmware/): ESP-IDF 用 I2C 制御の雛形
 
-## 関連
+### 関連
 
 - [OBS-RemoteControl](https://github.com/gyuhooo/OBS-RemoteControl)(テスト映像スクリプトの元)
 - [LT86104SXE Product Brief (Lontium)](https://www.lontiumsemi.com/UploadFiles/2021-03/LT86104SXE_brief_R1.pdf)

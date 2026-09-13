@@ -1,3 +1,6 @@
+sim/sim.vvp
+sim/frame.ppm
+sim/font8x16.mem
 firmware/build/
 firmware/sdkconfig
 firmware/sdkconfig.old
