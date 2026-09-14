@@ -83,7 +83,7 @@ place("R8", 110.0, 93.0, 0)
 place("JP1", 6.0, 107.5, 0)
 for i, y in enumerate((58.0, 60.5, 63.0, 65.5)):
     place(f"R{i+1}", 12.0, y, 0)              # I2C プルアップ
-place("H1", 13.2, 14.0); place("H2", 111.0, 6.0); place("H3", 111.0, 106.0); place("H4", 60.0, 106.0)
+place("H1", 12.7, 8.5); place("H2", 111.0, 6.0); place("H3", 111.0, 106.0); place("H4", 60.0, 106.0)
 
 # ---------------------------------------------------------------- 基板生成
 board = pcbnew.BOARD()
@@ -111,6 +111,8 @@ def net(name):
 missing = []
 for ref, c in comps.items():
     lib, name = c["fp"].split(":")
+    if ref.startswith("H"):
+        name = "MountingHole_3.2mm"             # パッドなしの取付穴 (コートヤードが小さい)
     fp = pcbnew.FootprintLoad(FPLIB + lib + ".pretty", name)
     if fp is None:
         missing.append(c["fp"]); continue
@@ -214,6 +216,38 @@ for n, cx in CX.items():
         add_track(pts, netname); n_tmds += 1
 print("TMDS pre-routed lines:", n_tmds)
 
+# ---------------------------------------------------------------- 囲われたパッドへの B.Cu アクセスビアと 5V_OUT
+def add_via(x, y, netname, dia=0.6, drill=0.3):
+    via = pcbnew.PCB_VIA(board)
+    via.SetPosition(VECTOR2I(FromMM(x), FromMM(y))); via.SetDrill(FromMM(drill)); via.SetWidth(FromMM(dia))
+    via.SetViaType(pcbnew.VIATYPE_THROUGH); via.SetLayerPair(pcbnew.F_Cu, pcbnew.B_Cu)
+    via.SetNetCode(net(netname).GetNetCode()); via.SetLocked(True); board.Add(via)
+def padnet(ref, num):
+    fp = board.FindFootprintByReference(ref)
+    for p in fp.Pads():
+        if p.GetNumber() == num:
+            return p.GetNetname()
+n_access = 0
+PREHANDLED = set()
+for n, cx in CX.items():
+    tpd, adv, hd = f"U{n}2", f"U{n}1", f"J{n}"
+    # TPD 下段 (A/B 側信号と VCC5V): TMDS の U ターンに囲われているので本体下 (パッド列の間) にビアを置く。0.65 ピッチなので 2 段に互い違い
+    for num, yv in (("1", 22.1), ("2", 20.95), ("3", 22.1), ("4", 20.95), ("7", 22.1), ("8", 20.95), ("9", 22.1), ("10", 20.95), ("11", 22.1)):
+        x, y = padpos(tpd, num); nn = padnet(tpd, num)
+        add_track([(x, y), (x, yv)], nn, width=0.15); add_via(x, yv, nn); n_access += 1
+    # ADV 上辺で TMDS に挟まれた/覆われたピン: AVDD19, PD22, AVDD25 は y=28.6、INT28/CEC30/CEC_CLK32 は y=29.4 (29/31 のプレーン用ビアは 28.6 に来る)
+    for num, yv, dia in (("19", 28.6, 0.6), ("22", 28.6, 0.6), ("25", 28.6, 0.6),
+                         ("28", 28.7, 0.5), ("30", 28.7, 0.5), ("32", 28.7, 0.5), ("29", 29.9, 0.6), ("31", 29.9, 0.6)):
+        x, y = padpos(adv, num); nn = padnet(adv, num)
+        add_track([(x, y), (x, yv)], nn, width=0.15); add_via(x, yv, nn, dia=dia); n_access += 1
+        PREHANDLED.add((adv, num))
+    # 5V_OUT: TPD pin13 -> コネクタ pin18、C{n}20 pad1 -> pin13 側面
+    x13, y13 = padpos(tpd, "13"); x18, y18 = padpos(hd, "18"); xc20, yc20 = padpos(f"C{n}20", "1")
+    yb = pad_bottom(hd, "18") + 0.5
+    add_track([(x13, y13), (x13, yb + 0.4), (x18, yb), (x18, y18)], f"CH{n}_5V_OUT", width=0.2)
+    add_track([(xc20, yc20), (x13 + 0.7, yc20), (x13, yc20 + 0.3)], f"CH{n}_5V_OUT", width=0.2)
+print("access vias:", n_access)
+
 # ---------------------------------------------------------------- プレーン系ネットのファンアウトビア
 # FreeRouting は内層プレーンへの接続 (パッド -> ビア) を作らないので、SMD パッドごとに先に打っておく。
 import math
@@ -224,7 +258,7 @@ for fp in board.GetFootprints():
     for pad in fp.Pads():
         bb = pad.GetBoundingBox()
         all_pads.append((bb.GetCenter().x / 1e6, bb.GetCenter().y / 1e6, bb.GetWidth() / 2e6, bb.GetHeight() / 2e6, pad.GetNetname()))
-vias_placed = []    # (x, y)
+vias_placed = [(v.GetPosition().x / 1e6, v.GetPosition().y / 1e6) for v in board.GetTracks() if v.GetClass() == "PCB_VIA"]
 segs = []           # 既存配線 (x1, y1, x2, y2, halfwidth, net)
 for t in board.GetTracks():
     if t.GetClass() == "PCB_TRACK":
@@ -234,27 +268,27 @@ def seg_dist(px, py, x1, y1, x2, y2):
     if dx == dy == 0: return math.hypot(px - x1, py - y1)
     t = max(0.0, min(1.0, ((px - x1) * dx + (py - y1) * dy) / (dx * dx + dy * dy)))
     return math.hypot(px - (x1 + t * dx), py - (y1 + t * dy))
-def clear_of(x, y, netname, sx0=None, sy0=None, hw_stub=0.1):
-    """ビア (x,y) と、パッド (sx0,sy0) からビアへの引き出し線が他ネットと干渉しないか"""
+def clear_of(x, y, netname, sx0=None, sy0=None, hw_stub=0.1, via_check=True):
+    """ビア (x,y) と、(sx0,sy0) から (x,y) への引き出し線が他ネットと干渉しないか。via_check=False なら線分だけ検査"""
     for px, py, hw, hh, pn in all_pads:
         if pn == netname:
             continue
         dx = max(abs(x - px) - hw, 0); dy = max(abs(y - py) - hh, 0)
-        if math.hypot(dx, dy) < VIA_D / 2 + CLR:
+        if via_check and math.hypot(dx, dy) < VIA_D / 2 + CLR:
             return False
         if sx0 is not None:
             # 引き出し線 vs パッド矩形 (矩形をビア半径ぶん近似で膨らませて線分距離)
             if seg_dist(px, py, sx0, sy0, x, y) < math.hypot(hw, hh) * 0.75 + hw_stub + CLR and max(abs(x - px) - hw, abs(y - py) - hh, abs(sx0 - px) - hw, abs(sy0 - py) - hh) < 0.6:
                 return False
     for vx, vy in vias_placed:
-        if math.hypot(x - vx, y - vy) < VIA_D + CLR:
+        if via_check and math.hypot(x - vx, y - vy) < VIA_D + CLR:
             return False
         if sx0 is not None and seg_dist(vx, vy, sx0, sy0, x, y) < VIA_D / 2 + hw_stub + CLR:
             return False
     for x1, y1, x2, y2, hw, pn in segs:
         if pn == netname:
             continue
-        if seg_dist(x, y, x1, y1, x2, y2) < VIA_D / 2 + hw + CLR:
+        if via_check and seg_dist(x, y, x1, y1, x2, y2) < VIA_D / 2 + hw + CLR:
             return False
         if sx0 is not None:
             # 線分同士の最短距離 (端点で近似)
@@ -266,14 +300,43 @@ def clear_of(x, y, netname, sx0=None, sy0=None, hw_stub=0.1):
     return True
 def rot(vx, vy, deg):
     a = math.radians(deg); return (vx * math.cos(a) - vy * math.sin(a), vx * math.sin(a) + vy * math.cos(a))
-n_via = 0; n_fail = []
+n_via = 0; n_fail = []; n_bridge = 0
 for fp in board.GetFootprints():
     pads = list(fp.Pads())
     tht_nums = {p.GetNumber() for p in pads if p.GetAttribute() == pcbnew.PAD_ATTRIB_PTH}
     fx, fy = fp.GetPosition().x / 1e6, fp.GetPosition().y / 1e6
+    # 連続する同ネットの SMD パッド (QFP の GND 入力など) は数珠つなぎにして両端だけビアを打つ
+    skip = set()
+    if len(pads) > 4:
+        by_net = {}
+        for p in pads:
+            if p.GetAttribute() == pcbnew.PAD_ATTRIB_SMD and p.GetNetname() in PLANE_NETS:
+                by_net.setdefault(p.GetNetname(), []).append(p)
+        for nn, plist in by_net.items():
+            plist.sort(key=lambda p: (round(p.GetPosition().x / 1e6, 1), round(p.GetPosition().y / 1e6, 1)))
+            run = [plist[0]]
+            def flush(run):
+                global n_bridge
+                if len(run) >= 3:
+                    for a, b2 in zip(run[:-1], run[1:]):
+                        tr = pcbnew.PCB_TRACK(board)
+                        tr.SetStart(a.GetPosition()); tr.SetEnd(b2.GetPosition()); tr.SetWidth(FromMM(0.2))
+                        tr.SetLayer(pcbnew.F_Cu if a.IsOnLayer(pcbnew.F_Cu) else pcbnew.B_Cu); tr.SetNetCode(a.GetNetCode()); tr.SetLocked(True); board.Add(tr)
+                        n_bridge += 1
+                    for q in run[1:-1]:
+                        skip.add(q.GetNumber())
+            for q in plist[1:]:
+                a = run[-1]
+                if math.hypot((q.GetPosition().x - a.GetPosition().x) / 1e6, (q.GetPosition().y - a.GetPosition().y) / 1e6) <= 0.55:
+                    run.append(q)
+                else:
+                    flush(run); run = [q]
+            flush(run)
     for pad in pads:
         netname = pad.GetNetname()
-        if netname not in PLANE_NETS or pad.GetAttribute() != pcbnew.PAD_ATTRIB_SMD or pad.GetNumber() in tht_nums:
+        if netname not in PLANE_NETS or pad.GetAttribute() != pcbnew.PAD_ATTRIB_SMD or pad.GetNumber() in tht_nums or pad.GetNumber() in skip:
+            continue
+        if (fp.GetReference(), pad.GetNumber()) in PREHANDLED:
             continue
         px, py = pad.GetPosition().x / 1e6, pad.GetPosition().y / 1e6
         sx, sy = pad.GetSize().x / 1e6, pad.GetSize().y / 1e6
@@ -297,18 +360,27 @@ for fp in board.GetFootprints():
                  (0.3, e0), (0.3, -e0), (-0.3, e0), (-0.3, -e0), (d0 + 1.5, 0.0), (d0 + 1.1, 0.6), (d0 + 1.1, -0.6), (d0 + 2.25, 0.0),
                  (-d0, 0.0), (-d0 - 0.75, 0.0), (-d0 - 0.4, 0.6), (-d0 - 0.4, -0.6)]      # 最後は内向き (IC の本体下)
         placed = False
+        hw_stub = 0.1 if min(sx, sy) < 0.4 else 0.125
         for d, lat in cands:
             vx, vy = px + dx * d - dy * lat, py + dy * d + dx * lat
-            if clear_of(vx, vy, netname, px, py, 0.1 if min(sx, sy) < 0.4 else 0.125):
+            # 途中点: IC パッドではパッド先端 + 0.25 mm までまっすぐ出る (横候補でも隣のパッドをかすめない)
+            if len(pads) > 4 and lat != 0.0 and d > 0:
+                mx, my = px + dx * (ex + 0.25), py + dy * (ex + 0.25)
+            else:
+                mx, my = px, py
+            if clear_of(vx, vy, netname, mx, my, hw_stub) and (mx == px or clear_of(mx, my, netname, px, py, hw_stub, via_check=False)):
                 via = pcbnew.PCB_VIA(board)
                 via.SetPosition(VECTOR2I(FromMM(vx), FromMM(vy))); via.SetDrill(FromMM(VIA_DRILL)); via.SetWidth(FromMM(VIA_D))
                 via.SetViaType(pcbnew.VIATYPE_THROUGH); via.SetLayerPair(pcbnew.F_Cu, pcbnew.B_Cu)
                 via.SetNetCode(pad.GetNetCode()); via.SetLocked(True); board.Add(via)
-                tr = pcbnew.PCB_TRACK(board)
-                tr.SetStart(VECTOR2I(FromMM(px), FromMM(py))); tr.SetEnd(VECTOR2I(FromMM(vx), FromMM(vy)))
-                tr.SetWidth(FromMM(0.25 if min(sx, sy) >= 0.4 else 0.2)); tr.SetLayer(pcbnew.F_Cu if pad.IsOnLayer(pcbnew.F_Cu) else pcbnew.B_Cu)
-                tr.SetNetCode(pad.GetNetCode()); tr.SetLocked(True); board.Add(tr)
-                vias_placed.append((vx, vy)); segs.append((px, py, vx, vy, tr.GetWidth() / 2e6, netname)); n_via += 1; placed = True
+                pts = [(px, py), (mx, my), (vx, vy)] if (mx, my) != (px, py) else [(px, py), (vx, vy)]
+                for (ax, ay), (bx, by) in zip(pts[:-1], pts[1:]):
+                    tr = pcbnew.PCB_TRACK(board)
+                    tr.SetStart(VECTOR2I(FromMM(ax), FromMM(ay))); tr.SetEnd(VECTOR2I(FromMM(bx), FromMM(by)))
+                    tr.SetWidth(FromMM(0.25 if min(sx, sy) >= 0.4 else 0.2)); tr.SetLayer(pcbnew.F_Cu if pad.IsOnLayer(pcbnew.F_Cu) else pcbnew.B_Cu)
+                    tr.SetNetCode(pad.GetNetCode()); tr.SetLocked(True); board.Add(tr)
+                    segs.append((ax, ay, bx, by, tr.GetWidth() / 2e6, netname))
+                vias_placed.append((vx, vy)); n_via += 1; placed = True
                 break
         if not placed:
             n_fail.append(f"{fp.GetReference()}.{pad.GetNumber()}({netname})")
@@ -333,7 +405,7 @@ for fp, pad in fail_pads:
             tr.SetNetCode(pad.GetNetCode()); tr.SetLocked(True); board.Add(tr)
             placed_keys.add(f"{fp.GetReference()}.{pad.GetNumber()}({pad.GetNetname()})"); break
 n_fail = [k for k in n_fail if k not in placed_keys]
-print(f"fanout vias: {n_via}  bridged to neighbour: {len(placed_keys)}  failed: {len(n_fail)} {n_fail[:12]}")
+print(f"fanout vias: {n_via}  chained pads: {n_bridge}  bridged to neighbour: {len(placed_keys)}  failed: {len(n_fail)} {n_fail[:12]}")
 
 pcbnew.SaveBoard(PCB, board)
 print("saved", PCB, "footprints:", len(list(board.GetFootprints())), "nets:", len(nets))
@@ -349,7 +421,7 @@ pro["net_settings"] = {
         {"name": "TMDS", "clearance": 0.15, "track_width": 0.15, "via_diameter": 0.5, "via_drill": 0.3,
          "diff_pair_width": 0.15, "diff_pair_gap": 0.15, "diff_pair_via_gap": 0.25, "microvia_diameter": 0.3, "microvia_drill": 0.1,
          "bus_width": 12, "line_style": 0, "wire_width": 6, "pcb_color": "rgba(0, 0, 0, 0.000)", "schematic_color": "rgba(0, 0, 0, 0.000)"},
-        {"name": "Power", "clearance": 0.2, "track_width": 0.5, "via_diameter": 0.8, "via_drill": 0.4,
+        {"name": "Power", "clearance": 0.15, "track_width": 0.5, "via_diameter": 0.8, "via_drill": 0.4,
          "diff_pair_width": 0.2, "diff_pair_gap": 0.25, "diff_pair_via_gap": 0.25, "microvia_diameter": 0.3, "microvia_drill": 0.1,
          "bus_width": 12, "line_style": 0, "wire_width": 6, "pcb_color": "rgba(0, 0, 0, 0.000)", "schematic_color": "rgba(0, 0, 0, 0.000)"}],
     "meta": {"version": 3},

@@ -91,7 +91,7 @@
       },
       {
         "name": "Power",
-        "clearance": 0.2,
+        "clearance": 0.15,
         "track_width": 0.5,
         "via_diameter": 0.8,
         "via_drill": 0.4,

@@ -95,10 +95,10 @@ FB31,120R@100MHz,Inductor_SMD:L_0603_1608Metric,BLM18PG121SN1D,Ferrite bead 0603
 FB32,120R@100MHz,Inductor_SMD:L_0603_1608Metric,BLM18PG121SN1D,Ferrite bead 0603
 FB41,120R@100MHz,Inductor_SMD:L_0603_1608Metric,BLM18PG121SN1D,Ferrite bead 0603
 FB42,120R@100MHz,Inductor_SMD:L_0603_1608Metric,BLM18PG121SN1D,Ferrite bead 0603
-H1,M3,MountingHole:MountingHole_3.2mm_M3,,Mounting hole M3
-H2,M3,MountingHole:MountingHole_3.2mm_M3,,Mounting hole M3
-H3,M3,MountingHole:MountingHole_3.2mm_M3,,Mounting hole M3
-H4,M3,MountingHole:MountingHole_3.2mm_M3,,Mounting hole M3
+H1,M3,MountingHole:MountingHole_3.2mm,,Mounting hole M3
+H2,M3,MountingHole:MountingHole_3.2mm,,Mounting hole M3
+H3,M3,MountingHole:MountingHole_3.2mm,,Mounting hole M3
+H4,M3,MountingHole:MountingHole_3.2mm,,Mounting hole M3
 J1,HDMI_A,Connector_HDMI:HDMI_A_Molex_208658-1001_Horizontal,208658-1001,"HDMI type A receptacle, right angle"
 J2,HDMI_A,Connector_HDMI:HDMI_A_Molex_208658-1001_Horizontal,208658-1001,"HDMI type A receptacle, right angle"
 J3,HDMI_A,Connector_HDMI:HDMI_A_Molex_208658-1001_Horizontal,208658-1001,"HDMI type A receptacle, right angle"

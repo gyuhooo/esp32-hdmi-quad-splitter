@@ -419,7 +419,7 @@ def power_sheet(sheet_uuid, page):
     sh.two_pin("Device:R", "R8", "1k", 310, 140, "LED_K", "GND", R0402, "RC0402FR-071KL", "1k 0402")
     # 取付穴
     for i, x in enumerate((30, 45, 60, 75)):
-        sh.symbol("Mechanical:MountingHole", f"H{i+1}", "M3", (x, 230), "MountingHole:MountingHole_3.2mm_M3", "", "Mounting hole M3")
+        sh.symbol("Mechanical:MountingHole", f"H{i+1}", "M3", (x, 230), "MountingHole:MountingHole_3.2mm", "", "Mounting hole M3")
     sh.text("Buck per AP63203 datasheet: CIN 2x10uF, CBST 0.1uF, L 4.7uH, COUT 2x22uF, FB tied to VOUT (fixed 3.3 V version).", 180, 205, 1.5)
     sh.write()
     return sh
