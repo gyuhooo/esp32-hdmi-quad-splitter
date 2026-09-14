@@ -346,11 +346,11 @@ def header_pinout():
               [f"I2C_{bus}_SCL", f"I2C_{bus}_SDA", f"CH{a}_HPD", f"CH{b}_HPD", f"CH{a}_INT", f"CH{b}_INT"]
         assert len(sig) == 80, len(sig)
         return list(zip(range(1, 81), sig))
-    return {"J7": header(1, 2, "A"), "J8": header(3, 4, "B")}
+    return {"J7": header(1, 3, "A"), "J8": header(2, 4, "B")}   # J7: OUT1+OUT3 (左辺), J8: OUT2+OUT4 (下辺)
 
 def fpga_sheet(sheet_uuid, page):
     sh = Sheet("fpga_conn.kicad_sch", "FPGA interface headers", sheet_uuid, page)
-    sh.text("FPGA interface: 2x 80-pin 2.54 mm headers (J7 = OUT1/OUT2, J8 = OUT3/OUT4). 3.3 V LVCMOS. Keep stack height short (< 30 mm) for the 148.5 MHz buses.", 20, 20, 2.0)
+    sh.text("FPGA interface: 2x 80-pin 2.54 mm headers (J7 = OUT1/OUT3 left edge, J8 = OUT2/OUT4 bottom edge). 3.3 V LVCMOS. Keep stack height short (< 30 mm) for the 148.5 MHz buses.", 20, 20, 2.0)
     pm = header_pinout()
     for ref, x in (("J7", 110), ("J8", 300)):
         p = sh.symbol("Connector_Generic:Conn_02x40_Odd_Even", ref, "FPGA_" + ref, (x, 150),

@@ -10,7 +10,10 @@ FPGA ボードから 24bit RGB ×4 を受け、HDMI 4 本を出す基板の KiCa
 | quad_hdmi_tx/netlist.net | kicad-cli で書き出したネットリスト |
 | quad_hdmi_tx/bom.csv, bom_grouped.csv | 部品表(リファレンス別 / 集計、MPN 付き) |
 | quad_hdmi_tx/fpga_header_pinmap.csv | J7/J8 のピン → 信号名。FPGA ピン列を埋めて `gen/gen_xdc.py` で XDC を生成 |
-| gen/ | 生成スクリプト、ネットリスト検査 |
+| quad_hdmi_tx/quad_hdmi_tx.kicad_pcb | 基板レイアウト(4 層、115 × 110 mm)。`gen/gen_pcb.py` が配置とプレーンを生成し、FreeRouting で自動配線 |
+| quad_hdmi_tx/drc.rpt | DRC レポート(pcbnew API) |
+| quad_hdmi_tx/fab/ | ガーバー、ドリル、CPL(部品座標)、各層の PDF(`gen/export_fab.sh`) |
+| gen/ | 生成スクリプト、ネットリスト検査、配線パイプライン |
 
 ## 回路構成
 
@@ -74,6 +77,60 @@ J7 (2×40): OUT1/OUT2 の RGB24+CLK/DE/HS/VS, I2C_A, HPD, INT      J8 (2×40): O
 7. **I2C アドレス**: 同一バスに 2 台(0x72 と 0x7A)。HDL の `top.v` はバス 0 = OUT1/OUT2、バス 1 = OUT3/OUT4 でこの割り当てを前提にしている。
 8. **CEC**: 使わないなら現状のまま(CEC_CLK を 0 Ω で GND)。
 9. **ERC**: KiCad で開き、ERC の未接続・電源ピン警告を確認する。PWR_FLAG は +5V、VBUS、+3V3、GND に置いてある。
+
+## 基板レイアウト
+
+### 配置
+
+```
+ y=0  ┌───────────────────────────────────────────────────────────┐
+      │ J7 │ [J1 HDMI] [J2 HDMI] [J3 HDMI] [J4 HDMI]         H2   │  上辺: HDMI ×4 (開口部は上)
+      │ 2× │  U12 TPD   U22 TPD   U32 TPD   U42 TPD                │  TPD12S016 (rot 90、TMDS パッドをコネクタ側に)
+      │ 40 │  U11 ADV   U21 ADV   U31 ADV   U41 ADV    J6  [J5]    │  ADV7513 (rot 180、TMDS を上辺、データを下辺/左辺に)
+      │    │  U13 LDO   U23 LDO   U33 LDO   U43 LDO      USB-C     │  チャネルごとの 1.8 V LDO
+      │    │          (配線チャネル: ヘッダ → ADV)      U5 buck    │
+      │    │  R1-4                                        L1 C5x   │
+      │    └─────── J8 2×40 (OUT2/OUT4) ───────────────  D1        │  下辺: J8
+ y=110└───────────────────────────────────────────────────────────┘
+        x=0                                                   x=115
+```
+
+- TMDS の並び順が ADV7513(rot 180)→ TPD12S016(rot 90)→ HDMI(rot 90)で **交差なし**に揃うよう向きを決めている
+  (ADV 上辺: TX2+ TX2- TX1+ TX1- TX0+ TX0- TXC+ TXC-、TPD 上辺: D2+ D2- D1+ D1- D0+ D0- CLK+ CLK-、コネクタ: 1 3 4 6 7 9 10 12)。
+- J7(左辺)は OUT1/OUT3、J8(下辺)は OUT2/OUT4 を受け持つ。ヘッダ内で GND を各信号グループの間に挟んでいる。
+- 電源部は右辺(USB-C の開口部は右)。
+
+### 層構成(4 層、1.6 mm)
+
+| 層 | 用途 |
+|---|---|
+| F.Cu | 信号(TMDS、RGB バス)、部品 |
+| In1.Cu (GND) | GND プレーン(全面) |
+| In2.Cu (PWR) | +3V3 プレーン。各 ADV の周囲は CHn_1V8 の島(優先度 1) |
+| B.Cu | 信号、配線後に GND ベタ |
+
+### ルール
+
+| 項目 | 値 |
+|---|---|
+| クリアランス | 0.15 mm(Power クラス 0.2) |
+| 配線幅 | 0.2 mm(TMDS 0.15、Power 0.5) |
+| ビア | 0.6/0.3 mm(TMDS 0.5/0.3、Power 0.8/0.4) |
+| 差動 | 100 Ω 目標、0.15/0.15 mm(**製造業者のインピーダンス計算で要調整**) |
+
+### 生成と配線のパイプライン
+
+```
+cd hardware/gen
+python3 gen_pcb.py                       # 配置・外形・プレーン・ネットクラス -> quad_hdmi_tx.kicad_pcb
+python3 route_pcb.py export              # quad_hdmi_tx.dsn
+xvfb-run -a java -jar freerouting-1.9.0.jar -de ../quad_hdmi_tx/quad_hdmi_tx.dsn -do ../quad_hdmi_tx/quad_hdmi_tx.ses -mp 80
+python3 route_pcb.py import              # SES 取り込み、外層 GND ベタ、ゾーン塗り、DRC -> drc.rpt
+python3 layout_report.py                 # 配線長、ビア数、TMDS ペア長差、DRC 集計
+./export_fab.sh                          # fab/ にガーバー・ドリル・CPL・PDF
+```
+
+FreeRouting に外層のベタを渡すと障害物として扱われ配線できないため、ベタは SES 取り込み後に追加している。
 
 ## レイアウト指針
 

@@ -7,3 +7,8 @@ firmware/sdkconfig.old
 hardware/quad_hdmi_tx/*-backups/
 hardware/quad_hdmi_tx/*.kicad_prl
 hardware/quad_hdmi_tx/fp-info-cache
+hardware/quad_hdmi_tx/*.dsn
+hardware/quad_hdmi_tx/*.ses
+hardware/quad_hdmi_tx/freerouting*.log
+hardware/quad_hdmi_tx/fr.pid
+hardware/quad_hdmi_tx/fab/gerber/

@@ -4,11 +4,11 @@
     (company "gyuhooo") (comment 1 "Quad HDMI test pattern generator - ADV7513 x4 carrier"))
   (lib_symbols)
   (text "Quad HDMI test pattern generator - HDMI TX carrier board" (at 20 25 0)
-    (effects (font (size 4 4)) (justify left bottom)) (uuid "3a72df88-9da3-40be-8ba5-591bc1ba9c66"))
+    (effects (font (size 4 4)) (justify left bottom)) (uuid "5f9ac02f-a80d-44a8-9b78-b7e8143d20a8"))
   (text
     "FPGA board (Artix-7) --J1/J2--> 4x ADV7513 (24-bit RGB -> TMDS) --> 4x TPD12S016 (ESD, 5V, DDC/HPD level shift) --> 4x HDMI A"
     (at 20 32 0) (effects (font (size 2 2)) (justify left bottom))
-    (uuid "9c65e2ef-88bd-4bf3-9d98-0643317beaa0"))
+    (uuid "af360329-4b08-4c52-a910-0aa1b4a8c689"))
   (sheet (at 30 50) (size 70 30) (fields_autoplaced) (stroke (width 0.1524) (type solid))
     (fill (color 0 0 0 0)) (uuid "9c8f0a10-0000-4000-8000-000000000002")
     (property "Sheetname" "Power: USB-C 5 V in, 3.3 V buck" (at 30 49 0)
