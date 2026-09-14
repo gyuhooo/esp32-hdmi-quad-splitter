@@ -130,7 +130,14 @@ python3 layout_report.py                 # 配線長、ビア数、TMDS ペア�
 ./export_fab.sh                          # fab/ にガーバー・ドリル・CPL・PDF
 ```
 
-FreeRouting に外層のベタを渡すと障害物として扱われ配線できないため、ベタは SES 取り込み後に追加している。
+FreeRouting を使う上での注意(実測で判明したもの):
+
+- 外層のベタを DSN に含めると障害物として扱われ配線できないため、ベタは SES 取り込み後に追加している。
+- FreeRouting 2.1 は SMD パッドから内層プレーンへのビアを自分では作らない。`gen_pcb.py` が GND / +3V3 / CHn_1V8 の全 SMD パッドに
+  ファンアウトビア(ロック済み)を先に置き、DSN には固定配線として渡している。
+- 2.1 はコマンドラインの `-mp` / `-mt` を無視し、設定ファイル(`/tmp/freerouting/freerouting.json` など)の
+  `router.max_passes`(既定 9999)と `router.max_threads`(既定 1)を使う。ヘッドレスでは `gui.enabled` を false にする。
+- 1.9.0 は `-mp` を受け付けるが GUI 必須(Xvfb で起動できる)。
 
 ## レイアウト指針
 

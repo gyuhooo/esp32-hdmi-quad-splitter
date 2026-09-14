@@ -17,8 +17,9 @@ SES = os.path.join(OUT, "quad_hdmi_tx.ses")
 
 if STAGE == "export":
     board = pcbnew.LoadBoard(PCB)
-    for t in list(board.GetTracks()):
-        board.Remove(t)
+    for t in list(board.GetTracks()):        # ロックされたファンアウトビアは残す
+        if not t.IsLocked():
+            board.Remove(t)
     ok = pcbnew.ExportSpecctraDSN(board, DSN)
     print("DSN export:", ok, os.path.getsize(DSN))
     sys.exit(0)
@@ -26,9 +27,13 @@ if not os.path.exists(SES):
     print("no SES file"); sys.exit(1)
 
 board = pcbnew.LoadBoard(PCB)
-for t in list(board.GetTracks()):
-    board.Remove(t)
-ok = pcbnew.ImportSpecctraSES(board, SES)
+ok = pcbnew.ImportSpecctraSES(SES)            # LoadBoard で読んだ基板に取り込む (7.0 API は引数 1 つ)
+if not ok or len(list(board.GetTracks())) < 300:
+    from ses_import import import_ses
+    for t in list(board.GetTracks()):        # 二重取り込みを避け、ロック済みファンアウトだけ残す
+        if not t.IsLocked():
+            board.Remove(t)
+    print("fallback SES parser:", import_ses(board, SES))
 print("SES import:", ok, "tracks:", len(list(board.GetTracks())))
 # 配線後に外層 GND ベタを追加 (オートルータには渡さない: FreeRouting はベタを障害物として扱う)
 gnd = board.FindNet("GND")
