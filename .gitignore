@@ -12,3 +12,4 @@ hardware/quad_hdmi_tx/*.ses
 hardware/quad_hdmi_tx/freerouting*.log
 hardware/quad_hdmi_tx/fr.pid
 hardware/quad_hdmi_tx/fab/gerber/
+hardware/quad_hdmi_tx/logs/
