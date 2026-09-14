@@ -44,20 +44,21 @@ for n, cx in CX.items():
     place(f"C{n}17", cx - 6.5, 17.5, 90)      # VCCA 0.1u (+3V3)
     place(f"C{n}20", cx + 6.5, 17.5, 90)      # 5V_OUT 0.1u
     place(f"C{n}19", cx + 6.5, 24.0, 90)      # VCC5V 0.1u
-    # ADV 右側の列 (縦置き)。0603 の前後は 2.4 mm、0402 同士は 2.0 mm
+    # ADV 右側の列 (縦置き)。0603 の前後は 2.4〜3.0 mm、0402 同士は 2.0 mm
     col = cx + 9.0
     for ref, y in ((f"C{n}11", 26.0), (f"C{n}09", 28.0), (f"C{n}13", 30.0), (f"C{n}14", 32.0), (f"C{n}15", 34.4),
-                   (f"C{n}04", 36.8), (f"C{n}07", 38.8), (f"C{n}12", 41.4), (f"C{n}08", 44.6)):
+                   (f"C{n}04", 36.8), (f"C{n}07", 38.8), (f"C{n}12", 41.4), (f"C{n}08", 44.6), (f"C{n}06", 47.4)):
         place(ref, col, y, 90)
     # フェライトビーズ / 抵抗の列 (縦置き)
     col2 = cx + 11.0
-    for ref, y in ((f"FB{n}1", 27.0), (f"FB{n}2", 30.2), (f"R{n}1", 32.8), (f"R{n}2", 35.0)):
+    for ref, y in ((f"FB{n}1", 27.0), (f"FB{n}2", 30.2), (f"R{n}1", 32.8)):
         place(ref, col2, y, 90)
-    # ADV 左上 (pin 29/31 用) の列。ADV のコートヤード (±6.7) から離す
-    for ref, y in ((f"C{n}16", 23.7), (f"C{n}18", 25.9), (f"C{n}06", 28.6), (f"C{n}10", 30.6), (f"R{n}4", 32.8)):
-        place(ref, cx - 9.2, y, 0)            # 横置き: ビアは左右へ。DVDD_3V 0.1u / 1u、DVDD (pin31)、AVDD (pin25)、CEC_CLK 0R
-    place(f"R{n}3", cx - 9.2, 21.5, 0)        # INT 10k (+3V3 側のビアは島の外)
-    place(f"C{n}05", cx - 7.5, 41.0, 0)       # DVDD (pin51) 0.1u
+    # ADV 下辺右寄り: pin51 用 DVDD 0.1u と AVDD (pin25) 0.1u
+    place(f"C{n}05", cx + 6.0, 41.5, 0)
+    place(f"C{n}10", cx + 6.0, 43.5, 0)
+    # ADV 左上 (y < 28、J8 からのデータ経路 y 29-36 を空ける)。横置きでビアは左右へ。+3V3 のビアは 1V8 の島 (x >= cx-3.9) の外
+    for ref, y in ((f"R{n}3", 19.0), (f"C{n}16", 21.0), (f"C{n}18", 23.2), (f"R{n}4", 25.4), (f"R{n}2", 27.6)):
+        place(ref, cx - 8.5, y, 0)            # INT 10k、DVDD_3V 0.1u / 1u、CEC_CLK 0R、PD 10k
     # LDO 行: 入力 (3.3 V) 側を左、出力 (1.8 V) 側を右に分ける
     place(f"U{n}3", cx, 49.0, 0)
     place(f"C{n}01", cx - 6.5, 52.5, 0)       # 10u in (3.3 V): 島の外
@@ -172,8 +173,7 @@ def zone_poly(netname, layer, pts, prio=0, name=""):
 for n, cx in CX.items():
     # 本体: y 26.5..50.1 (左半分) / ..53 (右半分、LDO 出力側)。pin31 (x=cx-3.25) のビア用に上へ切り欠きを伸ばす
     zone_poly(f"CH{n}_1V8", pcbnew.In2_Cu,
-              [(cx - 11.85, 26.5), (cx - 2.9, 26.5), (cx - 2.9, 29.6), (cx - 1.6, 29.6), (cx - 1.6, 26.5),   # pin29 用スロット
-               (cx + 11.85, 26.5), (cx + 11.85, 53.0), (cx - 1.5, 53.0), (cx - 1.5, 50.1), (cx - 11.85, 50.1)], prio=1)
+              [(cx - 3.9, 26.5), (cx + 11.85, 26.5), (cx + 11.85, 53.0), (cx - 1.5, 53.0), (cx - 1.5, 50.1), (cx - 5.6, 50.1), (cx - 5.6, 45.5), (cx - 3.9, 45.5)], prio=1)
 
 # テキスト
 t = pcbnew.PCB_TEXT(board); t.SetText("QUAD HDMI TX  ADV7513 x4  rev A"); t.SetLayer(pcbnew.F_SilkS)
@@ -237,10 +237,21 @@ for n, cx in CX.items():
         add_track([(x, y), (x, yv)], nn, width=0.15); add_via(x, yv, nn); n_access += 1
     # ADV 上辺で TMDS に挟まれた/覆われたピン: AVDD19, PD22, AVDD25 は y=28.6、INT28/CEC30/CEC_CLK32 は y=29.4 (29/31 のプレーン用ビアは 28.6 に来る)
     for num, yv, dia in (("19", 28.6, 0.6), ("22", 28.6, 0.6), ("25", 28.6, 0.6),
-                         ("28", 28.7, 0.5), ("30", 28.7, 0.5), ("32", 28.7, 0.5), ("29", 29.9, 0.6), ("31", 29.9, 0.6)):
+                         ("28", 28.7, 0.5), ("30", 28.7, 0.5), ("32", 28.7, 0.5), ("31", 29.9, 0.6)):
         x, y = padpos(adv, num); nn = padnet(adv, num)
         add_track([(x, y), (x, yv)], nn, width=0.15); add_via(x, yv, nn, dia=dia); n_access += 1
         PREHANDLED.add((adv, num))
+    # LS_OE(5) / CT_HPD(12) = +3V3: TMDS の U ターンの隙間 (x=cx+1.25, y=25.3) に 0.5 mm ビアを置き、パッド下端の下 y=24.45 を通すバーで接続
+    x5, y5 = padpos(tpd, "5"); x12, y12 = padpos(tpd, "12")
+    add_via(cx + 1.25, 25.3, "+3V3", dia=0.5)
+    add_track([(cx + 1.25, 25.3), (cx + 1.25, 24.45), (x5, 24.45), (x5, y5)], "+3V3", width=0.15)
+    add_track([(cx + 1.25, 24.45), (x12, 24.45), (x12, y12)], "+3V3", width=0.15)
+    PREHANDLED.add((tpd, "5")); PREHANDLED.add((tpd, "12"))
+    # DVDD_3V (pin29, +3V3): 本体下のリングを右へ通り、右上コーナーから抜けて島の外 (cx+7.5, 25.3) の +3V3 ビアへ
+    x29, y29 = padpos(adv, "29")
+    add_track([(x29, y29), (x29, 29.35), (cx + 4.0, 29.35), (cx + 4.6, 28.75), (cx + 6.8, 28.75), (cx + 6.8, 25.3)], "+3V3", width=0.15)
+    add_via(cx + 6.8, 25.3, "+3V3"); n_access += 1
+    PREHANDLED.add((adv, "29"))
     # 5V_OUT: TPD pin13 -> コネクタ pin18、C{n}20 pad1 -> pin13 側面
     x13, y13 = padpos(tpd, "13"); x18, y18 = padpos(hd, "18"); xc20, yc20 = padpos(f"C{n}20", "1")
     yb = pad_bottom(hd, "18") + 0.5
@@ -277,9 +288,13 @@ def clear_of(x, y, netname, sx0=None, sy0=None, hw_stub=0.1, via_check=True):
         if via_check and math.hypot(dx, dy) < VIA_D / 2 + CLR:
             return False
         if sx0 is not None:
-            # 引き出し線 vs パッド矩形 (矩形をビア半径ぶん近似で膨らませて線分距離)
-            if seg_dist(px, py, sx0, sy0, x, y) < math.hypot(hw, hh) * 0.75 + hw_stub + CLR and max(abs(x - px) - hw, abs(y - py) - hh, abs(sx0 - px) - hw, abs(sy0 - py) - hh) < 0.6:
-                return False
+            # 引き出し線 vs パッド矩形: 線分上を細かくサンプリングして矩形までの距離を見る
+            for k in range(0, 13):
+                t = k / 12.0
+                qx, qy = sx0 + (x - sx0) * t, sy0 + (y - sy0) * t
+                ddx = max(abs(qx - px) - hw, 0); ddy = max(abs(qy - py) - hh, 0)
+                if math.hypot(ddx, ddy) < hw_stub + CLR:
+                    return False
     for vx, vy in vias_placed:
         if via_check and math.hypot(x - vx, y - vy) < VIA_D + CLR:
             return False
@@ -357,8 +372,9 @@ for fp in board.GetFootprints():
         ey = abs(-dy * rot(1, 0, ang)[0] + dx * rot(1, 0, ang)[1]) * sx / 2 + abs(-dy * rot(0, 1, ang)[0] + dx * rot(0, 1, ang)[1]) * sy / 2
         e0 = ey + CLR + VIA_D / 2 + 0.1
         cands = [(d0, 0.0), (d0 + 0.75, 0.0), (0.0, e0), (0.0, -e0), (d0 + 0.4, 0.6), (d0 + 0.4, -0.6),
-                 (0.3, e0), (0.3, -e0), (-0.3, e0), (-0.3, -e0), (d0 + 1.5, 0.0), (d0 + 1.1, 0.6), (d0 + 1.1, -0.6), (d0 + 2.25, 0.0),
-                 (-d0, 0.0), (-d0 - 0.75, 0.0), (-d0 - 0.4, 0.6), (-d0 - 0.4, -0.6)]      # 最後は内向き (IC の本体下)
+                 (0.3, e0), (0.3, -e0), (-0.3, e0), (-0.3, -e0), (d0 + 1.5, 0.0), (d0 + 1.1, 0.6), (d0 + 1.1, -0.6), (d0 + 2.25, 0.0)]
+        if len(pads) > 4:
+            cands += [(-d0, 0.0), (-d0 - 0.75, 0.0), (-d0 - 0.4, 0.6), (-d0 - 0.4, -0.6)]   # 内向き (IC の本体下) は IC だけ
         placed = False
         hw_stub = 0.1 if min(sx, sy) < 0.4 else 0.125
         for d, lat in cands:

@@ -35,6 +35,21 @@ if not ok or len(list(board.GetTracks())) < 300:
             board.Remove(t)
     print("fallback SES parser:", import_ses(board, SES))
 print("SES import:", ok, "tracks:", len(list(board.GetTracks())))
+# 使われなかったアクセスビア (B.Cu 側に配線がない信号ネットのロック済みビア) とその引き出し線を削除
+board.BuildConnectivity()
+conn = board.GetConnectivity()
+plane_nets = {"GND", "+3V3"} | {f"CH{n}_1V8" for n in range(1, 5)}
+removed = 0
+for via in [t for t in board.GetTracks() if t.GetClass() == "PCB_VIA" and t.IsLocked()]:
+    if via.GetNetname() in plane_nets:
+        continue
+    tracks = [t for t in conn.GetConnectedTracks(via)]
+    if tracks and all(t.IsLocked() for t in tracks):      # ロック済みの引き出し線しか繋がっていない = 使われなかった
+        for t in tracks:
+            if t.IsLocked() and t.GetLength() < pcbnew.FromMM(3.0):
+                board.Remove(t)
+        board.Remove(via); removed += 1
+print("removed unused access vias:", removed)
 # 配線後に外層 GND ベタを追加 (オートルータには渡さない: FreeRouting はベタを障害物として扱う)
 gnd = board.FindNet("GND")
 for layer, name in ((pcbnew.B_Cu, "GND_B"), (pcbnew.F_Cu, "GND_F")):
@@ -43,7 +58,7 @@ for layer, name in ((pcbnew.B_Cu, "GND_B"), (pcbnew.F_Cu, "GND_F")):
     bb = board.GetBoardEdgesBoundingBox()
     for x, y in ((bb.GetLeft(), bb.GetTop()), (bb.GetRight(), bb.GetTop()), (bb.GetRight(), bb.GetBottom()), (bb.GetLeft(), bb.GetBottom())):
         o.Append(x, y)
-    z.SetPadConnection(pcbnew.ZONE_CONNECTION_THERMAL); z.SetMinThickness(pcbnew.FromMM(0.25))
+    z.SetPadConnection(pcbnew.ZONE_CONNECTION_FULL); z.SetMinThickness(pcbnew.FromMM(0.25))
     z.SetLocalClearance(pcbnew.FromMM(0.3)); z.SetAssignedPriority(0); board.Add(z)
 filler = pcbnew.ZONE_FILLER(board)
 filler.Fill(board.Zones())
