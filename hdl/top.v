@@ -14,7 +14,8 @@ module top #(
   output wire [3:0]  hdmi_de,
   output wire [3:0]  hdmi_hs,
   output wire [3:0]  hdmi_vs,
-  input  wire [3:0]  hdmi_hpd,    // ADV7513 HPD 出力 (未使用なら 1 に固定)
+  input  wire [3:0]  hdmi_hpd,    // TPD12S016 HPD_A (ADV7513 HPD と共通、3.3 V)
+  input  wire [3:0]  hdmi_int,    // ADV7513 INT (現状未使用)
   // I2C: 2 バス x 2 デバイス (アドレス 0x39 / 0x3D)
   inout  wire [1:0]  i2c_scl,
   inout  wire [1:0]  i2c_sda,

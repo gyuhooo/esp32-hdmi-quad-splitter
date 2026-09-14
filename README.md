@@ -13,7 +13,7 @@ Full HD のテスト映像を **1 台のデバイス内で生成し、HDMI 4 本
 | HDMI 送信 | ADI ADV7513 ×4(24bit RGB パラレル入力 → HDMI 1.4、1080p60 対応、資料公開) |
 | 出力 | 1080p / 720p / 480p × 29.97p / 59.94p / 30p / 60p を出力ごとに独立して設定 |
 | 画面 | 75% カラーバー、動くボックス(コマ落ち検出)、グレースケール、外枠、ラベル、6 桁フレームカウンタ、タイムコード |
-| 状態 | HDL 一式と iverilog シミュレーション済み。実機基板は未作成 |
+| 状態 | HDL 一式と iverilog シミュレーション済み。キャリア基板の回路図(KiCad 7)を作成済み、レイアウトは未着手 |
 
 ```
 100 MHz --> [Artix-7: MMCM x4 -> timing -> pattern] --24bit RGB--> [ADV7513] --> HDMI OUT1
@@ -36,10 +36,20 @@ Full HD のテスト映像を **1 台のデバイス内で生成し、HDMI 4 本
 cd sim && make MODE=1 FRAME=2     # iverilog で 1080p59.94 の 1 フレームを frame.ppm に保存
 ```
 
+### 回路図(hardware/)
+
+FPGA ボードに載せるキャリア基板(ADV7513 ×4、TPD12S016 ×4、HDMI ×4、USB-C 5 V 入力、3.3 V バック、1.8 V LDO ×4)。
+[hardware/README.md](hardware/README.md) に構成・検証状況・発注前チェックリストがある。
+
+![root](docs/images/sch-root.png)
+
+![ch1](docs/images/sch-hdmi-ch1.png)
+
 ### ディレクトリ
 
 | パス | 内容 |
 |---|---|
+| hardware/ | KiCad 7 回路図プロジェクト、BOM、ピン割り当て表、生成スクリプト |
 | hdl/ | Verilog ソース(タイミング、パターン、文字重畳、MMCM、ADV7513 初期化、トップ) |
 | sim/ | iverilog テストベンチと Makefile |
 | constraints/ | Vivado 制約ファイルの例 |

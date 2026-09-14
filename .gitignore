@@ -4,3 +4,6 @@ sim/font8x16.mem
 firmware/build/
 firmware/sdkconfig
 firmware/sdkconfig.old
+hardware/quad_hdmi_tx/*-backups/
+hardware/quad_hdmi_tx/*.kicad_prl
+hardware/quad_hdmi_tx/fp-info-cache

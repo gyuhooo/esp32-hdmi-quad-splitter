@@ -132,6 +132,7 @@ MMCME2_BASE(100 MHz 入力)の設定。`hdl/video_modes.vh` の関数で MODE �
 | hdl/font8x16.mem | フォント ROM(tools/make-font.py で生成) |
 | sim/ | iverilog テストベンチ。1 フレームを PPM に保存 |
 | constraints/example.xdc | 制約ファイルの例 |
+| hardware/ | キャリア基板の KiCad 7 回路図、BOM、J7/J8 ピン割り当て、XDC 生成 ([hardware/README.md](../hardware/README.md)) |
 
 ## ビルドとシミュレーション
 
