@@ -44,30 +44,28 @@ for n, cx in CX.items():
     place(f"C{n}17", cx - 6.5, 17.5, 90)      # VCCA 0.1u (+3V3)
     place(f"C{n}20", cx + 6.5, 17.5, 90)      # 5V_OUT 0.1u
     place(f"C{n}19", cx + 6.5, 24.0, 90)      # VCC5V 0.1u
-    # ADV 右側の列 (縦置き、2.2 mm ピッチ)。rot 180 後の右辺: 上から HPD16 AVDD15 REXT14 BGVDD13 PVDD12 DVDD11 ... VSYNC2 DVDD1
+    # ADV 右側の列 (縦置き)。0603 の前後は 2.4 mm、0402 同士は 2.0 mm
     col = cx + 9.0
-    for ref, y in ((f"C{n}11", 26.0), (f"C{n}09", 28.2), (f"C{n}13", 30.4), (f"C{n}14", 32.6), (f"C{n}15", 34.8),
-                   (f"C{n}04", 37.0), (f"C{n}07", 39.2), (f"C{n}12", 41.4), (f"C{n}08", 43.6)):
+    for ref, y in ((f"C{n}11", 26.0), (f"C{n}09", 28.0), (f"C{n}13", 30.0), (f"C{n}14", 32.0), (f"C{n}15", 34.4),
+                   (f"C{n}04", 36.8), (f"C{n}07", 38.8), (f"C{n}12", 41.4), (f"C{n}08", 44.6)):
         place(ref, col, y, 90)
     # フェライトビーズ / 抵抗の列 (縦置き)
     col2 = cx + 11.0
-    for ref, y in ((f"FB{n}1", 27.0), (f"FB{n}2", 29.5), (f"R{n}1", 32.0), (f"R{n}2", 34.5)):
+    for ref, y in ((f"FB{n}1", 27.0), (f"FB{n}2", 30.2), (f"R{n}1", 32.8), (f"R{n}2", 35.0)):
         place(ref, col2, y, 90)
-    # ADV 上辺左側 (pin 28-32: INT, DVDD_3V, CEC, DVDD, CEC_CLK) 用
-    place(f"C{n}10", cx - 5.0, 24.8, 0)       # AVDD (pin25) 0.1u
-    for ref, y in ((f"C{n}16", 24.5), (f"C{n}18", 26.7), (f"C{n}06", 28.9)):
-        place(ref, cx - 7.0, y, 90)           # DVDD_3V 0.1u / 1u、DVDD (pin31) 0.1u
-    place(f"R{n}3", cx - 9.5, 24.0, 90)       # INT 10k
-    place(f"R{n}4", cx - 9.5, 26.5, 90)       # CEC_CLK 0R
+    # ADV 左上 (pin 29/31 用) の列。ADV のコートヤード (±6.7) から離す
+    for ref, y in ((f"C{n}16", 23.7), (f"C{n}18", 25.9), (f"C{n}06", 28.6), (f"C{n}10", 30.6), (f"R{n}4", 32.8)):
+        place(ref, cx - 9.2, y, 0)            # 横置き: ビアは左右へ。DVDD_3V 0.1u / 1u、DVDD (pin31)、AVDD (pin25)、CEC_CLK 0R
+    place(f"R{n}3", cx - 9.2, 21.5, 0)        # INT 10k (+3V3 側のビアは島の外)
     place(f"C{n}05", cx - 7.5, 41.0, 0)       # DVDD (pin51) 0.1u
-    # LDO 行
+    # LDO 行: 入力 (3.3 V) 側を左、出力 (1.8 V) 側を右に分ける
     place(f"U{n}3", cx, 49.0, 0)
-    place(f"C{n}01", cx - 7.0, 49.0, 90)      # 10u in
+    place(f"C{n}01", cx - 6.5, 52.5, 0)       # 10u in (3.3 V): 島の外
     place(f"C{n}02", cx + 7.0, 49.0, 90)      # 22u out
     place(f"C{n}03", cx + 10.0, 49.0, 90)     # 0.1u out
 # 電源部 (右辺、y >= 55)
 place("J5", 109.5, 64.0, 90)                  # USB-C、開口部右
-place("F1", 104.0, 57.0, 90)
+place("F1", 103.5, 54.5, 90)
 place("R5", 103.0, 71.0, 0)
 place("R6", 103.0, 73.0, 0)
 place("J6", 110.5, 20.0, 0)
@@ -85,7 +83,7 @@ place("R8", 110.0, 93.0, 0)
 place("JP1", 6.0, 107.5, 0)
 for i, y in enumerate((58.0, 60.5, 63.0, 65.5)):
     place(f"R{i+1}", 12.0, y, 0)              # I2C プルアップ
-place("H1", 12.0, 14.0); place("H2", 111.0, 6.0); place("H3", 111.0, 106.0); place("H4", 60.0, 106.0)
+place("H1", 13.2, 14.0); place("H2", 111.0, 6.0); place("H3", 111.0, 106.0); place("H4", 60.0, 106.0)
 
 # ---------------------------------------------------------------- 基板生成
 board = pcbnew.BOARD()
@@ -98,7 +96,8 @@ board.SetLayerName(pcbnew.In2_Cu, "PWR")
 bds.m_MinClearance = FromMM(0.15)
 bds.m_TrackMinWidth = FromMM(0.15)
 bds.m_ViasMinSize = FromMM(0.5)
-bds.m_MinThroughDrill = FromMM(0.3)
+bds.m_MinThroughDrill = FromMM(0.2)
+bds.m_HoleClearance = FromMM(0.18)
 bds.m_ViasMinAnnularWidth = FromMM(0.1)
 bds.m_CopperEdgeClearance = FromMM(0.3)
 
@@ -131,6 +130,8 @@ for ref, c in comps.items():
     # リファレンスを小さく
     fp.Reference().SetTextSize(VECTOR2I(FromMM(0.8), FromMM(0.8)))
     fp.Reference().SetTextThickness(FromMM(0.12))
+    fp.Reference().SetLayer(pcbnew.F_Fab if side == "F" else pcbnew.B_Fab)   # シルクには置かない (CPL で実装)
+    fp.Value().SetVisible(False)
 if missing:
     print("WARN:", missing)
 
@@ -158,34 +159,108 @@ def zone(netname, layer, x1, y1, x2, y2, prio=0, name=""):
     board.Add(z); return z
 zone("GND", pcbnew.In1_Cu, 0, 0, W, H)
 zone("+3V3", pcbnew.In2_Cu, 0, 0, W, H)
+def zone_poly(netname, layer, pts, prio=0, name=""):
+    z = pcbnew.ZONE(board)
+    z.SetLayer(layer); z.SetNetCode(net(netname).GetNetCode()); z.SetAssignedPriority(prio); z.SetZoneName(name or netname)
+    o = z.Outline(); o.NewOutline()
+    for x, y in pts:
+        o.Append(FromMM(x), FromMM(y))
+    z.SetPadConnection(pcbnew.ZONE_CONNECTION_FULL); z.SetMinThickness(FromMM(0.2)); z.SetLocalClearance(FromMM(0.25))
+    board.Add(z); return z
 for n, cx in CX.items():
-    zone(f"CH{n}_1V8", pcbnew.In2_Cu, cx - 11.85, 24.0, cx + 11.85, 53.0, prio=1)
+    # 本体: y 26.5..50.1 (左半分) / ..53 (右半分、LDO 出力側)。pin31 (x=cx-3.25) のビア用に上へ切り欠きを伸ばす
+    zone_poly(f"CH{n}_1V8", pcbnew.In2_Cu,
+              [(cx - 11.85, 26.5), (cx - 2.9, 26.5), (cx - 2.9, 29.6), (cx - 1.6, 29.6), (cx - 1.6, 26.5),   # pin29 用スロット
+               (cx + 11.85, 26.5), (cx + 11.85, 53.0), (cx - 1.5, 53.0), (cx - 1.5, 50.1), (cx - 11.85, 50.1)], prio=1)
 
 # テキスト
 t = pcbnew.PCB_TEXT(board); t.SetText("QUAD HDMI TX  ADV7513 x4  rev A"); t.SetLayer(pcbnew.F_SilkS)
 t.SetPosition(VECTOR2I(FromMM(60), FromMM(58))); t.SetTextSize(VECTOR2I(FromMM(1.5), FromMM(1.5))); board.Add(t)
 
+# ---------------------------------------------------------------- TMDS 事前配線
+def add_track(pts, netname, width=0.15, layer=pcbnew.F_Cu):
+    ni = net(netname)
+    for (x1, y1), (x2, y2) in zip(pts[:-1], pts[1:]):
+        t = pcbnew.PCB_TRACK(board)
+        t.SetStart(VECTOR2I(FromMM(x1), FromMM(y1))); t.SetEnd(VECTOR2I(FromMM(x2), FromMM(y2)))
+        t.SetWidth(FromMM(width)); t.SetLayer(layer); t.SetNetCode(ni.GetNetCode()); t.SetLocked(True); board.Add(t)
+def padpos(ref, num):
+    fp = board.FindFootprintByReference(ref)
+    for p in fp.Pads():
+        if p.GetNumber() == num:
+            return p.GetPosition().x / 1e6, p.GetPosition().y / 1e6
+    raise KeyError((ref, num))
+def pad_bottom(ref, num):
+    fp = board.FindFootprintByReference(ref)
+    for p in fp.Pads():
+        if p.GetNumber() == num:
+            return p.GetBoundingBox().GetBottom() / 1e6
+    raise KeyError((ref, num))
+n_tmds = 0
+for n, cx in CX.items():
+    adv, tpd, hd = f"U{n}1", f"U{n}2", f"J{n}"
+    # (net, ADV pin, TPD pin, HDMI pin, 水平の y, 縦の x オフセット, レーン y)。左グループは左端から、右グループは右端から TPD 下へ入る
+    left = [("TX1_N", "23", "20", "6", 24.85, -4.35, 20.35), ("TX1_P", "24", "21", "4", 25.30, -4.80, 19.90),
+            ("TX2_N", "26", "22", "3", 25.75, -5.25, 19.45), ("TX2_P", "27", "23", "1", 26.20, -5.70, 19.00)]
+    right = [("TX0_P", "21", "18", "7", 24.85, 4.35, 20.35), ("TX0_N", "20", "17", "9", 25.30, 4.80, 19.90),
+             ("TXC_P", "18", "16", "10", 25.75, 5.25, 19.45), ("TXC_N", "17", "15", "12", 26.20, 5.70, 19.00)]
+    for sig, pa, pt, ph, yh, xv, yl in left + right:
+        netname = f"CH{n}_{sig}"
+        xa, ya = padpos(adv, pa); xt, yt = padpos(tpd, pt); xc, yc = padpos(hd, ph)
+        x_v = cx + xv
+        y_d = pad_bottom(hd, ph) + 0.5                                             # コネクタパッド下端の少し下で斜めを終える
+        pts = [(xa, ya), (xa, yh), (x_v, yh), (x_v, yl), (xt, yl), (xt, yt),      # ADV -> U ターン -> TPD パッド
+               (xt, 16.6), (xc, y_d), (xc, yc)]                                    # TPD -> コネクタ
+        add_track(pts, netname); n_tmds += 1
+print("TMDS pre-routed lines:", n_tmds)
+
 # ---------------------------------------------------------------- プレーン系ネットのファンアウトビア
 # FreeRouting は内層プレーンへの接続 (パッド -> ビア) を作らないので、SMD パッドごとに先に打っておく。
 import math
 PLANE_NETS = {"GND", "+3V3"} | {f"CH{n}_1V8" for n in CX}
-VIA_D, VIA_DRILL, CLR = 0.6, 0.3, 0.15
+VIA_D, VIA_DRILL, CLR = 0.6, 0.3, 0.22
 all_pads = []       # (x, y, hw, hh, net)  軸平行の近似矩形 (mm)
 for fp in board.GetFootprints():
     for pad in fp.Pads():
         bb = pad.GetBoundingBox()
         all_pads.append((bb.GetCenter().x / 1e6, bb.GetCenter().y / 1e6, bb.GetWidth() / 2e6, bb.GetHeight() / 2e6, pad.GetNetname()))
 vias_placed = []    # (x, y)
-def clear_of(x, y, netname):
+segs = []           # 既存配線 (x1, y1, x2, y2, halfwidth, net)
+for t in board.GetTracks():
+    if t.GetClass() == "PCB_TRACK":
+        segs.append((t.GetStart().x / 1e6, t.GetStart().y / 1e6, t.GetEnd().x / 1e6, t.GetEnd().y / 1e6, t.GetWidth() / 2e6, t.GetNetname()))
+def seg_dist(px, py, x1, y1, x2, y2):
+    dx, dy = x2 - x1, y2 - y1
+    if dx == dy == 0: return math.hypot(px - x1, py - y1)
+    t = max(0.0, min(1.0, ((px - x1) * dx + (py - y1) * dy) / (dx * dx + dy * dy)))
+    return math.hypot(px - (x1 + t * dx), py - (y1 + t * dy))
+def clear_of(x, y, netname, sx0=None, sy0=None, hw_stub=0.1):
+    """ビア (x,y) と、パッド (sx0,sy0) からビアへの引き出し線が他ネットと干渉しないか"""
     for px, py, hw, hh, pn in all_pads:
         if pn == netname:
             continue
         dx = max(abs(x - px) - hw, 0); dy = max(abs(y - py) - hh, 0)
         if math.hypot(dx, dy) < VIA_D / 2 + CLR:
             return False
+        if sx0 is not None:
+            # 引き出し線 vs パッド矩形 (矩形をビア半径ぶん近似で膨らませて線分距離)
+            if seg_dist(px, py, sx0, sy0, x, y) < math.hypot(hw, hh) * 0.75 + hw_stub + CLR and max(abs(x - px) - hw, abs(y - py) - hh, abs(sx0 - px) - hw, abs(sy0 - py) - hh) < 0.6:
+                return False
     for vx, vy in vias_placed:
         if math.hypot(x - vx, y - vy) < VIA_D + CLR:
             return False
+        if sx0 is not None and seg_dist(vx, vy, sx0, sy0, x, y) < VIA_D / 2 + hw_stub + CLR:
+            return False
+    for x1, y1, x2, y2, hw, pn in segs:
+        if pn == netname:
+            continue
+        if seg_dist(x, y, x1, y1, x2, y2) < VIA_D / 2 + hw + CLR:
+            return False
+        if sx0 is not None:
+            # 線分同士の最短距離 (端点で近似)
+            if min(seg_dist(sx0, sy0, x1, y1, x2, y2), seg_dist(x, y, x1, y1, x2, y2),
+                   seg_dist(x1, y1, sx0, sy0, x, y), seg_dist(x2, y2, sx0, sy0, x, y)) < hw + hw_stub + CLR:
+                return False
     if not (1.0 < x < W - 1.0 and 1.0 < y < H - 1.0):
         return False
     return True
@@ -203,7 +278,9 @@ for fp in board.GetFootprints():
         px, py = pad.GetPosition().x / 1e6, pad.GetPosition().y / 1e6
         sx, sy = pad.GetSize().x / 1e6, pad.GetSize().y / 1e6
         ang = -pad.GetOrientationDegrees()          # KiCad は y 下向き座標。画面上の回転を数学座標へ
-        if len(pads) <= 4:
+        if fp.GetReference() in ("J1", "J2", "J3", "J4"):
+            dx, dy = 0.0, -1.0                      # HDMI コネクタ: 上 (筐体側) へ。下は TMDS の扇形配線
+        elif len(pads) <= 4:
             dx, dy = px - fx, py - fy               # 2 端子部品: 部品中心から外向き
             if abs(dx) + abs(dy) < 1e-3: dx, dy = 1.0, 0.0
         else:
@@ -217,11 +294,12 @@ for fp in board.GetFootprints():
         ey = abs(-dy * rot(1, 0, ang)[0] + dx * rot(1, 0, ang)[1]) * sx / 2 + abs(-dy * rot(0, 1, ang)[0] + dx * rot(0, 1, ang)[1]) * sy / 2
         e0 = ey + CLR + VIA_D / 2 + 0.1
         cands = [(d0, 0.0), (d0 + 0.75, 0.0), (0.0, e0), (0.0, -e0), (d0 + 0.4, 0.6), (d0 + 0.4, -0.6),
-                 (0.3, e0), (0.3, -e0), (-0.3, e0), (-0.3, -e0), (d0 + 1.5, 0.0), (d0 + 1.1, 0.6), (d0 + 1.1, -0.6), (d0 + 2.25, 0.0)]
+                 (0.3, e0), (0.3, -e0), (-0.3, e0), (-0.3, -e0), (d0 + 1.5, 0.0), (d0 + 1.1, 0.6), (d0 + 1.1, -0.6), (d0 + 2.25, 0.0),
+                 (-d0, 0.0), (-d0 - 0.75, 0.0), (-d0 - 0.4, 0.6), (-d0 - 0.4, -0.6)]      # 最後は内向き (IC の本体下)
         placed = False
         for d, lat in cands:
             vx, vy = px + dx * d - dy * lat, py + dy * d + dx * lat
-            if clear_of(vx, vy, netname):
+            if clear_of(vx, vy, netname, px, py, 0.1 if min(sx, sy) < 0.4 else 0.125):
                 via = pcbnew.PCB_VIA(board)
                 via.SetPosition(VECTOR2I(FromMM(vx), FromMM(vy))); via.SetDrill(FromMM(VIA_DRILL)); via.SetWidth(FromMM(VIA_D))
                 via.SetViaType(pcbnew.VIATYPE_THROUGH); via.SetLayerPair(pcbnew.F_Cu, pcbnew.B_Cu)
@@ -230,11 +308,32 @@ for fp in board.GetFootprints():
                 tr.SetStart(VECTOR2I(FromMM(px), FromMM(py))); tr.SetEnd(VECTOR2I(FromMM(vx), FromMM(vy)))
                 tr.SetWidth(FromMM(0.25 if min(sx, sy) >= 0.4 else 0.2)); tr.SetLayer(pcbnew.F_Cu if pad.IsOnLayer(pcbnew.F_Cu) else pcbnew.B_Cu)
                 tr.SetNetCode(pad.GetNetCode()); tr.SetLocked(True); board.Add(tr)
-                vias_placed.append((vx, vy)); n_via += 1; placed = True
+                vias_placed.append((vx, vy)); segs.append((px, py, vx, vy, tr.GetWidth() / 2e6, netname)); n_via += 1; placed = True
                 break
         if not placed:
             n_fail.append(f"{fp.GetReference()}.{pad.GetNumber()}({netname})")
-print(f"fanout vias: {n_via}  failed: {len(n_fail)} {n_fail[:12]}")
+# 置けなかったパッド: 0.6 mm 以内の同ネットパッド (同一部品) に短絡配線して、隣のビアに相乗りする
+fail_pads = []
+for fp in board.GetFootprints():
+    for pad in fp.Pads():
+        key = f"{fp.GetReference()}.{pad.GetNumber()}({pad.GetNetname()})"
+        if key in n_fail:
+            fail_pads.append((fp, pad))
+placed_keys = set()
+for fp, pad in fail_pads:
+    px, py = pad.GetPosition().x / 1e6, pad.GetPosition().y / 1e6
+    for other in fp.Pads():
+        if other is pad or other.GetNetname() != pad.GetNetname():
+            continue
+        ox, oy = other.GetPosition().x / 1e6, other.GetPosition().y / 1e6
+        if 0 < math.hypot(px - ox, py - oy) <= 0.6:
+            tr = pcbnew.PCB_TRACK(board)
+            tr.SetStart(VECTOR2I(FromMM(px), FromMM(py))); tr.SetEnd(VECTOR2I(FromMM(ox), FromMM(oy)))
+            tr.SetWidth(FromMM(0.2)); tr.SetLayer(pcbnew.F_Cu if pad.IsOnLayer(pcbnew.F_Cu) else pcbnew.B_Cu)
+            tr.SetNetCode(pad.GetNetCode()); tr.SetLocked(True); board.Add(tr)
+            placed_keys.add(f"{fp.GetReference()}.{pad.GetNumber()}({pad.GetNetname()})"); break
+n_fail = [k for k in n_fail if k not in placed_keys]
+print(f"fanout vias: {n_via}  bridged to neighbour: {len(placed_keys)}  failed: {len(n_fail)} {n_fail[:12]}")
 
 pcbnew.SaveBoard(PCB, board)
 print("saved", PCB, "footprints:", len(list(board.GetFootprints())), "nets:", len(nets))
@@ -258,7 +357,7 @@ pro["net_settings"] = {
                          [{"pattern": p, "netclass": "Power"} for p in ("+5V", "+3V3", "VBUS", "CH*_1V8", "CH*_AVDD", "CH*_PVDD", "CH*_5V_OUT", "SW", "FPGA_5V")]
 }
 pro["board"]["design_settings"] = {
-    "rules": {"min_clearance": 0.15, "min_track_width": 0.15, "min_via_diameter": 0.5, "min_through_hole_diameter": 0.3,
+    "rules": {"min_clearance": 0.15, "min_track_width": 0.15, "min_via_diameter": 0.5, "min_through_hole_diameter": 0.2, "min_hole_clearance": 0.18,
               "min_via_annular_width": 0.1, "min_copper_edge_clearance": 0.3, "solder_mask_clearance": 0.0, "solder_mask_min_width": 0.0},
     "defaults": {}, "track_widths": [0.15, 0.2, 0.3, 0.5], "via_dimensions": [{"diameter": 0.5, "drill": 0.3}, {"diameter": 0.8, "drill": 0.4}],
     "diff_pair_dimensions": [{"width": 0.15, "gap": 0.15, "via_gap": 0.25}]
