@@ -23,18 +23,20 @@ if STAGE == "export":
     ok = pcbnew.ExportSpecctraDSN(board, DSN)
     print("DSN export:", ok, os.path.getsize(DSN))
     sys.exit(0)
-if not os.path.exists(SES):
+if STAGE == "import" and not os.path.exists(SES):
     print("no SES file"); sys.exit(1)
 
 board = pcbnew.LoadBoard(PCB)
-ok = pcbnew.ImportSpecctraSES(SES)            # LoadBoard で読んだ基板に取り込む (7.0 API は引数 1 つ)
-if not ok or len(list(board.GetTracks())) < 300:
+if STAGE == "import":
+    # pcbnew.ImportSpecctraSES はこの環境では失敗し、その後 board ハンドルが無効になるため自前パーサだけを使う
     from ses_import import import_ses
     for t in list(board.GetTracks()):        # 二重取り込みを避け、ロック済みファンアウトだけ残す
         if not t.IsLocked():
             board.Remove(t)
-    print("fallback SES parser:", import_ses(board, SES))
-print("SES import:", ok, "tracks:", len(list(board.GetTracks())))
+    print("SES parser:", import_ses(board, SES))
+else:
+    print("finish stage: reusing routed board")
+print("tracks:", len(list(board.GetTracks())))
 # 使われなかったアクセスビア (B.Cu 側に配線がない信号ネットのロック済みビア) とその引き出し線を削除
 board.BuildConnectivity()
 conn = board.GetConnectivity()
@@ -50,9 +52,32 @@ for via in [t for t in board.GetTracks() if t.GetClass() == "PCB_VIA" and t.IsLo
                 board.Remove(t)
         board.Remove(via); removed += 1
 print("removed unused access vias:", removed)
+# オートルータが残した ADV pin15 (AVDD) は、同ネットの右隣のビアへ L 字で接続する
+board.BuildConnectivity(); conn = board.GetConnectivity()
+fixed = 0
+for n in range(1, 5):
+    fp = board.FindFootprintByReference(f"U{n}1")
+    pad = [p for p in fp.Pads() if p.GetNumber() == "15"][0]
+    if conn.GetConnectedTracks(pad):
+        continue
+    px, py = pad.GetPosition().x / 1e6, pad.GetPosition().y / 1e6
+    vias = [t for t in board.GetTracks() if t.GetClass() == "PCB_VIA" and t.GetNetname() == pad.GetNetname()
+            and t.GetPosition().x / 1e6 > px + 1.0 and abs(t.GetPosition().y / 1e6 - py) < 3.0]
+    if not vias:
+        continue
+    v = min(vias, key=lambda t: abs(t.GetPosition().x / 1e6 - px))
+    vx, vy = v.GetPosition().x / 1e6, v.GetPosition().y / 1e6
+    for (ax, ay), (bx, by) in (((px, py), (vx, py)), ((vx, py), (vx, vy))):
+        t = pcbnew.PCB_TRACK(board); t.SetStart(pcbnew.VECTOR2I(pcbnew.FromMM(ax), pcbnew.FromMM(ay))); t.SetEnd(pcbnew.VECTOR2I(pcbnew.FromMM(bx), pcbnew.FromMM(by)))
+        t.SetWidth(pcbnew.FromMM(0.15)); t.SetLayer(pcbnew.F_Cu); t.SetNetCode(pad.GetNetCode()); board.Add(t)
+    fixed += 1
+print("manual AVDD pin15 fixes:", fixed)
 # 配線後に外層 GND ベタを追加 (オートルータには渡さない: FreeRouting はベタを障害物として扱う)
 gnd = board.FindNet("GND")
+existing = {z.GetZoneName() for z in board.Zones()}
 for layer, name in ((pcbnew.B_Cu, "GND_B"), (pcbnew.F_Cu, "GND_F")):
+    if name in existing:
+        continue
     z = pcbnew.ZONE(board); z.SetLayer(layer); z.SetNetCode(gnd.GetNetCode()); z.SetZoneName(name)
     o = z.Outline(); o.NewOutline()
     bb = board.GetBoardEdgesBoundingBox()

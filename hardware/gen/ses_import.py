@@ -19,11 +19,16 @@ def import_ses(board, ses_path):
     def P(x, y):
         return VECTOR2I(int(round(float(x) * scale * 1000)), int(round(-float(y) * scale * 1000)))
     n_wire = n_via = 0
+    netmap = {str(k): v.GetNetCode() for k, v in board.GetNetsByName().items()}
+    class _NI:
+        def __init__(self, code): self.code = code
+        def GetNetCode(self): return self.code
     netout = find1(routes, "network_out")
     for net in find(netout, "net"):
-        name = str(net[1]); ni = board.FindNet(name)
-        if ni is None:
+        name = str(net[1])
+        if name not in netmap:
             print("  unknown net", name); continue
+        ni = _NI(netmap[name])
         for w in find(net, "wire"):
             path = find1(w, "path"); layer = str(path[1]); width = float(path[2]) * scale * 1000
             pts = [float(v) for v in path[3:] if not isinstance(v, list)]
