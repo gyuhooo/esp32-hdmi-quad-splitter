@@ -37,7 +37,7 @@ place("J8", 12.0, 100.0, 90)
 # チャネル: HDMI 上辺、TPD、ADV (rot 180)、LDO。ピッチ 24 mm
 CX = {1: 25.0, 2: 49.0, 3: 73.0, 4: 97.0}
 for n, cx in CX.items():
-    place(f"J{n}", cx, 10.4, 90)              # HDMI: パッド y=13.7、開口部は上辺
+    place(f"J{n}", cx, 7.02, 90)              # HDMI: フットプリントの "PCB Edge" 線 (中心から 3.38 mm) を基板上辺 y=0 に合わせる。パッド y=10.3
     place(f"U{n}2", cx, 20.5, 90)             # TPD12S016: TMDS パッド上辺 (y=17.6)、A 側下辺 (y=23.4)
     place(f"U{n}1", cx, 33.0, 180)            # ADV7513: TMDS 上辺 (y=27.3)、データ 下辺/左辺
     # TPD まわり
@@ -65,7 +65,7 @@ for n, cx in CX.items():
     place(f"C{n}02", cx + 7.0, 49.0, 90)      # 22u out
     place(f"C{n}03", cx + 10.0, 49.0, 90)     # 0.1u out
 # 電源部 (右辺、y >= 55)
-place("J5", 109.5, 64.0, 90)                  # USB-C、開口部右
+place("J5", 111.33, 64.0, 90)                 # USB-C、開口部右。"PCB Edge" 線 (中心から 3.67 mm) を x=115 に合わせる
 place("F1", 103.5, 54.5, 90)
 place("R5", 103.0, 71.0, 0)
 place("R6", 103.0, 73.0, 0)
@@ -247,10 +247,12 @@ for n, cx in CX.items():
     add_track([(cx + 1.25, 25.3), (cx + 1.25, 24.45), (x5, 24.45), (x5, y5)], "+3V3", width=0.15)
     add_track([(cx + 1.25, 24.45), (x12, 24.45), (x12, y12)], "+3V3", width=0.15)
     PREHANDLED.add((tpd, "5")); PREHANDLED.add((tpd, "12"))
-    # DVDD_3V (pin29, +3V3): 本体下のリングを右へ通り、右上コーナーから抜けて島の外 (cx+7.5, 25.3) の +3V3 ビアへ
+    # DVDD_3V (pin29, +3V3): 本体下でビアを打ち、B.Cu で左へ抜けて島の外 (cx-7.3, 30.45) の +3V3 ビアへ
+    # (以前の右上コーナー経由は HPD pin16 の逃げ道を塞いでいた)
     x29, y29 = padpos(adv, "29")
-    add_track([(x29, y29), (x29, 29.35), (cx + 4.0, 29.35), (cx + 4.6, 28.75), (cx + 6.8, 28.75), (cx + 6.8, 25.3)], "+3V3", width=0.15)
-    add_via(cx + 6.8, 25.3, "+3V3"); n_access += 1
+    add_track([(x29, y29), (x29, 29.9)], "+3V3", width=0.15); add_via(x29, 29.9, "+3V3")
+    add_track([(x29, 29.9), (x29 - 0.55, 30.45), (cx - 7.3, 30.45)], "+3V3", width=0.15, layer=pcbnew.B_Cu)
+    add_via(cx - 7.3, 30.45, "+3V3"); n_access += 2
     PREHANDLED.add((adv, "29"))
     # 5V_OUT: TPD pin13 -> コネクタ pin18、C{n}20 pad1 -> pin13 側面
     x13, y13 = padpos(tpd, "13"); x18, y18 = padpos(hd, "18"); xc20, yc20 = padpos(f"C{n}20", "1")

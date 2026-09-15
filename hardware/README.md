@@ -62,7 +62,7 @@ J7 (2×40): OUT1/OUT2 の RGB24+CLK/DE/HS/VS, I2C_A, HPD, INT      J8 (2×40): O
 | ADV7513 の全 65 ピン、TPD12S016 の全 24 ピンがデータシートどおりに割り当てられている | 済(スクリプトで番号を生成、検査で全ピンの接続を確認) |
 | kicad-cli によるネットリスト書き出し | 済(147 部品、233 ネット) |
 | ネット検査: データ線 2 ピン、TMDS 3 ピン、HPD/INT 3 ピン、I2C 4 ピン、GND/+3V3 に信号ピンが混ざっていない | 済(`gen/check_netlist.py`) |
-| 基板レイアウト(配置・配線) | 済(4 層 115 × 110 mm、配線 3,059 本、ビア 527 個) |
+| 基板レイアウト(配置・配線) | 済(4 層 115 × 110 mm、配線 3,127 本、ビア 524 個。HDMI・USB-C コネクタは基板端に合わせ済み) |
 | DRC(pcbnew API、KiCad 7 の既定ルール + 本基板のルール) | **未接続 0、クリアランス違反 0**。残る 143 件は「フットプリントがライブラリと一致しない」情報のみ |
 | TMDS 8 本 × 4 ch | ビアなし、ペア内長差 0.55 mm 以下(スクリプトで固定配線) |
 | ガーバー / ドリル / CPL 出力 | 済(`quad_hdmi_tx/fab/`) |
@@ -103,6 +103,9 @@ TMDS の事前配線(OUT1 周辺、配線前の状態):
 8. **インピーダンス**: TMDS は 0.15 mm 幅 / 0.15 mm 間隔で固定配線している。製造業者の 4 層スタックアップ(例: JLC04161H-7628)の計算値に合わせて幅・間隔を調整し、必要なら `gen/gen_pcb.py` のネットクラスと事前配線幅を変えて再生成する。
 9. **自動配線部の目視確認**: RGB バス(148.5 MHz)は FreeRouting の結果をそのまま使っている。J8 → OUT2/OUT4 の長い斜め配線と、ADV 右辺付近の AVDD/PVDD をレビューし、必要なら手で整える。OUT1/OUT3 の AVDD pin15 はスクリプトで L 字に手配線している。
 10. **シルク**: 参照記号は F.Fab に置いている(シルクには出ない)。実装は `fab/cpl.csv` の座標で行う。
+11. **コネクタの基板端合わせ**: HDMI(Molex 208658)と USB-C(GCT USB4105)のフットプリントには "PCB Edge" の基準線がある。
+    生成スクリプトはこの線が基板外形(HDMI: y=0、USB-C: x=115)に一致するよう配置している(HDMI は本体が 1.5 mm、USB-C は 0.5 mm 外形からはみ出す)。
+    ケースに入れる場合はこのはみ出し量を前提に開口を設計する。
 
 ## 基板レイアウト
 
@@ -154,6 +157,7 @@ xvfb-run -a java -jar freerouting-1.9.0.jar -de ../quad_hdmi_tx/quad_hdmi_tx.dsn
 python3 route_pcb.py import              # SES 取り込み、外層 GND ベタ、ゾーン塗り、DRC -> drc.rpt
 python3 layout_report.py                 # 配線長、ビア数、TMDS ペア長差、DRC 集計
 ./export_fab.sh                          # fab/ にガーバー・ドリル・CPL・PDF
+python3 render_images.py                 # fab/*.pdf → docs/images/pcb-*.png (Pillow, pdftoppm)
 ```
 
 FreeRouting を使う上での注意(実測で判明したもの):

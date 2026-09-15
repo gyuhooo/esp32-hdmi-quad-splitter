@@ -13,3 +13,4 @@ hardware/quad_hdmi_tx/freerouting*.log
 hardware/quad_hdmi_tx/fr.pid
 hardware/quad_hdmi_tx/fab/gerber/
 hardware/quad_hdmi_tx/logs/
+hardware/quad_hdmi_tx/drc_try.rpt
