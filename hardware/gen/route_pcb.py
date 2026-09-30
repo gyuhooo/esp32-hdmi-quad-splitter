@@ -37,21 +37,28 @@ if STAGE == "import":
 else:
     print("finish stage: reusing routed board")
 print("tracks:", len(list(board.GetTracks())))
-# 使われなかったアクセスビア (B.Cu 側に配線がない信号ネットのロック済みビア) とその引き出し線を削除
-board.BuildConnectivity()
-conn = board.GetConnectivity()
+# ルータが基板下端に寄せすぎたビア/配線端点を、銅-外形 0.3 mm を満たす位置まで上へずらす (DSN には外形クリアランスが渡らない)
+Hb = board.GetBoardEdgesBoundingBox().GetBottom() / 1e6
+n_nudge = 0
+def move_point(old, new):
+    for t in board.GetTracks():
+        if t.GetClass() == "PCB_TRACK" and not t.IsLocked():
+            if t.GetStart() == old: t.SetStart(new)
+            if t.GetEnd() == old: t.SetEnd(new)
+for via in [t for t in board.GetTracks() if t.GetClass() == "PCB_VIA" and not t.IsLocked()]:
+    r_ = via.GetWidth() / 2e6; y = via.GetPosition().y / 1e6
+    if y + r_ > Hb - 0.3:
+        old = pcbnew.VECTOR2I(via.GetPosition()); new = pcbnew.VECTOR2I(old.x, pcbnew.FromMM(Hb - 0.3 - r_))
+        move_point(old, new); via.SetPosition(new); n_nudge += 1
+for t in [t for t in board.GetTracks() if t.GetClass() == "PCB_TRACK" and not t.IsLocked()]:
+    hw = t.GetWidth() / 2e6
+    for p in (t.GetStart(), t.GetEnd()):
+        if p.y / 1e6 + hw > Hb - 0.3:
+            old = pcbnew.VECTOR2I(p); new = pcbnew.VECTOR2I(old.x, pcbnew.FromMM(Hb - 0.3 - hw))
+            move_point(old, new); n_nudge += 1
+print("nudged vias/track ends away from bottom edge:", n_nudge)
+# (使われなかったアクセスビアは、最後に DRC の via_dangling を見て削除する。ロック済み配線だけで完結する事前配線を壊さないため)
 plane_nets = {"GND", "+3V3"} | {f"CH{n}_1V8" for n in range(1, 5)}
-removed = 0
-for via in [t for t in board.GetTracks() if t.GetClass() == "PCB_VIA" and t.IsLocked()]:
-    if via.GetNetname() in plane_nets:
-        continue
-    tracks = [t for t in conn.GetConnectedTracks(via)]
-    if tracks and all(t.IsLocked() for t in tracks):      # ロック済みの引き出し線しか繋がっていない = 使われなかった
-        for t in tracks:
-            if t.IsLocked() and t.GetLength() < pcbnew.FromMM(3.0):
-                board.Remove(t)
-        board.Remove(via); removed += 1
-print("removed unused access vias:", removed)
 # オートルータが残した未接続 (同一ネット内の島) を、島同士の最寄りの端点間で L 字 / 直線 / B.Cu 経由 (ビア 2 個) で接続する。
 # 候補はまず他ネットの銅との衝突を幾何で除外し、通ったものだけ DRC で確認する (違反が増えたら取り消す)
 def uid(item):
@@ -179,26 +186,6 @@ for net in board.GetNetsByName().values():
         continue
     n_fix += connect_clusters(net.GetNetCode(), name, baseline)
 print("generic cluster fixes:", n_fix)
-# オートルータが残した ADV pin15 (AVDD) は、同ネットの右隣のビアへ L 字で接続する
-board.BuildConnectivity(); conn = board.GetConnectivity()
-fixed = 0
-for n in range(1, 5):
-    fp = board.FindFootprintByReference(f"U{n}1")
-    pad = [p for p in fp.Pads() if p.GetNumber() == "15"][0]
-    if conn.GetConnectedTracks(pad):
-        continue
-    px, py = pad.GetPosition().x / 1e6, pad.GetPosition().y / 1e6
-    vias = [t for t in board.GetTracks() if t.GetClass() == "PCB_VIA" and t.GetNetname() == pad.GetNetname()
-            and t.GetPosition().x / 1e6 > px + 1.0 and abs(t.GetPosition().y / 1e6 - py) < 3.0]
-    if not vias:
-        continue
-    v = min(vias, key=lambda t: abs(t.GetPosition().x / 1e6 - px))
-    vx, vy = v.GetPosition().x / 1e6, v.GetPosition().y / 1e6
-    for (ax, ay), (bx, by) in (((px, py), (vx, py)), ((vx, py), (vx, vy))):
-        t = pcbnew.PCB_TRACK(board); t.SetStart(pcbnew.VECTOR2I(pcbnew.FromMM(ax), pcbnew.FromMM(ay))); t.SetEnd(pcbnew.VECTOR2I(pcbnew.FromMM(bx), pcbnew.FromMM(by)))
-        t.SetWidth(pcbnew.FromMM(0.15)); t.SetLayer(pcbnew.F_Cu); t.SetNetCode(pad.GetNetCode()); board.Add(t)
-    fixed += 1
-print("manual AVDD pin15 fixes:", fixed)
 # 配線後に外層 GND ベタを追加 (オートルータには渡さない: FreeRouting はベタを障害物として扱う)
 gnd = board.FindNet("GND")
 existing = {z.GetZoneName() for z in board.Zones()}
@@ -228,6 +215,11 @@ if dang:
     for v in [t for t in board.GetTracks() if t.GetClass() == "PCB_VIA"]:
         vx, vy = v.GetPosition().x / 1e6, v.GetPosition().y / 1e6
         if any(abs(vx - x) < 0.01 and abs(vy - y) < 0.01 for x, y in dang):
+            pos = pcbnew.VECTOR2I(v.GetPosition())
+            # そのビアにしか繋がっていない短いロック済み引き出し線 (アクセスビアのスタブ) も一緒に消す
+            for t in [t for t in board.GetTracks() if t.GetClass() == "PCB_TRACK" and t.IsLocked() and t.GetLength() < pcbnew.FromMM(3.0)]:
+                if t.GetStart() == pos or t.GetEnd() == pos:
+                    board.Remove(t)
             board.Remove(v); n_d += 1
     print("removed dangling vias:", n_d)
     filler.Fill(board.Zones()); pcbnew.SaveBoard(PCB, board)
@@ -237,3 +229,5 @@ print("DRC violations:", m.group(1) if m else "?", " unconnected:", u.group(1) i
 kinds = re.findall(r"^\[(\w+)\]", txt, re.M)
 from collections import Counter
 print("  ", Counter(kinds).most_common(10))
+for m in list(re.finditer(r"^\[(clearance|hole_clearance|copper_edge_clearance|solder_mask_bridge|shorting_items)\][^\n]*\n((?:    [^\n]*\n)+)", txt, re.M))[:16]:
+    print("    ", m.group(1), "|", " / ".join(l.strip() for l in m.group(2).strip().split("\n")))

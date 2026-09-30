@@ -14,8 +14,9 @@ def import_ses(board, ses_path):
     # (resolution um N): 1 単位 = 1/N µm。FreeRouting の SES は N=10 (0.1 µm 単位) で書かれる
     res_n = float(res[2]) if res else 10.0
     scale = 1.0 / res_n              # 単位 -> µm
-    layers = {board.GetLayerName(l): l for l in (pcbnew.F_Cu, pcbnew.B_Cu, pcbnew.In1_Cu, pcbnew.In2_Cu)}
-    layers.update({"F.Cu": pcbnew.F_Cu, "B.Cu": pcbnew.B_Cu, "In1.Cu": pcbnew.In1_Cu, "In2.Cu": pcbnew.In2_Cu})
+    cu = [pcbnew.F_Cu, pcbnew.In1_Cu, pcbnew.In2_Cu, pcbnew.In3_Cu, pcbnew.In4_Cu, pcbnew.B_Cu]
+    layers = {board.GetLayerName(l): l for l in cu}
+    layers.update(dict(zip(["F.Cu", "In1.Cu", "In2.Cu", "In3.Cu", "In4.Cu", "B.Cu"], cu)))
     def P(x, y):
         return VECTOR2I(int(round(float(x) * scale * 1000)), int(round(-float(y) * scale * 1000)))
     n_wire = n_via = 0

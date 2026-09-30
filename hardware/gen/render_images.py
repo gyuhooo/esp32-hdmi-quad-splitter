@@ -8,7 +8,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 FAB = os.path.join(HERE, "..", "quad_hdmi_tx", "fab")
 IMG = os.path.join(HERE, "..", "..", "docs", "images")
 TMP = os.environ.get("TMPDIR", "/tmp")
-for name in ("top", "bottom", "in1_gnd", "in2_pwr"):
+for name in ("top", "bottom", "in1_gnd", "in2_sig", "in3_sig", "in4_pwr"):
     pdf = os.path.join(FAB, f"{name}.pdf")
     if not os.path.exists(pdf):
         sys.exit(f"missing {pdf}; run export_fab.sh first")

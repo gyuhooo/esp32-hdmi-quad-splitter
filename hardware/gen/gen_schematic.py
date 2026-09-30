@@ -64,7 +64,7 @@ ADV_TOP = [("1", "DVDD", "power_in"), ("11", "DVDD", "power_in"), ("31", "DVDD",
            ("12", "PVDD", "power_in"), ("13", "BGVDD", "power_in"), ("29", "DVDD_3V", "power_in")]
 ADV_BOTTOM = [("65", "EPAD", "power_in"), ("3", "SPDIF", "input"), ("4", "MCLK", "input"), ("5", "I2S0", "input"),
               ("6", "I2S1", "input"), ("7", "I2S2", "input"), ("8", "I2S3", "input"), ("9", "SCLK", "input"), ("10", "LRCLK", "input")]
-ADV_FP = "Package_QFP:LQFP-64-1EP_10x10mm_P0.5mm_EP5x5mm_ThermalVias"
+ADV_FP = "Package_QFP:LQFP-64-1EP_10x10mm_P0.5mm_EP5x5mm"   # EP のサーマルビアは gen_pcb.py が裏面ヘッダのパッドを避けて打つ
 ADV_SYM = make_symbol("ADV7513", "U", "ADV7513BSWZ", ADV_FP, ADV_LEFT, ADV_RIGHT, ADV_TOP, ADV_BOTTOM, 20.32, 38.1,
                       "https://www.analog.com/media/en/technical-documentation/data-sheets/ADV7513.pdf")
 
@@ -333,28 +333,33 @@ def channel_sheet(n, sheet_uuid, page, i2c_bus, pd_high):
 
 # ---------------------------------------------------------------- FPGA コネクタシート
 def header_pinout():
-    """J1/J2 のピン割り当て: [(pin, net)] を返す"""
-    def ch_signals(n):
+    """J7/J8 (裏面、横向き 2x40 SMD) のピン割り当て: [(pin, net)] を返す。
+    ヘッダの列 k (=1..40、ピン 2k-1 と 2k) は ADV の真下に並ぶ: 列 1-10 = OUT1、11-20 = OUT2、21-30 = OUT3、31-40 = OUT4。
+    各チャネルは J7 で 20 ピン、J8 で 20 ピン。リボンケーブル上で 4 信号ごとに GND が入る"""
+    def part_a(n):                       # J7 (上側): ADV 左辺の D12-D23 + 下辺の D1/D2/D4/D5
         P = f"CH{n}_"
-        groups = [[P + "CLK"], [P + "DE", P + "HS", P + "VS"]] + [[P + f"D{i}" for i in range(k, k + 4)] for k in range(0, 24, 4)]
-        out = []
-        for g in groups:
-            out += g + ["GND"]
-        return out     # 28 signals + 8 GND = 36
-    def header(a, b, bus):
-        sig = ["FPGA_5V", "FPGA_5V"] + ch_signals(a) + ch_signals(b) + \
-              [f"I2C_{bus}_SCL", f"I2C_{bus}_SDA", f"CH{a}_HPD", f"CH{b}_HPD", f"CH{a}_INT", f"CH{b}_INT"]
-        assert len(sig) == 80, len(sig)
-        return list(zip(range(1, 81), sig))
-    return {"J7": header(1, 3, "A"), "J8": header(2, 4, "B")}   # J7: OUT1+OUT3 (左辺), J8: OUT2+OUT4 (下辺)
+        # 列 k = ピン 2k-1 (上段) / 2k (下段)。列 4-7 の下段は GND (TPD の真下: 表面は TMDS の U ターンで塞がっている)。
+        # 割り当ては gen_pcb.py の事前配線 (内層の通路の順序) で決まる。
+        return [P + "D18", P + "D19", P + "D23", P + "D17", P + "D13", P + "D15", P + "D14", "GND", P + "D22", "GND",
+                P + "D16", "GND", P + "D20", "GND", P + "D21", P + "D10", P + "D2", P + "D1", P + "D5", P + "D4"]
+    def part_b(n):                       # J8 (下側): ADV 下辺の D0-D11/CLK/DE/HS を真上のエスケープビアから、HPD/VS/INT、+ I2C / 5V
+        P = f"CH{n}_"
+        extra = {1: ["I2C_A_SCL", "I2C_A_SDA"], 2: ["FPGA_5V", "FPGA_5V"], 3: ["I2C_B_SCL", "I2C_B_SDA"], 4: ["GND", "GND"]}[n]
+        # 列 4-7 の上段は GND (ADV の露出パッドの真下: サーマルビアに裏面で直結)。列 4-7 の下段は真上のエスケープビアから裏面で直落とし
+        x1, x2 = extra
+        return [P + "D6", P + "D7", P + "CLK", P + "D9", P + "INT", P + "D12", "GND", P + "D11", "GND", P + "D8",
+                "GND", P + "D3", "GND", P + "HS", P + "HPD", P + "VS", P + "DE", P + "D0", x1, x2]
+    j7 = sum((part_a(n) for n in (1, 2, 3, 4)), []); j8 = sum((part_b(n) for n in (1, 2, 3, 4)), [])
+    assert len(j7) == 80 and len(j8) == 80
+    return {"J7": list(zip(range(1, 81), j7)), "J8": list(zip(range(1, 81), j8))}
 
 def fpga_sheet(sheet_uuid, page):
     sh = Sheet("fpga_conn.kicad_sch", "FPGA interface headers", sheet_uuid, page)
-    sh.text("FPGA interface: 2x 80-pin 2.54 mm headers (J7 = OUT1/OUT3 left edge, J8 = OUT2/OUT4 bottom edge). 3.3 V LVCMOS. Keep stack height short (< 30 mm) for the 148.5 MHz buses.", 20, 20, 2.0)
+    sh.text("FPGA interface: 2x 80-pin 2.54 mm SMD headers on the bottom side, parallel to the long edge. Header column k (pins 2k-1/2k) sits under the ADV7513 of OUT ceil(k/10): J7 = D13-D23 (+D1/D2/D4/D5/D10), J8 = D0-D9/D11/D12/CLK/DE/HS/VS/HPD/INT (+I2C, 5V). 3.3 V LVCMOS, 148.5 MHz SDR: keep ribbon cables short (< 15 cm).", 20, 20, 2.0)
     pm = header_pinout()
     for ref, x in (("J7", 110), ("J8", 300)):
         p = sh.symbol("Connector_Generic:Conn_02x40_Odd_Even", ref, "FPGA_" + ref, (x, 150),
-                      "Connector_PinHeader_2.54mm:PinHeader_2x40_P2.54mm_Vertical", "PH2-80-UA", "2x40 pin header 2.54 mm (or box header)")
+                      "Connector_PinHeader_2.54mm:PinHeader_2x40_P2.54mm_Vertical_SMD", "TSM-140-01-L-DV", "2x40 pin header 2.54 mm, SMD, bottom side")
         for pin, net in pm[ref]:
             sh.net_or_power(p, str(pin), net)
     # I2C プルアップ
@@ -362,10 +367,10 @@ def fpga_sheet(sheet_uuid, page):
         sh.two_pin("Device:R", f"R{i+1}", "4.7k", x, 250, "+3V3", net, R0402, "RC0402FR-074K7L", "4.7k 0402 (I2C pull-up)")
     # 5 V 供給ジャンパ
     jp = sh.symbol("Jumper:SolderJumper_2_Open", "JP1", "5V->FPGA", (130, 250), "Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm",
-                   "", "Solder jumper: feed +5V to FPGA board via header pins 1/2")
+                   "", "Solder jumper: feed +5V to FPGA board via J8 pins 39/40")
     x, y, _, _, _ = jp["1"]; sh.wire(x, y, x - 5.08, y); sh.power("+5V", x - 5.08, y)
     x, y, _, _, _ = jp["2"]; sh.wire(x, y, x + 5.08, y); sh.label("FPGA_5V", x + 5.08, y, 0)
-    sh.text("JP1 closed: this board powers the FPGA board through J7/J8 pins 1-2. Leave open if the FPGA board has its own supply.", 20, 262, 1.5)
+    sh.text("JP1 closed: this board powers the FPGA board through J8 pins 39-40 (FPGA_5V). Leave open if the FPGA board has its own supply.", 20, 262, 1.5)
     sh.write()
     return sh
 

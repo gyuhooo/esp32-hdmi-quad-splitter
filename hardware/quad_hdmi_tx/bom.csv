@@ -105,9 +105,9 @@ J3,HDMI_A,Connector_HDMI:HDMI_A_Molex_208658-1001_Horizontal,208658-1001,"HDMI t
 J4,HDMI_A,Connector_HDMI:HDMI_A_Molex_208658-1001_Horizontal,208658-1001,"HDMI type A receptacle, right angle"
 J5,USB-C 5V in,Connector_USB:USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal,USB4105-GF-A,USB-C receptacle 16P (power only)
 J6,5V ALT IN,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,,"2-pin header, alternative 5 V input"
-J7,FPGA_J7,Connector_PinHeader_2.54mm:PinHeader_2x40_P2.54mm_Vertical,PH2-80-UA,2x40 pin header 2.54 mm (or box header)
-J8,FPGA_J8,Connector_PinHeader_2.54mm:PinHeader_2x40_P2.54mm_Vertical,PH2-80-UA,2x40 pin header 2.54 mm (or box header)
-JP1,5V->FPGA,Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm,,Solder jumper: feed +5V to FPGA board via header pins 1/2
+J7,FPGA_J7,Connector_PinHeader_2.54mm:PinHeader_2x40_P2.54mm_Vertical_SMD,TSM-140-01-L-DV,"2x40 pin header 2.54 mm, SMD, bottom side"
+J8,FPGA_J8,Connector_PinHeader_2.54mm:PinHeader_2x40_P2.54mm_Vertical_SMD,TSM-140-01-L-DV,"2x40 pin header 2.54 mm, SMD, bottom side"
+JP1,5V->FPGA,Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm,,Solder jumper: feed +5V to FPGA board via J8 pins 39/40
 L1,4.7uH,Inductor_SMD:L_Taiyo-Yuden_NR-40xx,NR4018T4R7M,4.7uH 2.2A shielded inductor 4x4 mm
 R1,4.7k,Resistor_SMD:R_0402_1005Metric,RC0402FR-074K7L,4.7k 0402 (I2C pull-up)
 R2,4.7k,Resistor_SMD:R_0402_1005Metric,RC0402FR-074K7L,4.7k 0402 (I2C pull-up)
@@ -134,15 +134,15 @@ R42,10k,Resistor_SMD:R_0402_1005Metric,RC0402FR-0710KL,10k 0402 (I2C address sel
 R43,10k,Resistor_SMD:R_0402_1005Metric,RC0402FR-0710KL,10k 0402 (INT pull-up)
 R44,0R,Resistor_SMD:R_0402_1005Metric,RC0402FR-070RL,0 ohm 0402
 U5,AP63203WU,Package_TO_SOT_SMD:TSOT-23-6,AP63203WU-7,"3.3 V 2 A synchronous buck, TSOT-23-6"
-U11,ADV7513BSWZ,Package_QFP:LQFP-64-1EP_10x10mm_P0.5mm_EP5x5mm_ThermalVias,ADV7513BSWZ,"HDMI 1.4 transmitter, 165 MHz, LQFP-64 EP"
+U11,ADV7513BSWZ,Package_QFP:LQFP-64-1EP_10x10mm_P0.5mm_EP5x5mm,ADV7513BSWZ,"HDMI 1.4 transmitter, 165 MHz, LQFP-64 EP"
 U12,TPD12S016PWR,Package_SO:TSSOP-24_4.4x7.8mm_P0.65mm,TPD12S016PWR,"HDMI ESD/level shifter/5V load switch, TSSOP-24"
 U13,TLV1117LV18DCYR,Package_TO_SOT_SMD:SOT-223-3_TabPin2,TLV1117LV18DCYR,"1.8 V 1 A LDO, SOT-223 (AMS1117-1.8 pin compatible)"
-U21,ADV7513BSWZ,Package_QFP:LQFP-64-1EP_10x10mm_P0.5mm_EP5x5mm_ThermalVias,ADV7513BSWZ,"HDMI 1.4 transmitter, 165 MHz, LQFP-64 EP"
+U21,ADV7513BSWZ,Package_QFP:LQFP-64-1EP_10x10mm_P0.5mm_EP5x5mm,ADV7513BSWZ,"HDMI 1.4 transmitter, 165 MHz, LQFP-64 EP"
 U22,TPD12S016PWR,Package_SO:TSSOP-24_4.4x7.8mm_P0.65mm,TPD12S016PWR,"HDMI ESD/level shifter/5V load switch, TSSOP-24"
 U23,TLV1117LV18DCYR,Package_TO_SOT_SMD:SOT-223-3_TabPin2,TLV1117LV18DCYR,"1.8 V 1 A LDO, SOT-223 (AMS1117-1.8 pin compatible)"
-U31,ADV7513BSWZ,Package_QFP:LQFP-64-1EP_10x10mm_P0.5mm_EP5x5mm_ThermalVias,ADV7513BSWZ,"HDMI 1.4 transmitter, 165 MHz, LQFP-64 EP"
+U31,ADV7513BSWZ,Package_QFP:LQFP-64-1EP_10x10mm_P0.5mm_EP5x5mm,ADV7513BSWZ,"HDMI 1.4 transmitter, 165 MHz, LQFP-64 EP"
 U32,TPD12S016PWR,Package_SO:TSSOP-24_4.4x7.8mm_P0.65mm,TPD12S016PWR,"HDMI ESD/level shifter/5V load switch, TSSOP-24"
 U33,TLV1117LV18DCYR,Package_TO_SOT_SMD:SOT-223-3_TabPin2,TLV1117LV18DCYR,"1.8 V 1 A LDO, SOT-223 (AMS1117-1.8 pin compatible)"
-U41,ADV7513BSWZ,Package_QFP:LQFP-64-1EP_10x10mm_P0.5mm_EP5x5mm_ThermalVias,ADV7513BSWZ,"HDMI 1.4 transmitter, 165 MHz, LQFP-64 EP"
+U41,ADV7513BSWZ,Package_QFP:LQFP-64-1EP_10x10mm_P0.5mm_EP5x5mm,ADV7513BSWZ,"HDMI 1.4 transmitter, 165 MHz, LQFP-64 EP"
 U42,TPD12S016PWR,Package_SO:TSSOP-24_4.4x7.8mm_P0.65mm,TPD12S016PWR,"HDMI ESD/level shifter/5V load switch, TSSOP-24"
 U43,TLV1117LV18DCYR,Package_TO_SOT_SMD:SOT-223-3_TabPin2,TLV1117LV18DCYR,"1.8 V 1 A LDO, SOT-223 (AMS1117-1.8 pin compatible)"

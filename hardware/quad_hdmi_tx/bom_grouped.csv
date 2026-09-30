@@ -6,7 +6,7 @@ Qty,Value,Footprint,MPN,Description,References
 6,22uF,Capacitor_SMD:C_0805_2012Metric,GRM21BR60J226ME39L,22uF 6.3V X5R 0805,C102 C202 C302 C402 C55 C56
 4,M3,MountingHole:MountingHole_3.2mm,,Mounting hole M3,H1 H2 H3 H4
 4,4.7k,Resistor_SMD:R_0402_1005Metric,RC0402FR-074K7L,4.7k 0402 (I2C pull-up),R1 R2 R3 R4
-4,ADV7513BSWZ,Package_QFP:LQFP-64-1EP_10x10mm_P0.5mm_EP5x5mm_ThermalVias,ADV7513BSWZ,"HDMI 1.4 transmitter, 165 MHz, LQFP-64 EP",U11 U21 U31 U41
+4,ADV7513BSWZ,Package_QFP:LQFP-64-1EP_10x10mm_P0.5mm_EP5x5mm,ADV7513BSWZ,"HDMI 1.4 transmitter, 165 MHz, LQFP-64 EP",U11 U21 U31 U41
 4,TPD12S016PWR,Package_SO:TSSOP-24_4.4x7.8mm_P0.65mm,TPD12S016PWR,"HDMI ESD/level shifter/5V load switch, TSSOP-24",U12 U22 U32 U42
 4,HDMI_A,Connector_HDMI:HDMI_A_Molex_208658-1001_Horizontal,208658-1001,"HDMI type A receptacle, right angle",J1 J2 J3 J4
 4,TLV1117LV18DCYR,Package_TO_SOT_SMD:SOT-223-3_TabPin2,TLV1117LV18DCYR,"1.8 V 1 A LDO, SOT-223 (AMS1117-1.8 pin compatible)",U13 U23 U33 U43
@@ -25,6 +25,6 @@ Qty,Value,Footprint,MPN,Description,References
 1,4.7uH,Inductor_SMD:L_Taiyo-Yuden_NR-40xx,NR4018T4R7M,4.7uH 2.2A shielded inductor 4x4 mm,L1
 1,PWR,LED_SMD:LED_0603_1608Metric,LTST-C193KGKT-5A,Green LED 0603,D1
 1,1k,Resistor_SMD:R_0402_1005Metric,RC0402FR-071KL,1k 0402,R8
-1,FPGA_J7,Connector_PinHeader_2.54mm:PinHeader_2x40_P2.54mm_Vertical,PH2-80-UA,2x40 pin header 2.54 mm (or box header),J7
-1,FPGA_J8,Connector_PinHeader_2.54mm:PinHeader_2x40_P2.54mm_Vertical,PH2-80-UA,2x40 pin header 2.54 mm (or box header),J8
-1,5V->FPGA,Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm,,Solder jumper: feed +5V to FPGA board via header pins 1/2,JP1
+1,FPGA_J7,Connector_PinHeader_2.54mm:PinHeader_2x40_P2.54mm_Vertical_SMD,TSM-140-01-L-DV,"2x40 pin header 2.54 mm, SMD, bottom side",J7
+1,FPGA_J8,Connector_PinHeader_2.54mm:PinHeader_2x40_P2.54mm_Vertical_SMD,TSM-140-01-L-DV,"2x40 pin header 2.54 mm, SMD, bottom side",J8
+1,5V->FPGA,Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm,,Solder jumper: feed +5V to FPGA board via J8 pins 39/40,JP1
