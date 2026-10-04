@@ -45,6 +45,10 @@ FPGA ボードに載せるキャリア基板(ADV7513 ×4、TPD12S016 ×4、HDMI 
 
 ![ch1](docs/images/sch-hdmi-ch1.png)
 
+基板の簡易 3D モデル(`hardware/quad_hdmi_tx/3d/`、three.js ビューア付き):
+
+![3d](docs/images/pcb-3d-iso.png)
+
 基板レイアウト(6 層、115 × 38 mm、表面):
 
 ![pcb](docs/images/pcb-top.png)

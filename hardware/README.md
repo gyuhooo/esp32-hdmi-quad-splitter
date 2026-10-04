@@ -13,6 +13,7 @@ FPGA ボードから 24bit RGB ×4 を受け、HDMI 4 本を出す基板の KiCa
 | quad_hdmi_tx/quad_hdmi_tx.kicad_pcb | 基板レイアウト rev B(6 層、115 × 38 mm の細長い基板)。`gen/gen_pcb.py` が配置・プレーン・事前配線を生成し、FreeRouting で自動配線 |
 | quad_hdmi_tx/drc.rpt | DRC レポート(pcbnew API) |
 | quad_hdmi_tx/fab/ | ガーバー、ドリル、CPL(部品座標)、各層の PDF(`gen/export_fab.sh`) |
+| quad_hdmi_tx/3d/ | STEP(基板のみ)、簡易 3D モデル(OBJ + テクスチャ)、three.js ビューア(`gen/gen_3d.py`、`gen/make_3d_textures.py`) |
 | gen/ | 生成スクリプト、ネットリスト検査、配線パイプライン |
 
 ## 回路構成
@@ -96,6 +97,24 @@ HPD 20 mm、INT 25 mm、DDC_SCL / CEC 15 mm (TPD -> HDMI)、FPGA_5V 72 mm (J8 �
 +5V 197 mm (ビア 9)、+3V3 132 mm (ビア 41、内層 4 のプレーンが主)、GND 326 mm (ビア 203、内層 1 のプレーンが主)
 TMDS: ペア内長差 0.05〜0.47 mm、ビアなし
 ```
+
+### 3D モデル
+
+![3d](../docs/images/pcb-3d-iso.png)
+
+| 表 | 裏 |
+|---|---|
+| ![3d top](../docs/images/pcb-3d-top.png) | ![3d bottom](../docs/images/pcb-3d-bottom.png) |
+
+`quad_hdmi_tx/3d/` に 3 種類ある(`gen/gen_3d.py` と `gen/make_3d_textures.py` で生成):
+
+| ファイル | 内容 |
+|---|---|
+| `quad_hdmi_tx.step` | kicad-cli の STEP 出力。この環境には KiCad の 3D モデルライブラリが無いため **基板のみ**(部品なし)。筐体設計の基準に使える |
+| `quad_hdmi_tx_simplified.obj` / `.mtl` / `tex_top.png` / `tex_bot.png` | 簡易モデル(Wavefront OBJ、mm、Y 上)。基板は表裏にレジスト・金パッド・シルクのテクスチャ、部品はパッケージ種別の寸法表による直方体(IC・受動部品・コネクタ・ヘッダのピン) |
+| `viewer.html` | 上の簡易モデルを three.js で回転表示する 1 ファイルのビューア(ブラウザで開く) |
+
+部品の外形は寸法表の近似なので、正確な 3D モデルが要るときは KiCad の 3D ライブラリを入れて `kicad-cli pcb export step` を再実行する。
 
 ## 発注前チェックリスト
 
@@ -184,6 +203,8 @@ python3 route_pcb.py import              # SES 取り込み、外層 GND ベタ�
 python3 layout_report.py                 # 配線長、ビア数、TMDS ペア長差、DRC 集計
 ./export_fab.sh                          # fab/ にガーバー・ドリル・CPL・PDF
 python3 render_images.py                 # fab/*.pdf → docs/images/pcb-*.png (Pillow, pdftoppm)
+python3 gen_3d.py                        # 3d/board3d.json, 簡易 OBJ/MTL (pcbnew)
+python make_3d_textures.py               # 3d/tex_*.png と 3d/viewer.html (Pillow + numpy。先に各層の白黒 PDF→PNG が要る、スクリプト冒頭参照)
 ```
 
 FreeRouting を使う上での注意(実測で判明したもの):
