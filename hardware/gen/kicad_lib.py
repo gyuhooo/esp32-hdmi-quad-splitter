@@ -39,13 +39,13 @@ def get_symbol(lib, name):
             return sym
     raise KeyError(f"{lib}:{name}")
 
-def pins(sym):
-    """[(number, name, type, x, y, angle, length)] (ユニット 1 のみ)"""
+def pins(sym, unit=1):
+    """[(number, name, type, x, y, angle, length)] (指定ユニット + 共通ユニット 0 のピン)"""
     out = []
-    for unit in find(sym, "symbol"):
-        if not (unit[1].endswith("_1_1") or unit[1].endswith("_0_1") or unit[1].endswith("_1_0")):
+    for u in find(sym, "symbol"):
+        if not (u[1].endswith(f"_{unit}_1") or u[1].endswith("_0_1") or u[1].endswith(f"_{unit}_0")):
             continue
-        for p in find(unit, "pin"):
+        for p in find(u, "pin"):
             at = find1(p, "at"); ln = find1(p, "length")
             out.append((find1(p, "number")[1], find1(p, "name")[1], str(p[1]),
                         float(at[1]), float(at[2]), float(at[3]) if len(at) > 3 else 0.0, float(ln[1])))

@@ -7,7 +7,8 @@ from pcbnew import VECTOR2I
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sexp import parse, find, find1
 
-def import_ses(board, ses_path):
+def import_ses(board, ses_path, nets=None):
+    """nets を与えるとそのネットの配線/ビアだけ取り込む (追加配線用)"""
     doc = parse(open(ses_path).read())[0]
     routes = find1(doc, "routes")
     res = find1(routes, "resolution") if routes else None
@@ -29,6 +30,8 @@ def import_ses(board, ses_path):
         name = str(net[1])
         if name not in netmap:
             print("  unknown net", name); continue
+        if nets is not None and name not in nets:
+            continue
         ni = _NI(netmap[name])
         for w in find(net, "wire"):
             path = find1(w, "path"); layer = str(path[1]); width = float(path[2]) * scale * 1000

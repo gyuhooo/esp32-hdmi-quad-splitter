@@ -8,10 +8,11 @@ import os, json, math
 import pcbnew
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.normpath(os.path.join(HERE, "..", "quad_hdmi_tx"))
+PROJECT = os.environ.get("PCB_PROJECT", "quad_hdmi_tx")
+OUT = os.path.normpath(os.path.join(HERE, "..", PROJECT))
 D3 = os.path.join(OUT, "3d")
 os.makedirs(D3, exist_ok=True)
-board = pcbnew.LoadBoard(os.path.join(OUT, "quad_hdmi_tx.kicad_pcb"))
+board = pcbnew.LoadBoard(os.path.join(OUT, PROJECT + ".kicad_pcb"))
 THICK = board.GetDesignSettings().GetBoardThickness() / 1e6
 
 # パッケージ寸法表: footprint 名の部分一致 -> (本体 長さ (footprint の x 方向), 幅, 高さ, 種別)
@@ -23,9 +24,13 @@ PKG = [
     ("C_0805", (2.0, 1.25, 1.25, "cap")), ("Fuse_1206", (3.2, 1.6, 0.9, "res")), ("NR-40xx", (4.0, 4.0, 1.8, "ind")),
     ("HDMI_A", (None, None, 6.3, "conn")), ("USB_C", (None, None, 3.3, "conn")),
     ("PinHeader_2x40", (101.6, 5.08, 2.54, "hdr")), ("PinHeader_1x02", (5.08, 2.54, 2.54, "hdr")),
+    # FPGA メイン基板
+    ("Xilinx_FTG256", (17.0, 17.0, 1.55, "ic")), ("SOIC-8", (5.3, 5.3, 1.9, "ic")), ("ASE-4Pin", (3.2, 2.5, 1.2, "ic")),
+    ("PinSocket_2x40", (101.6, 5.08, 8.5, "socket")), ("PinHeader_2x07_P2.00mm", (14.0, 4.0, 1.5, "hdr2")), ("PinHeader_1x06", (15.24, 2.54, 2.54, "hdr")),
+    ("PinHeader_2x06", (15.24, 5.08, 2.54, "hdr")), ("KMR2", (4.2, 2.8, 1.5, "ind")), ("SW_DIP_SPSTx04", (7.6, 5.1, 2.5, "ic")), ("C_1206", (3.2, 1.6, 1.6, "cap")),
 ]
 COLORS = {"ic": "1c1c1e", "cap": "b48a5a", "res": "262626", "ind": "6d6d70", "led": "e8d26a", "conn": "c8c9cc", "hdr": "1a1a1a", "ldo": "1c1c1e",
-          "lead": "cfcfcf", "pin": "d4b25a", "fr4": "2f6b45"}
+          "lead": "cfcfcf", "pin": "d4b25a", "fr4": "2f6b45", "socket": "202020", "hdr2": "1a1a1a"}
 
 def classify(name):
     for key, spec in PKG:
@@ -49,18 +54,19 @@ for fp in board.GetFootprints():
     if L is None:                                   # コネクタ: コートヤードの外形をそのまま本体に
         cxp, cyp = cb.GetCenter().x / 1e6, cb.GetCenter().y / 1e6
         w, d = cb.GetWidth() / 1e6 - 0.3, cb.GetHeight() / 1e6 - 0.3
-    elif kind == "hdr":                             # ピンヘッダ: パッドの格子から本体 (ピン数 x 2.54) を決める (回転・原点位置に依らない)
+    elif kind in ("hdr", "socket", "hdr2"):          # ピンヘッダ/ソケット: パッドの格子から本体 (ピン数 x ピッチ) を決める (回転・原点位置に依らない)
         xs = sorted(set(round(p.GetPosition().x / 1e6, 2) for p in fp.Pads())); ys = sorted(set(round(p.GetPosition().y / 1e6, 2) for p in fp.Pads()))
         cxp, cyp = (xs[0] + xs[-1]) / 2, (ys[0] + ys[-1]) / 2
+        pitch = 2.0 if kind == "hdr2" else 2.54
         if len(xs) >= len(ys):
-            w, d = xs[-1] - xs[0] + 2.54, 2.54 * min(len(ys), 2)
+            w, d = xs[-1] - xs[0] + pitch, pitch * min(len(ys), 2)
         else:
-            w, d = 2.54 * min(len(xs), 2), ys[-1] - ys[0] + 2.54
+            w, d = pitch * min(len(xs), 2), ys[-1] - ys[0] + pitch
     else:
         cxp, cyp = x, y
         w, d = (L, W) if abs(math.sin(math.radians(rot))) < 0.5 else (W, L)
     part = {"ref": fp.GetReference(), "fp": name, "kind": kind, "x": round(cxp, 3), "y": round(cyp, 3), "w": round(w, 3), "d": round(d, 3), "h": H, "side": "B" if flipped else "F"}
-    if kind == "hdr":                               # ピン: 各パッドの列 x と、本体中心から ±1.27 の行
+    if kind in ("hdr", "hdr2"):                     # ピン: 各パッドの列 x と、本体中心から ±1.27 の行 (ソケットはピンなし)
         rows = sorted(set(round(p.GetPosition().y / 1e6, 2) for p in fp.Pads()))
         cols = sorted(set(round(p.GetPosition().x / 1e6, 2) for p in fp.Pads()))
         if len(rows) == 2 and abs(rows[1] - rows[0]) > 3:         # SMD 2 列: パッドは本体の外、ピンは本体の中 (行間 2.54)
@@ -68,7 +74,7 @@ for fp in board.GetFootprints():
         if len(cols) == 2 and abs(cols[1] - cols[0]) > 3:
             cols = [cxp - 1.27, cxp + 1.27]
         part["pins"] = [[c, r] for c in cols for r in rows]
-        part["pin_h"] = 8.5
+        part["pin_h"] = 8.5 if kind == "hdr" else 4.5
     if kind in ("cap", "res", "ind", "led"):
         part["ends"] = 0.3 if L >= 1.6 else 0.2    # 端子 (銀) の長さ
     if kind == "ic":
@@ -123,8 +129,9 @@ for p in parts:
     for c, r in p.get("pins", []):
         py0, py1 = up(0.0, p["pin_h"])
         box(c - 0.32, c + 0.32, py0, py1, r - 0.32, r + 0.32, "pin")
-with open(os.path.join(D3, "quad_hdmi_tx_simplified.obj"), "w") as f:
-    f.write("# Quad HDMI TX carrier rev B - simplified 3D model (board + component boxes). Units: mm. Y up.\nmtllib quad_hdmi_tx_simplified.mtl\n")
+TITLE = {"quad_hdmi_tx": "Quad HDMI TX carrier rev B", "fpga_main": "FPGA main board rev A (XC7A35T)"}.get(PROJECT, PROJECT)
+with open(os.path.join(D3, PROJECT + "_simplified.obj"), "w") as f:
+    f.write(f"# {TITLE} - simplified 3D model (board + component boxes). Units: mm. Y up.\nmtllib {PROJECT}_simplified.mtl\n")
     for v in V: f.write(f"v {v[0]:.3f} {v[1]:.3f} {v[2]:.3f}\n")
     for t in VT: f.write(f"vt {t[0]:.5f} {t[1]:.5f}\n")
     for n in VN: f.write(f"vn {n[0]} {n[1]} {n[2]}\n")
@@ -132,7 +139,7 @@ with open(os.path.join(D3, "quad_hdmi_tx_simplified.obj"), "w") as f:
         f.write(f"usemtl {mat}\n")
         for face in faces:
             f.write("f " + " ".join(f"{a}/{b}/{c}" if b else f"{a}//{c}" for a, b, c in face) + "\n")
-with open(os.path.join(D3, "quad_hdmi_tx_simplified.mtl"), "w") as f:
+with open(os.path.join(D3, PROJECT + "_simplified.mtl"), "w") as f:
     def mtl(name, rgb, extra=""):
         r, g, b_ = int(rgb[0:2], 16) / 255, int(rgb[2:4], 16) / 255, int(rgb[4:6], 16) / 255
         f.write(f"newmtl {name}\nKd {r:.3f} {g:.3f} {b_:.3f}\nKa 0.2 0.2 0.2\nKs 0.3 0.3 0.3\nNs 40\n{extra}\n")

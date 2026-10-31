@@ -1,0 +1,1493 @@
+** Drc report for ../fpga_main/fpga_main.kicad_pcb **
+** Created on 2026-10-31 05:13:36 **
+
+** Found 221 DRC violations **
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(78.9000 mm, 56.7000 mm): Footprint R3
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(95.3000 mm, 66.5000 mm): Footprint C14
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(76.1000 mm, 55.5000 mm): Footprint R19
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(87.0000 mm, 62.1000 mm): Footprint C6
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(33.0000 mm, 63.5000 mm): Footprint R15
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(78.9000 mm, 58.8000 mm): Footprint R4
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(66.5000 mm, 62.0000 mm): Footprint R11
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(69.5000 mm, 66.9000 mm): Footprint R23
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(90.9000 mm, 58.8000 mm): Footprint R7
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(107.3000 mm, 66.5000 mm): Footprint C21
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(62.5000 mm, 62.0000 mm): Footprint R14
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(76.1000 mm, 59.5000 mm): Footprint R21
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(51.6000 mm, 3.0000 mm): Footprint H2
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(104.5000 mm, 44.0000 mm): Footprint R2
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(55.3000 mm, 68.2000 mm): Footprint SW3
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(106.0000 mm, 61.5000 mm): Footprint C16
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(41.5000 mm, 68.3000 mm): Footprint SW1
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(69.5000 mm, 69.0000 mm): Footprint D5
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(2.0700 mm, 32.3300 mm): Footprint J2
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(35.0000 mm, 63.5000 mm): Footprint R16
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(82.0000 mm, 64.0000 mm): Footprint C4
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(51.6000 mm, 55.0000 mm): Footprint U1
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(76.1000 mm, 57.5000 mm): Footprint R20
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(29.5000 mm, 65.5000 mm): Footprint C49
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(82.5000 mm, 57.5000 mm): Footprint U3
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(94.5000 mm, 57.5000 mm): Footprint U4
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(96.9000 mm, 55.2000 mm): Footprint C8
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(33.0000 mm, 66.0000 mm): Footprint R12
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(94.0000 mm, 64.0000 mm): Footprint C10
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(77.0000 mm, 3.0000 mm): Footprint H4
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(82.0000 mm, 61.5000 mm): Footprint C3
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(71.5000 mm, 69.0000 mm): Footprint D6
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(67.5000 mm, 69.0000 mm): Footprint D4
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(112.5000 mm, 69.5000 mm): Footprint H6
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(64.5000 mm, 62.0000 mm): Footprint R13
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(111.3300 mm, 46.0000 mm): Footprint J10
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(104.5000 mm, 42.0000 mm): Footprint R1
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(36.5000 mm, 65.5000 mm): Footprint R26
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(3.0000 mm, 46.0000 mm): Footprint J5
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(61.5000 mm, 69.0000 mm): Footprint D1
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(106.0000 mm, 54.6000 mm): Footprint C18
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(91.5000 mm, 64.5000 mm): Footprint R8
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(8.0000 mm, 69.0000 mm): Footprint J3
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(2.0700 mm, 16.9300 mm): Footprint J1
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(104.5000 mm, 48.5000 mm): Footprint F1
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(3.0000 mm, 64.0000 mm): Footprint H5
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(65.5000 mm, 66.9000 mm): Footprint R18
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(106.5000 mm, 57.5000 mm): Footprint U5
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(73.5000 mm, 69.0000 mm): Footprint D7
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(61.5000 mm, 66.9000 mm): Footprint R10
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(94.0000 mm, 61.5000 mm): Footprint C9
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(100.5000 mm, 46.5000 mm): Footprint C35
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(38.0000 mm, 50.0000 mm): Footprint X1
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(63.5000 mm, 66.9000 mm): Footprint R17
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(111.0000 mm, 58.3000 mm): Footprint L3
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(94.0000 mm, 54.6000 mm): Footprint C11
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(47.3000 mm, 68.3000 mm): Footprint SW2
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(99.0000 mm, 62.1000 mm): Footprint C12
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(26.2000 mm, 3.0000 mm): Footprint H1
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(103.5000 mm, 64.5000 mm): Footprint R9
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(87.0000 mm, 64.6000 mm): Footprint C7
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(71.5000 mm, 66.9000 mm): Footprint R24
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(65.5000 mm, 69.0000 mm): Footprint D3
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(90.9000 mm, 56.7000 mm): Footprint R6
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(87.0000 mm, 58.3000 mm): Footprint L1
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(111.0000 mm, 62.1000 mm): Footprint C19
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(106.0000 mm, 64.0000 mm): Footprint C17
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(73.5000 mm, 66.9000 mm): Footprint R25
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(84.9000 mm, 55.2000 mm): Footprint C2
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(100.5000 mm, 52.0000 mm): Footprint C1
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(3.0000 mm, 3.0000 mm): Footprint H7
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(108.9000 mm, 55.2000 mm): Footprint C15
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(68.0000 mm, 57.5000 mm): Footprint U2
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(99.0000 mm, 58.3000 mm): Footprint L2
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(99.0000 mm, 64.6000 mm): Footprint C13
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(112.0000 mm, 35.0000 mm): Footprint H3
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(67.5000 mm, 66.9000 mm): Footprint R22
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(79.5000 mm, 64.5000 mm): Footprint R5
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(35.5000 mm, 50.0000 mm): Footprint C23
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(74.0000 mm, 53.6000 mm): Footprint C22
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(63.5000 mm, 69.0000 mm): Footprint D2
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(111.0000 mm, 64.6000 mm): Footprint C20
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(82.0000 mm, 54.6000 mm): Footprint C5
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(24.0000 mm, 69.0000 mm): Footprint J4
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(62.2000 mm, 49.0000 mm): Footprint C44
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(63.5000 mm, 60.0000 mm): Footprint C46
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(52.6000 mm, 55.0000 mm): Footprint C29
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(41.3000 mm, 62.5000 mm): Footprint C43
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(38.0000 mm, 57.0000 mm): Footprint C48
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(51.6000 mm, 57.0000 mm): Footprint C28
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(62.2000 mm, 45.0000 mm): Footprint C38
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(41.3000 mm, 48.5000 mm): Footprint C40
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(82.0000 mm, 67.9000 mm): Footprint C25
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(38.0000 mm, 61.0000 mm): Footprint C37
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(62.0000 mm, 55.5000 mm): Footprint C32
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(63.5000 mm, 63.0000 mm): Footprint C47
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(98.0000 mm, 59.5000 mm): Footprint C31
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(41.3000 mm, 59.0000 mm): Footprint C42
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(51.6000 mm, 53.0000 mm): Footprint C27
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(55.6000 mm, 55.0000 mm): Footprint C33
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(49.6000 mm, 55.0000 mm): Footprint C30
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(58.6000 mm, 55.0000 mm): Footprint C34
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(69.5000 mm, 62.0000 mm): Footprint C39
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(41.3000 mm, 52.0000 mm): Footprint C41
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(78.0000 mm, 67.7000 mm): Footprint C24
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(85.0000 mm, 51.8000 mm): Footprint JP1
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(87.5000 mm, 67.8000 mm): Footprint C26
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(62.2000 mm, 52.0000 mm): Footprint C45
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(41.3000 mm, 55.5000 mm): Footprint C36
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(44.6000 mm, 48.0000 mm): Track [CH2_D11] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(46.6000 mm, 48.0000 mm): Track [CH2_D20] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(47.6000 mm, 48.0000 mm): Track [CH2_HPD] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(48.6000 mm, 48.0000 mm): Track [CH2_DE] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(49.6000 mm, 48.0000 mm): Track [CH2_D0] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(52.6000 mm, 48.0000 mm): Track [CH3_D23] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(53.6000 mm, 48.0000 mm): Track [CH3_D17] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(54.6000 mm, 48.0000 mm): Track [CH3_D13] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(55.6000 mm, 48.0000 mm): Track [CH3_D14] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(57.6000 mm, 48.0000 mm): Track [CH3_D20] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.6000 mm, 48.0000 mm): Track [CH3_HPD] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(44.6000 mm, 49.0000 mm): Track [CH2_D15] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(45.1000 mm, 48.5000 mm): Track [CH2_D8] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(46.1000 mm, 48.5000 mm): Track [CH2_D3] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(48.1000 mm, 48.5000 mm): Track [CH2_D10] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(49.6000 mm, 47.0000 mm): Track [CH2_D1] on SIG1, length 1.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(50.1000 mm, 48.5000 mm): Track [CH2_D5] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(53.1000 mm, 48.5000 mm): Track [CH3_D9] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(55.1000 mm, 48.5000 mm): Track [CH3_D15] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(56.1000 mm, 48.5000 mm): Track [CH3_D22] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(57.1000 mm, 48.5000 mm): Track [CH3_D16] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.1000 mm, 48.5000 mm): Track [CH3_D21] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(45.1000 mm, 49.5000 mm): Track [CH2_D12] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(47.1000 mm, 49.5000 mm): Track [CLK100] on SIG1, length 3.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(47.1000 mm, 49.5000 mm): Track [CH2_D21] on SIG2, length 3.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(48.1000 mm, 49.5000 mm): Track [CH2_D2] on SIG2, length 3.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(51.1000 mm, 49.5000 mm): Track [CH3_D6] on SIG1, length 3.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(52.1000 mm, 49.5000 mm): Track [CH3_D19] on SIG1, length 3.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(54.6000 mm, 47.0000 mm): Track [CH3_INT] on SIG1, length 1.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(55.1000 mm, 50.5000 mm): Track [CH3_D0] on SIG1, length 5.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(57.1000 mm, 49.5000 mm): Track [CH3_D3] on SIG2, length 3.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.1000 mm, 49.5000 mm): Track [CH3_D2] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.6000 mm, 50.0000 mm): Track [CH3_DE] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(44.6000 mm, 51.0000 mm): Track [CH2_D9] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(45.1000 mm, 50.5000 mm): Track [CH2_D13] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(47.1000 mm, 50.5000 mm): Track [PMOD_1] on SIG2, length 4.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(48.1000 mm, 51.5000 mm): Track [PMOD_2] on SIG2, length 5.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(50.1000 mm, 50.5000 mm): Track [CCLK] on SIG2, length 4.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(57.1000 mm, 50.5000 mm): Track [CH3_D5] on SIG2, length 3.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.6000 mm, 51.0000 mm): Track [I2C_B_SCL] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(44.6000 mm, 52.0000 mm): Track [CH2_D19] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(45.1000 mm, 51.5000 mm): Track [CH2_CLK] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(43.6000 mm, 53.0000 mm): Track [CH2_D6] on SIG1, length 1.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(43.6000 mm, 53.0000 mm): Track [PMOD_3] on SIG2, length 1.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(57.1000 mm, 51.5000 mm): Track [CH3_D4] on SIG2, length 3.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.1000 mm, 51.5000 mm): Track [CH4_D18] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.6000 mm, 52.0000 mm): Track [CH4_D6] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(44.6000 mm, 53.0000 mm): Track [CH2_D7] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(47.1000 mm, 53.5000 mm): Track [PMOD_4] on SIG2, length 4.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(59.6000 mm, 53.0000 mm): Track [CH4_D7] on SIG1, length 1.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.6000 mm, 53.0000 mm): Track [CH4_D19] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(44.6000 mm, 54.0000 mm): Track [I2C_A_SDA] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(45.1000 mm, 53.5000 mm): Track [CH2_D18] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(46.1000 mm, 54.5000 mm): Track [I2C_A_SCL] on SIG1, length 3.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(47.1000 mm, 54.5000 mm): Track [PMOD_7] on SIG2, length 4.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(54.1000 mm, 53.5000 mm): Track [DONE] on SIG2, length 6.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(57.1000 mm, 54.5000 mm): Track [CH4_D9] on SIG1, length 3.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.1000 mm, 53.5000 mm): Track [CH4_CLK] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(45.1000 mm, 56.5000 mm): Track [CH1_D2] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(46.1000 mm, 55.5000 mm): Track [CH1_D1] on SIG1, length 3.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(47.1000 mm, 56.5000 mm): Track [PMOD_8] on SIG2, length 4.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(57.1000 mm, 55.5000 mm): Track [QSPI_D0] on SIG1, length 3.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.1000 mm, 56.5000 mm): Track [QSPI_D1] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.6000 mm, 56.0000 mm): Track [CH4_INT] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(44.6000 mm, 57.0000 mm): Track [CH1_D10] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(43.6000 mm, 58.0000 mm): Track [CH1_HPD] on SIG1, length 1.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(43.6000 mm, 58.0000 mm): Track [PMOD_9] on SIG2, length 1.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(54.6000 mm, 63.0000 mm): Track [INIT_B] on SIG2, length 1.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(59.6000 mm, 58.0000 mm): Track [CH4_D12] on SIG1, length 1.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.6000 mm, 57.0000 mm): Track [QSPI_D2] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(44.6000 mm, 58.0000 mm): Track [CH1_VS] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(45.1000 mm, 58.5000 mm): Track [CH1_HS] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(47.1000 mm, 58.5000 mm): Track [PMOD_10] on SIG2, length 4.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(50.1000 mm, 58.5000 mm): Track [TCK] on SIG2, length 5.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(52.1000 mm, 58.5000 mm): Track [PROGRAM_B] on SIG2, length 5.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(56.1000 mm, 58.5000 mm): Track [QSPI_CS] on SIG2, length 4.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(56.1000 mm, 58.5000 mm): Track [CH4_DE] on SIG1, length 5.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.1000 mm, 58.5000 mm): Track [CH4_D14] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.6000 mm, 58.0000 mm): Track [CH4_D15] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(44.6000 mm, 59.0000 mm): Track [CH1_D20] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(46.1000 mm, 59.5000 mm): Track [CH1_D16] on SIG1, length 3.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(49.6000 mm, 63.0000 mm): Track [TMS] on SIG2, length 1.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(53.1000 mm, 59.5000 mm): Track [CFG_M0] on SIG2, length 4.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.1000 mm, 59.5000 mm): Track [CH4_D8] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.6000 mm, 59.0000 mm): Track [CH4_D22] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(44.6000 mm, 60.0000 mm): Track [CH1_D8] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(45.1000 mm, 60.5000 mm): Track [CH1_D11] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(46.1000 mm, 60.5000 mm): Track [CH1_D9] on SIG2, length 3.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(49.6000 mm, 63.0000 mm): Track [TDI] on SIG1, length 1.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(50.1000 mm, 60.5000 mm): Track [TDO] on SIG1, length 3.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(55.1000 mm, 60.5000 mm): Track [CH4_D1] on SIG2, length 3.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(56.1000 mm, 60.5000 mm): Track [CH4_D0] on SIG2, length 3.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(57.1000 mm, 60.5000 mm): Track [CH4_D10] on SIG2, length 3.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.1000 mm, 60.5000 mm): Track [CH4_D3] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(45.1000 mm, 61.5000 mm): Track [CH1_INT] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(46.1000 mm, 61.5000 mm): Track [CH1_D17] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(47.1000 mm, 61.5000 mm): Track [CH1_D23] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(48.1000 mm, 61.5000 mm): Track [CH1_D6] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(54.6000 mm, 63.0000 mm): Track [CH4_D4] on SIG1, length 1.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(55.1000 mm, 61.5000 mm): Track [CH4_D5] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(57.1000 mm, 61.5000 mm): Track [CH4_D2] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.1000 mm, 61.5000 mm): Track [CH4_VS] on SIG1, length 2.5000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.6000 mm, 61.0000 mm): Track [CH4_HS] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(44.6000 mm, 62.0000 mm): Track [CH1_D15] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(45.6000 mm, 62.0000 mm): Track [CH1_D13] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(47.6000 mm, 62.0000 mm): Track [CH1_D19] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(48.6000 mm, 62.0000 mm): Track [CH1_D18] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(53.6000 mm, 62.0000 mm): Track [LED0] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(54.6000 mm, 62.0000 mm): Track [LED1] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(55.6000 mm, 62.0000 mm): Track [LED3] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(56.6000 mm, 62.0000 mm): Track [SW1] on F.Cu, length 2.0000 mm
+[track_dangling]: Track has unconnected end
+    Local override; Severity: warning
+    @(58.6000 mm, 62.0000 mm): Track [CH4_HPD] on F.Cu, length 2.0000 mm
+
+** Found 205 unconnected pads **
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(39.4500 mm, 69.1000 mm): Pad 2 [GND] of SW1 on F.Cu
+    @(43.5500 mm, 69.1000 mm): Track [GND] on F.Cu, length 1.2210 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(83.6375 mm, 56.5500 mm): Pad 6 [U3_BST] of U3 on F.Cu
+    @(84.4200 mm, 55.2000 mm): Pad 1 [U3_BST] of C2 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(83.6375 mm, 57.5000 mm): Pad 5 [U3_SW] of U3 on F.Cu
+    @(85.6000 mm, 58.3000 mm): Pad 1 [U3_SW] of L1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(85.3800 mm, 55.2000 mm): Pad 2 [U3_SW] of C2 on F.Cu
+    @(83.6375 mm, 57.5000 mm): Pad 5 [U3_SW] of U3 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(78.9000 mm, 57.2100 mm): Pad 1 [+1V0] of R3 on F.Cu
+    @(84.9300 mm, 62.1000 mm): Via [+1V0] on F.Cu - B.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(95.6375 mm, 56.5500 mm): Pad 6 [U4_BST] of U4 on F.Cu
+    @(96.4200 mm, 55.2000 mm): Pad 1 [U4_BST] of C8 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(95.6375 mm, 57.5000 mm): Pad 5 [U4_SW] of U4 on F.Cu
+    @(97.6000 mm, 58.3000 mm): Pad 1 [U4_SW] of L2 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(97.3800 mm, 55.2000 mm): Pad 2 [U4_SW] of C8 on F.Cu
+    @(95.6375 mm, 57.5000 mm): Pad 5 [U4_SW] of U4 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(91.5000 mm, 65.0100 mm): Pad 2 [U4_EN] of R8 on F.Cu
+    @(94.5250 mm, 66.5000 mm): Pad 1 [U4_EN] of C14 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(93.3625 mm, 57.5000 mm): Pad 2 [U4_EN] of U4 on F.Cu
+    @(91.5000 mm, 65.0100 mm): Pad 2 [U4_EN] of R8 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(107.6375 mm, 56.5500 mm): Pad 6 [U5_BST] of U5 on F.Cu
+    @(108.4200 mm, 55.2000 mm): Pad 1 [U5_BST] of C15 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(107.6375 mm, 57.5000 mm): Pad 5 [U5_SW] of U5 on F.Cu
+    @(109.6000 mm, 58.3000 mm): Pad 1 [U5_SW] of L3 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(109.3800 mm, 55.2000 mm): Pad 2 [U5_SW] of C15 on F.Cu
+    @(107.6375 mm, 57.5000 mm): Pad 5 [U5_SW] of U5 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(103.5000 mm, 65.0100 mm): Pad 2 [U5_EN] of R9 on F.Cu
+    @(106.5250 mm, 66.5000 mm): Pad 1 [U5_EN] of C21 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(105.3625 mm, 57.5000 mm): Pad 2 [U5_EN] of U5 on F.Cu
+    @(103.5000 mm, 65.0100 mm): Pad 2 [U5_EN] of R9 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(61.5000 mm, 68.2125 mm): Pad 2 [PWR_LED] of D1 on F.Cu
+    @(62.0100 mm, 66.9000 mm): Pad 2 [PWR_LED] of R10 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(104.5000 mm, 47.1000 mm): Pad 1 [VBUS] of F1 on F.Cu
+    @(107.6500 mm, 48.4000 mm): Pad B9 [VBUS] of J10 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(107.6500 mm, 43.6000 mm): Pad B4 [VBUS] of J10 on F.Cu
+    @(104.5000 mm, 47.1000 mm): Pad 1 [VBUS] of F1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(103.9900 mm, 42.0000 mm): Pad 1 [CC1] of R1 on F.Cu
+    @(107.6500 mm, 47.2500 mm): Pad A5 [CC1] of J10 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(103.9900 mm, 44.0000 mm): Pad 1 [CC2] of R2 on F.Cu
+    @(107.6500 mm, 44.2500 mm): Pad B5 [CC2] of J10 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(81.3625 mm, 56.5500 mm): Pad 1 [U3_FB] of U3 on F.Cu
+    @(78.9000 mm, 56.1900 mm): Pad 2 [U3_FB] of R3 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(78.9000 mm, 56.1900 mm): Pad 2 [U3_FB] of R3 on F.Cu
+    @(78.9000 mm, 59.3100 mm): Pad 1 [U3_FB] of R4 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(79.5000 mm, 65.0100 mm): Pad 2 [U3_EN] of R5 on F.Cu
+    @(81.3625 mm, 57.5000 mm): Pad 2 [U3_EN] of U3 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(93.3625 mm, 56.5500 mm): Pad 1 [U4_FB] of U4 on F.Cu
+    @(90.9000 mm, 56.1900 mm): Pad 2 [U4_FB] of R6 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(90.9000 mm, 56.1900 mm): Pad 2 [U4_FB] of R6 on F.Cu
+    @(90.9000 mm, 59.3100 mm): Pad 1 [U4_FB] of R7 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(37.6300 mm, 16.9300 mm): PTH pad 29 [CH2_D22] of J1
+    @(45.1000 mm, 47.5000 mm): Pad A2 [CH2_D22] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(40.1700 mm, 16.9300 mm): PTH pad 31 [CH2_D16] of J1
+    @(46.1000 mm, 47.5000 mm): Pad A3 [CH2_D16] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(42.7100 mm, 34.8700 mm): PTH pad 34 [CH2_HS] of J2
+    @(47.1000 mm, 47.5000 mm): Pad A4 [CH2_HS] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(45.2500 mm, 34.8700 mm): PTH pad 36 [CH2_VS] of J2
+    @(48.1000 mm, 47.5000 mm): Pad A5 [CH2_VS] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(50.1000 mm, 47.5000 mm): Pad A7 [CH2_D4] of U1 on F.Cu
+    @(50.3300 mm, 19.4700 mm): PTH pad 40 [CH2_D4] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(51.1000 mm, 47.5000 mm): Pad A8 [CH3_D18] of U1 on F.Cu
+    @(52.8700 mm, 16.9300 mm): PTH pad 41 [CH3_D18] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(52.1000 mm, 47.5000 mm): Pad A9 [CH3_D7] of U1 on F.Cu
+    @(52.8700 mm, 34.8700 mm): PTH pad 42 [CH3_D7] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(53.1000 mm, 47.5000 mm): Pad A10 [CH3_CLK] of U1 on F.Cu
+    @(55.4100 mm, 32.3300 mm): PTH pad 43 [CH3_CLK] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(55.1000 mm, 47.5000 mm): Pad A12 [CH3_D12] of U1 on F.Cu
+    @(57.9500 mm, 34.8700 mm): PTH pad 46 [CH3_D12] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(56.1000 mm, 47.5000 mm): Pad A13 [CH3_D11] of U1 on F.Cu
+    @(60.4900 mm, 34.8700 mm): PTH pad 48 [CH3_D11] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(57.1000 mm, 47.5000 mm): Pad A14 [CH3_D8] of U1 on F.Cu
+    @(63.0300 mm, 34.8700 mm): PTH pad 50 [CH3_D8] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(58.1000 mm, 47.5000 mm): Pad A15 [CH3_HS] of U1 on F.Cu
+    @(68.1100 mm, 34.8700 mm): PTH pad 54 [CH3_HS] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(35.0900 mm, 16.9300 mm): PTH pad 27 [CH2_D14] of J1
+    @(44.1000 mm, 48.5000 mm): Pad B1 [CH2_D14] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(44.6000 mm, 48.0000 mm): Track [CH2_D11] on F.Cu, length 2.0000 mm
+    @(35.0900 mm, 34.8700 mm): PTH pad 28 [CH2_D11] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(42.7100 mm, 16.9300 mm): PTH pad 33 [CH2_D20] of J1
+    @(46.6000 mm, 48.0000 mm): Track [CH2_D20] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(45.2500 mm, 32.3300 mm): PTH pad 35 [CH2_HPD] of J2
+    @(47.6000 mm, 48.0000 mm): Track [CH2_HPD] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(47.7900 mm, 32.3300 mm): PTH pad 37 [CH2_DE] of J2
+    @(48.6000 mm, 48.0000 mm): Track [CH2_DE] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(47.7900 mm, 34.8700 mm): PTH pad 38 [CH2_D0] of J2
+    @(49.6000 mm, 48.0000 mm): Track [CH2_D0] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(55.4100 mm, 16.9300 mm): PTH pad 43 [CH3_D23] of J1
+    @(52.6000 mm, 48.0000 mm): Track [CH3_D23] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(55.4100 mm, 19.4700 mm): PTH pad 44 [CH3_D17] of J1
+    @(53.6000 mm, 48.0000 mm): Track [CH3_D17] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(57.9500 mm, 16.9300 mm): PTH pad 45 [CH3_D13] of J1
+    @(54.6000 mm, 48.0000 mm): Track [CH3_D13] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(60.4900 mm, 16.9300 mm): PTH pad 47 [CH3_D14] of J1
+    @(55.6000 mm, 48.0000 mm): Track [CH3_D14] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(68.1100 mm, 16.9300 mm): PTH pad 53 [CH3_D20] of J1
+    @(57.6000 mm, 48.0000 mm): Track [CH3_D20] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(70.6500 mm, 32.3300 mm): PTH pad 55 [CH3_HPD] of J2
+    @(58.6000 mm, 48.0000 mm): Track [CH3_HPD] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(59.1000 mm, 48.5000 mm): Pad B16 [CH3_VS] of U1 on F.Cu
+    @(70.6500 mm, 34.8700 mm): PTH pad 56 [CH3_VS] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(32.5500 mm, 32.3300 mm): PTH pad 25 [CH2_INT] of J2
+    @(44.1000 mm, 49.5000 mm): Pad C1 [CH2_INT] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(32.5500 mm, 19.4700 mm): PTH pad 26 [CH2_D15] of J1
+    @(44.6000 mm, 49.0000 mm): Track [CH2_D15] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(45.1000 mm, 48.5000 mm): Track [CH2_D8] on SIG1, length 2.5000 mm
+    @(37.6300 mm, 34.8700 mm): PTH pad 30 [CH2_D8] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(46.1000 mm, 48.5000 mm): Track [CH2_D3] on SIG1, length 2.5000 mm
+    @(40.1700 mm, 34.8700 mm): PTH pad 32 [CH2_D3] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(48.1000 mm, 48.5000 mm): Track [CH2_D10] on SIG1, length 2.5000 mm
+    @(45.2500 mm, 19.4700 mm): PTH pad 36 [CH2_D10] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(47.7900 mm, 19.4700 mm): PTH pad 38 [CH2_D1] of J1
+    @(49.6000 mm, 47.0000 mm): Track [CH2_D1] on SIG1, length 1.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(50.3300 mm, 16.9300 mm): PTH pad 39 [CH2_D5] of J1
+    @(50.1000 mm, 48.5000 mm): Track [CH2_D5] on SIG1, length 2.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(53.1000 mm, 48.5000 mm): Track [CH3_D9] on SIG1, length 2.5000 mm
+    @(55.4100 mm, 34.8700 mm): PTH pad 44 [CH3_D9] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(55.1000 mm, 48.5000 mm): Track [CH3_D15] on SIG1, length 2.5000 mm
+    @(57.9500 mm, 19.4700 mm): PTH pad 46 [CH3_D15] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(56.1000 mm, 48.5000 mm): Track [CH3_D22] on SIG1, length 2.5000 mm
+    @(63.0300 mm, 16.9300 mm): PTH pad 49 [CH3_D22] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(65.5700 mm, 16.9300 mm): PTH pad 51 [CH3_D16] of J1
+    @(57.1000 mm, 48.5000 mm): Track [CH3_D16] on SIG1, length 2.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(70.6500 mm, 16.9300 mm): PTH pad 55 [CH3_D21] of J1
+    @(58.1000 mm, 48.5000 mm): Track [CH3_D21] on SIG1, length 2.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(59.1000 mm, 49.5000 mm): Pad C16 [CH3_D10] of U1 on F.Cu
+    @(70.6500 mm, 19.4700 mm): PTH pad 56 [CH3_D10] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(30.0100 mm, 19.4700 mm): PTH pad 24 [CH2_D17] of J1
+    @(44.1000 mm, 50.5000 mm): Pad D1 [CH2_D17] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(32.5500 mm, 34.8700 mm): PTH pad 26 [CH2_D12] of J2
+    @(45.1000 mm, 49.5000 mm): Track [CH2_D12] on SIG1, length 2.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(47.1000 mm, 50.5000 mm): Track [CLK100] on F.Cu, length 0.7071 mm
+    @(39.0500 mm, 49.1750 mm): Pad 3 [CLK100] of X1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(47.1000 mm, 49.5000 mm): Track [CH2_D21] on SIG2, length 3.5000 mm
+    @(45.2500 mm, 16.9300 mm): PTH pad 35 [CH2_D21] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(48.1000 mm, 49.5000 mm): Track [CH2_D2] on SIG2, length 3.5000 mm
+    @(47.7900 mm, 16.9300 mm): PTH pad 37 [CH2_D2] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(52.8700 mm, 32.3300 mm): PTH pad 41 [CH3_D6] of J2
+    @(51.1000 mm, 49.5000 mm): Track [CH3_D6] on SIG1, length 3.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(52.8700 mm, 19.4700 mm): PTH pad 42 [CH3_D19] of J1
+    @(52.1000 mm, 49.5000 mm): Track [CH3_D19] on SIG1, length 3.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(54.6000 mm, 47.0000 mm): Track [CH3_INT] on SIG1, length 1.0000 mm
+    @(57.9500 mm, 32.3300 mm): PTH pad 45 [CH3_INT] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(55.1000 mm, 50.5000 mm): Track [CH3_D0] on SIG1, length 5.5000 mm
+    @(73.1900 mm, 34.8700 mm): PTH pad 58 [CH3_D0] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(65.5700 mm, 34.8700 mm): PTH pad 52 [CH3_D3] of J2
+    @(57.1000 mm, 49.5000 mm): Track [CH3_D3] on SIG2, length 3.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(58.1000 mm, 49.5000 mm): Track [CH3_D2] on SIG1, length 2.5000 mm
+    @(73.1900 mm, 16.9300 mm): PTH pad 57 [CH3_D2] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(58.6000 mm, 50.0000 mm): Track [CH3_DE] on F.Cu, length 2.0000 mm
+    @(73.1900 mm, 32.3300 mm): PTH pad 57 [CH3_DE] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(59.1000 mm, 50.5000 mm): Pad D16 [CH3_D1] of U1 on F.Cu
+    @(73.1900 mm, 19.4700 mm): PTH pad 58 [CH3_D1] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(30.0100 mm, 16.9300 mm): PTH pad 23 [CH2_D23] of J1
+    @(44.1000 mm, 51.5000 mm): Pad E1 [CH2_D23] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(30.0100 mm, 34.8700 mm): PTH pad 24 [CH2_D9] of J2
+    @(44.6000 mm, 51.0000 mm): Track [CH2_D9] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(32.5500 mm, 16.9300 mm): PTH pad 25 [CH2_D13] of J1
+    @(45.1000 mm, 50.5000 mm): Track [CH2_D13] on SIG1, length 2.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(47.1000 mm, 50.5000 mm): Track [PMOD_1] on SIG2, length 4.5000 mm
+    @(3.0000 mm, 46.0000 mm): PTH pad 1 [PMOD_1] of J5
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(3.0000 mm, 48.5400 mm): PTH pad 3 [PMOD_2] of J5
+    @(48.1000 mm, 51.5000 mm): Track [PMOD_2] on SIG2, length 5.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(51.1000 mm, 51.5000 mm): Pad E8 [CCLK] of U1 on F.Cu
+    @(71.6000 mm, 58.1350 mm): Pad 6 [CCLK] of U2 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(57.1000 mm, 50.5000 mm): Track [CH3_D5] on SIG2, length 3.5000 mm
+    @(75.7300 mm, 16.9300 mm): PTH pad 59 [CH3_D5] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(58.6000 mm, 51.0000 mm): Track [I2C_B_SCL] on F.Cu, length 2.0000 mm
+    @(75.7300 mm, 32.3300 mm): PTH pad 59 [I2C_B_SCL] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(59.1000 mm, 51.5000 mm): Pad E16 [I2C_B_SDA] of U1 on F.Cu
+    @(75.7300 mm, 34.8700 mm): PTH pad 60 [I2C_B_SDA] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(27.4700 mm, 19.4700 mm): PTH pad 22 [CH2_D19] of J1
+    @(44.6000 mm, 52.0000 mm): Track [CH2_D19] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(30.0100 mm, 32.3300 mm): PTH pad 23 [CH2_CLK] of J2
+    @(45.1000 mm, 51.5000 mm): Track [CH2_CLK] on SIG1, length 2.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(27.4700 mm, 32.3300 mm): PTH pad 21 [CH2_D6] of J2
+    @(43.6000 mm, 53.0000 mm): Track [CH2_D6] on SIG1, length 1.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(3.0000 mm, 51.0800 mm): PTH pad 5 [PMOD_3] of J5
+    @(43.6000 mm, 53.0000 mm): Track [PMOD_3] on SIG2, length 1.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(57.1000 mm, 51.5000 mm): Track [CH3_D4] on SIG2, length 3.5000 mm
+    @(75.7300 mm, 19.4700 mm): PTH pad 60 [CH3_D4] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(58.1000 mm, 51.5000 mm): Track [CH4_D18] on SIG1, length 2.5000 mm
+    @(78.2700 mm, 16.9300 mm): PTH pad 61 [CH4_D18] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(58.6000 mm, 52.0000 mm): Track [CH4_D6] on F.Cu, length 2.0000 mm
+    @(78.2700 mm, 32.3300 mm): PTH pad 61 [CH4_D6] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(24.9300 mm, 19.4700 mm): PTH pad 20 [CH1_D4] of J1
+    @(44.1000 mm, 53.5000 mm): Pad G1 [CH1_D4] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(27.4700 mm, 34.8700 mm): PTH pad 22 [CH2_D7] of J2
+    @(44.6000 mm, 53.0000 mm): Track [CH2_D7] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(3.0000 mm, 53.6200 mm): PTH pad 7 [PMOD_4] of J5
+    @(47.1000 mm, 53.5000 mm): Track [PMOD_4] on SIG2, length 4.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(59.6000 mm, 53.0000 mm): Track [CH4_D7] on SIG1, length 1.0000 mm
+    @(78.2700 mm, 34.8700 mm): PTH pad 62 [CH4_D7] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(58.6000 mm, 53.0000 mm): Track [CH4_D19] on F.Cu, length 2.0000 mm
+    @(78.2700 mm, 19.4700 mm): PTH pad 62 [CH4_D19] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(59.1000 mm, 53.5000 mm): Pad G16 [CH4_D23] of U1 on F.Cu
+    @(80.8100 mm, 16.9300 mm): PTH pad 63 [CH4_D23] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(24.9300 mm, 16.9300 mm): PTH pad 19 [CH1_D5] of J1
+    @(44.1000 mm, 54.5000 mm): Pad H1 [CH1_D5] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(24.9300 mm, 34.8700 mm): PTH pad 20 [I2C_A_SDA] of J2
+    @(44.6000 mm, 54.0000 mm): Track [I2C_A_SDA] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(27.4700 mm, 16.9300 mm): PTH pad 21 [CH2_D18] of J1
+    @(45.1000 mm, 53.5000 mm): Track [CH2_D18] on SIG1, length 2.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(24.9300 mm, 32.3300 mm): PTH pad 19 [I2C_A_SCL] of J2
+    @(46.1000 mm, 54.5000 mm): Track [I2C_A_SCL] on SIG1, length 3.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(5.5400 mm, 46.0000 mm): PTH pad 2 [PMOD_7] of J5
+    @(47.1000 mm, 54.5000 mm): Track [PMOD_7] on SIG2, length 4.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(62.9900 mm, 66.9000 mm): Pad 1 [DONE] of R17 on F.Cu
+    @(62.5000 mm, 61.4900 mm): Pad 2 [DONE] of R14 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(62.5000 mm, 61.4900 mm): Pad 2 [DONE] of R14 on F.Cu
+    @(54.1000 mm, 53.5000 mm): Track [DONE] on SIG2, length 6.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(57.1000 mm, 54.5000 mm): Track [CH4_D9] on SIG1, length 3.5000 mm
+    @(80.8100 mm, 34.8700 mm): PTH pad 64 [CH4_D9] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(58.1000 mm, 53.5000 mm): Track [CH4_CLK] on SIG1, length 2.5000 mm
+    @(80.8100 mm, 32.3300 mm): PTH pad 63 [CH4_CLK] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(59.1000 mm, 54.5000 mm): Pad H16 [CH4_D17] of U1 on F.Cu
+    @(80.8100 mm, 19.4700 mm): PTH pad 64 [CH4_D17] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(22.3900 mm, 34.8700 mm): PTH pad 18 [CH1_D0] of J2
+    @(44.1000 mm, 55.5000 mm): Pad J1 [CH1_D0] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(22.3900 mm, 16.9300 mm): PTH pad 17 [CH1_D2] of J1
+    @(45.1000 mm, 56.5000 mm): Track [CH1_D2] on SIG1, length 2.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(22.3900 mm, 19.4700 mm): PTH pad 18 [CH1_D1] of J1
+    @(46.1000 mm, 55.5000 mm): Track [CH1_D1] on SIG1, length 3.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(5.5400 mm, 48.5400 mm): PTH pad 4 [PMOD_8] of J5
+    @(47.1000 mm, 56.5000 mm): Track [PMOD_8] on SIG2, length 4.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(71.6000 mm, 59.4050 mm): Pad 5 [QSPI_D0] of U2 on F.Cu
+    @(57.1000 mm, 55.5000 mm): Track [QSPI_D0] on SIG1, length 3.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(58.1000 mm, 56.5000 mm): Track [QSPI_D1] on SIG1, length 2.5000 mm
+    @(64.4000 mm, 56.8650 mm): Pad 2 [QSPI_D1] of U2 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(58.6000 mm, 56.0000 mm): Track [CH4_INT] on F.Cu, length 2.0000 mm
+    @(83.3500 mm, 32.3300 mm): PTH pad 65 [CH4_INT] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(59.1000 mm, 55.5000 mm): Pad J16 [CH4_D13] of U1 on F.Cu
+    @(83.3500 mm, 16.9300 mm): PTH pad 65 [CH4_D13] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(22.3900 mm, 32.3300 mm): PTH pad 17 [CH1_DE] of J2
+    @(44.1000 mm, 56.5000 mm): Pad K1 [CH1_DE] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(19.8500 mm, 19.4700 mm): PTH pad 16 [CH1_D10] of J1
+    @(44.6000 mm, 57.0000 mm): Track [CH1_D10] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(19.8500 mm, 32.3300 mm): PTH pad 15 [CH1_HPD] of J2
+    @(43.6000 mm, 58.0000 mm): Track [CH1_HPD] on SIG1, length 1.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(5.5400 mm, 51.0800 mm): PTH pad 6 [PMOD_9] of J5
+    @(43.6000 mm, 58.0000 mm): Track [PMOD_9] on SIG2, length 1.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(65.5000 mm, 69.7875 mm): Pad 1 [INIT_B] of D3 on F.Cu
+    @(64.5000 mm, 61.4900 mm): Pad 2 [INIT_B] of R13 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(64.5000 mm, 61.4900 mm): Pad 2 [INIT_B] of R13 on F.Cu
+    @(54.1000 mm, 63.0000 mm): Track [INIT_B] on SIG2, length 0.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(59.6000 mm, 58.0000 mm): Track [CH4_D12] on SIG1, length 1.0000 mm
+    @(83.3500 mm, 34.8700 mm): PTH pad 66 [CH4_D12] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(58.6000 mm, 57.0000 mm): Track [QSPI_D2] on F.Cu, length 2.0000 mm
+    @(64.4000 mm, 58.1350 mm): Pad 3 [QSPI_D2] of U2 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(64.4000 mm, 58.1350 mm): Pad 3 [QSPI_D2] of U2 on F.Cu
+    @(76.6100 mm, 57.5000 mm): Pad 2 [QSPI_D2] of R20 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(76.6100 mm, 59.5000 mm): Pad 2 [QSPI_D3] of R21 on F.Cu
+    @(71.6000 mm, 56.8650 mm): Pad 7 [QSPI_D3] of U2 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(71.6000 mm, 56.8650 mm): Pad 7 [QSPI_D3] of U2 on F.Cu
+    @(59.1000 mm, 56.5000 mm): Pad K16 [QSPI_D3] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(19.8500 mm, 34.8700 mm): PTH pad 16 [CH1_VS] of J2
+    @(44.6000 mm, 58.0000 mm): Track [CH1_VS] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(17.3100 mm, 34.8700 mm): PTH pad 14 [CH1_HS] of J2
+    @(45.1000 mm, 58.5000 mm): Track [CH1_HS] on SIG1, length 2.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(5.5400 mm, 53.6200 mm): PTH pad 8 [PMOD_10] of J5
+    @(47.1000 mm, 58.5000 mm): Track [PMOD_10] on SIG2, length 4.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(31.6200 mm, 69.0000 mm): PTH pad 4 [TCK] of J4
+    @(50.1000 mm, 58.5000 mm): Track [TCK] on SIG2, length 5.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(12.0000 mm, 67.0000 mm): PTH pad 6 [TCK] of J3
+    @(31.6200 mm, 69.0000 mm): PTH pad 4 [TCK] of J4
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(39.4500 mm, 67.5000 mm): Pad 1 [PROGRAM_B] of SW1 on F.Cu
+    @(43.5500 mm, 67.5000 mm): Pad 1 [PROGRAM_B] of SW1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(33.5100 mm, 66.0000 mm): Pad 2 [PROGRAM_B] of R12 on F.Cu
+    @(39.4500 mm, 67.5000 mm): Pad 1 [PROGRAM_B] of SW1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(43.5500 mm, 67.5000 mm): Pad 1 [PROGRAM_B] of SW1 on F.Cu
+    @(52.1000 mm, 58.5000 mm): Track [PROGRAM_B] on SIG2, length 5.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(64.4000 mm, 55.5950 mm): Pad 1 [QSPI_CS] of U2 on F.Cu
+    @(56.1000 mm, 58.5000 mm): Track [QSPI_CS] on SIG2, length 4.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(76.6100 mm, 55.5000 mm): Pad 2 [QSPI_CS] of R19 on F.Cu
+    @(64.4000 mm, 55.5950 mm): Pad 1 [QSPI_CS] of U2 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(56.1000 mm, 57.5000 mm): Track [CH4_DE] on F.Cu, length 0.7071 mm
+    @(98.5900 mm, 32.3300 mm): PTH pad 77 [CH4_DE] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(58.1000 mm, 58.5000 mm): Track [CH4_D14] on SIG1, length 2.5000 mm
+    @(85.8900 mm, 16.9300 mm): PTH pad 67 [CH4_D14] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(58.6000 mm, 58.0000 mm): Track [CH4_D15] on F.Cu, length 2.0000 mm
+    @(83.3500 mm, 19.4700 mm): PTH pad 66 [CH4_D15] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(19.8500 mm, 16.9300 mm): PTH pad 15 [CH1_D21] of J1
+    @(44.1000 mm, 58.5000 mm): Pad M1 [CH1_D21] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(17.3100 mm, 16.9300 mm): PTH pad 13 [CH1_D20] of J1
+    @(44.6000 mm, 59.0000 mm): Track [CH1_D20] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(14.7700 mm, 16.9300 mm): PTH pad 11 [CH1_D16] of J1
+    @(46.1000 mm, 59.5000 mm): Track [CH1_D16] on SIG1, length 3.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(33.0000 mm, 62.9900 mm): Pad 2 [TMS] of R15 on F.Cu
+    @(24.0000 mm, 69.0000 mm): PTH pad 1 [TMS] of J4
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(10.0000 mm, 67.0000 mm): PTH pad 4 [TMS] of J3
+    @(24.0000 mm, 69.0000 mm): PTH pad 1 [TMS] of J4
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(49.1000 mm, 59.5000 mm): Track [TMS] on SIG2, length 3.5000 mm
+    @(33.0000 mm, 62.9900 mm): Pad 2 [TMS] of R15 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(66.5000 mm, 61.4900 mm): Pad 2 [CFG_M0] of R11 on F.Cu
+    @(52.6000 mm, 59.0000 mm): Track [CFG_M0] on SIG2, length 0.7071 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(58.1000 mm, 59.5000 mm): Track [CH4_D8] on SIG1, length 2.5000 mm
+    @(88.4300 mm, 34.8700 mm): PTH pad 70 [CH4_D8] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(58.6000 mm, 59.0000 mm): Track [CH4_D22] on F.Cu, length 2.0000 mm
+    @(88.4300 mm, 16.9300 mm): PTH pad 69 [CH4_D22] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(59.1000 mm, 58.5000 mm): Pad M16 [CH4_D11] of U1 on F.Cu
+    @(85.8900 mm, 34.8700 mm): PTH pad 68 [CH4_D11] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(14.7700 mm, 34.8700 mm): PTH pad 12 [CH1_D3] of J2
+    @(44.1000 mm, 59.5000 mm): Pad N1 [CH1_D3] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(12.2300 mm, 34.8700 mm): PTH pad 10 [CH1_D8] of J2
+    @(44.6000 mm, 60.0000 mm): Track [CH1_D8] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(9.6900 mm, 34.8700 mm): PTH pad 8 [CH1_D11] of J2
+    @(45.1000 mm, 60.5000 mm): Track [CH1_D11] on SIG1, length 2.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(4.6100 mm, 34.8700 mm): PTH pad 4 [CH1_D9] of J2
+    @(46.6000 mm, 60.0000 mm): Track [CH1_D9] on SIG2, length 0.7071 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(35.0000 mm, 62.9900 mm): Pad 2 [TDI] of R16 on F.Cu
+    @(26.5400 mm, 69.0000 mm): PTH pad 2 [TDI] of J4
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(16.0000 mm, 67.0000 mm): PTH pad 10 [TDI] of J3
+    @(26.5400 mm, 69.0000 mm): PTH pad 2 [TDI] of J4
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(35.0000 mm, 62.9900 mm): Pad 2 [TDI] of R16 on F.Cu
+    @(49.1000 mm, 60.5000 mm): Track [TDI] on SIG1, length 2.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(14.0000 mm, 67.0000 mm): PTH pad 8 [TDO] of J3
+    @(29.0800 mm, 69.0000 mm): PTH pad 3 [TDO] of J4
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(29.0800 mm, 69.0000 mm): PTH pad 3 [TDO] of J4
+    @(50.1000 mm, 60.5000 mm): Track [TDO] on SIG1, length 3.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(98.5900 mm, 19.4700 mm): PTH pad 78 [CH4_D1] of J1
+    @(54.6000 mm, 60.0000 mm): Track [CH4_D1] on SIG2, length 0.7071 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(98.5900 mm, 34.8700 mm): PTH pad 78 [CH4_D0] of J2
+    @(55.6000 mm, 60.0000 mm): Track [CH4_D0] on SIG2, length 0.7071 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(96.0500 mm, 19.4700 mm): PTH pad 76 [CH4_D10] of J1
+    @(56.1000 mm, 59.5000 mm): Track [CH4_D10] on F.Cu, length 0.7071 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(58.1000 mm, 60.5000 mm): Track [CH4_D3] on SIG1, length 2.5000 mm
+    @(90.9700 mm, 34.8700 mm): PTH pad 72 [CH4_D3] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(59.1000 mm, 59.5000 mm): Pad N16 [CH4_D16] of U1 on F.Cu
+    @(90.9700 mm, 16.9300 mm): PTH pad 71 [CH4_D16] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(12.2300 mm, 16.9300 mm): PTH pad 9 [CH1_D22] of J1
+    @(44.1000 mm, 60.5000 mm): Pad P1 [CH1_D22] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(7.1500 mm, 32.3300 mm): PTH pad 5 [CH1_INT] of J2
+    @(45.6000 mm, 61.0000 mm): Track [CH1_INT] on SIG1, length 0.7071 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(46.6000 mm, 61.0000 mm): Track [CH1_D17] on SIG1, length 0.7071 mm
+    @(4.6100 mm, 19.4700 mm): PTH pad 4 [CH1_D17] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(48.1000 mm, 60.5000 mm): Track [CH1_D23] on F.Cu, length 0.7071 mm
+    @(4.6100 mm, 16.9300 mm): PTH pad 3 [CH1_D23] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(2.0700 mm, 32.3300 mm): PTH pad 1 [CH1_D6] of J2
+    @(48.6000 mm, 61.0000 mm): Track [CH1_D6] on SIG1, length 0.7071 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(101.1300 mm, 19.4700 mm): PTH pad 80 [CH4_D4] of J1
+    @(53.6000 mm, 61.0000 mm): Track [CH4_D4] on SIG1, length 0.7071 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(101.1300 mm, 16.9300 mm): PTH pad 79 [CH4_D5] of J1
+    @(54.6000 mm, 61.0000 mm): Track [CH4_D5] on SIG1, length 0.7071 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(98.5900 mm, 16.9300 mm): PTH pad 77 [CH4_D2] of J1
+    @(56.1000 mm, 60.5000 mm): Track [CH4_D2] on F.Cu, length 0.7071 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(96.0500 mm, 34.8700 mm): PTH pad 76 [CH4_VS] of J2
+    @(57.6000 mm, 61.0000 mm): Track [CH4_VS] on SIG1, length 0.7071 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(58.6000 mm, 61.0000 mm): Track [CH4_HS] on F.Cu, length 2.0000 mm
+    @(93.5100 mm, 34.8700 mm): PTH pad 74 [CH4_HS] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(59.1000 mm, 60.5000 mm): Pad P16 [CH4_D20] of U1 on F.Cu
+    @(93.5100 mm, 16.9300 mm): PTH pad 73 [CH4_D20] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(9.6900 mm, 16.9300 mm): PTH pad 7 [CH1_D14] of J1
+    @(44.1000 mm, 61.5000 mm): Pad R1 [CH1_D14] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(45.1000 mm, 61.5000 mm): Track [CH1_D15] on F.Cu, length 0.7071 mm
+    @(7.1500 mm, 19.4700 mm): PTH pad 6 [CH1_D15] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(46.1000 mm, 61.5000 mm): Track [CH1_D13] on F.Cu, length 0.7071 mm
+    @(7.1500 mm, 16.9300 mm): PTH pad 5 [CH1_D13] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(2.0700 mm, 19.4700 mm): PTH pad 2 [CH1_D19] of J1
+    @(48.1000 mm, 61.5000 mm): Track [CH1_D19] on F.Cu, length 0.7071 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(2.0700 mm, 16.9300 mm): PTH pad 1 [CH1_D18] of J1
+    @(49.1000 mm, 61.5000 mm): Track [CH1_D18] on F.Cu, length 0.7071 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(53.6000 mm, 62.0000 mm): Track [LED0] on F.Cu, length 2.0000 mm
+    @(66.9900 mm, 66.9000 mm): Pad 1 [LED0] of R22 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(54.6000 mm, 62.0000 mm): Track [LED1] on F.Cu, length 2.0000 mm
+    @(68.9900 mm, 66.9000 mm): Pad 1 [LED1] of R23 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(55.6000 mm, 62.0000 mm): Track [LED3] on F.Cu, length 2.0000 mm
+    @(72.9900 mm, 66.9000 mm): Pad 1 [LED3] of R25 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(51.4900 mm, 67.5650 mm): Pad 2 [SW1] of SW3 on F.Cu
+    @(56.6000 mm, 62.0000 mm): Track [SW1] on F.Cu, length 2.0000 mm
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(58.6000 mm, 62.0000 mm): Track [CH4_HPD] on F.Cu, length 2.0000 mm
+    @(96.0500 mm, 32.3300 mm): PTH pad 75 [CH4_HPD] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(59.1000 mm, 61.5000 mm): Pad R16 [CH4_D21] of U1 on F.Cu
+    @(96.0500 mm, 16.9300 mm): PTH pad 75 [CH4_D21] of J1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(7.1500 mm, 34.8700 mm): PTH pad 6 [CH1_D12] of J2
+    @(45.1000 mm, 62.5000 mm): Pad T2 [CH1_D12] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(45.2500 mm, 67.5000 mm): Pad 1 [RST_N] of SW2 on F.Cu
+    @(49.3500 mm, 67.5000 mm): Pad 1 [RST_N] of SW2 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(46.1000 mm, 62.5000 mm): Pad T3 [RST_N] of U1 on F.Cu
+    @(45.2500 mm, 67.5000 mm): Pad 1 [RST_N] of SW2 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(37.0100 mm, 65.5000 mm): Pad 2 [RST_N] of R26 on F.Cu
+    @(29.0200 mm, 65.5000 mm): Pad 1 [RST_N] of C49 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(37.0100 mm, 65.5000 mm): Pad 2 [RST_N] of R26 on F.Cu
+    @(45.2500 mm, 67.5000 mm): Pad 1 [RST_N] of SW2 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(4.6100 mm, 32.3300 mm): PTH pad 3 [CH1_CLK] of J2
+    @(47.1000 mm, 62.5000 mm): Pad T4 [CH1_CLK] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(2.0700 mm, 34.8700 mm): PTH pad 2 [CH1_D7] of J2
+    @(48.1000 mm, 62.5000 mm): Pad T5 [CH1_D7] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(55.1000 mm, 62.5000 mm): Pad T12 [LED2] of U1 on F.Cu
+    @(70.9900 mm, 66.9000 mm): Pad 1 [LED2] of R24 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(51.4900 mm, 66.2950 mm): Pad 1 [SW0] of SW3 on F.Cu
+    @(56.1000 mm, 62.5000 mm): Pad T13 [SW0] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(51.4900 mm, 68.8350 mm): Pad 3 [SW2] of SW3 on F.Cu
+    @(57.1000 mm, 62.5000 mm): Pad T14 [SW2] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(51.4900 mm, 70.1050 mm): Pad 4 [SW3] of SW3 on F.Cu
+    @(58.1000 mm, 62.5000 mm): Pad T15 [SW3] of U1 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(63.5000 mm, 68.2125 mm): Pad 2 [DONE_LED] of D2 on F.Cu
+    @(64.0100 mm, 66.9000 mm): Pad 2 [DONE_LED] of R17 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(65.5000 mm, 68.2125 mm): Pad 2 [INIT_LED] of D3 on F.Cu
+    @(66.0100 mm, 66.9000 mm): Pad 2 [INIT_LED] of R18 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(50.3300 mm, 32.3300 mm): PTH pad 39 [FPGA_5V] of J2
+    @(50.3300 mm, 34.8700 mm): PTH pad 40 [FPGA_5V] of J2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(50.3300 mm, 34.8700 mm): PTH pad 40 [FPGA_5V] of J2
+    @(85.6500 mm, 51.8000 mm): Pad 2 [FPGA_5V] of JP1 on B.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(67.5000 mm, 68.2125 mm): Pad 2 [LED0_A] of D4 on F.Cu
+    @(68.0100 mm, 66.9000 mm): Pad 2 [LED0_A] of R22 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(69.5000 mm, 68.2125 mm): Pad 2 [LED1_A] of D5 on F.Cu
+    @(70.0100 mm, 66.9000 mm): Pad 2 [LED1_A] of R23 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(71.5000 mm, 68.2125 mm): Pad 2 [LED2_A] of D6 on F.Cu
+    @(72.0100 mm, 66.9000 mm): Pad 2 [LED2_A] of R24 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(73.5000 mm, 68.2125 mm): Pad 2 [LED3_A] of D7 on F.Cu
+    @(74.0100 mm, 66.9000 mm): Pad 2 [LED3_A] of R25 on F.Cu
+
+** Found 0 Footprint errors **
+
+** End of Report **

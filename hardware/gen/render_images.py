@@ -5,7 +5,9 @@
 import os, subprocess, sys
 from PIL import Image, ImageChops
 HERE = os.path.dirname(os.path.abspath(__file__))
-FAB = os.path.join(HERE, "..", "quad_hdmi_tx", "fab")
+PROJECT = os.environ.get("PCB_PROJECT", "quad_hdmi_tx")
+FAB = os.path.join(HERE, "..", PROJECT, "fab")
+PREFIX = "pcb" if PROJECT == "quad_hdmi_tx" else PROJECT.replace("_", "-")
 IMG = os.path.join(HERE, "..", "..", "docs", "images")
 TMP = os.environ.get("TMPDIR", "/tmp")
 for name in ("top", "bottom", "in1_gnd", "in2_sig", "in3_sig", "in4_pwr"):
@@ -21,6 +23,6 @@ for name in ("top", "bottom", "in1_gnd", "in2_sig", "in3_sig", "in4_pwr"):
         pad = 10
         bbox = (max(0, bbox[0] - pad), max(0, bbox[1] - pad), min(im.width, bbox[2] + pad), min(im.height, bbox[3] + pad))
         im = im.crop(bbox)
-    out = os.path.join(IMG, f"pcb-{name}.png")
+    out = os.path.join(IMG, f"{PREFIX}-{name}.png")
     im.save(out, optimize=True)
     print(out, im.size)

@@ -1,6 +1,17 @@
+# 基板 (2 枚構成)
+
+| 基板 | 内容 | 詳細 |
+|---|---|---|
+| `quad_hdmi_tx/` キャリア基板 rev B | ADV7513 ×4 + TPD12S016 ×4 + HDMI ×4、115 × 38 mm、6 層。裏面に 2×40 ヘッダ J7/J8 | この README |
+| `fpga_main/` FPGA メイン基板 rev A | XC7A35T-1FTG256C、QSPI フラッシュ、JTAG、100 MHz、電源(5 V → 1.0 / 1.8 / 3.3 V)、115 × 72 mm、6 層。表面の 2×40 ソケット J1/J2 にキャリアを重ねる | [fpga_main/README.md](fpga_main/README.md) |
+
+キャリア基板はメイン基板の上に重ね(基板間 約 11 mm、M3 スペーサ)、124 本の 3.3 V 信号 + GND + FPGA_5V をソケットで直結する。
+両基板の KiCad プロジェクトは `gen/` のスクリプトが生成する(回路図 → ネットリスト → 配置と事前配線 → FreeRouting → DRC → ガーバー)。
+FPGA のピン割り当て(`fpga_main/fpga_pinmap.csv`)から `gen/gen_xdc.py` が `constraints/board.xdc` を作る。
+
 # Quad HDMI TX キャリア基板 (ADV7513 ×4)
 
-FPGA ボードから 24bit RGB ×4 を受け、HDMI 4 本を出す基板の KiCad 7 プロジェクト。
+FPGA メイン基板(下記 `fpga_main/`)から 24bit RGB ×4 を受け、HDMI 4 本を出す基板の KiCad 7 プロジェクト。
 `gen/gen_schematic.py` が回路図・BOM・ピン割り当て表を生成し、`kicad-cli` でネットリストと PDF を書き出している。
 
 | ファイル | 内容 |
@@ -9,12 +20,12 @@ FPGA ボードから 24bit RGB ×4 を受け、HDMI 4 本を出す基板の KiCa
 | quad_hdmi_tx/quad_hdmi_tx.pdf | 回路図 PDF(7 ページ) |
 | quad_hdmi_tx/netlist.net | kicad-cli で書き出したネットリスト |
 | quad_hdmi_tx/bom.csv, bom_grouped.csv | 部品表(リファレンス別 / 集計、MPN 付き) |
-| quad_hdmi_tx/fpga_header_pinmap.csv | J7/J8 のピン → 信号名。FPGA ピン列を埋めて `gen/gen_xdc.py` で XDC を生成 |
+| quad_hdmi_tx/fpga_header_pinmap.csv | J7/J8 のピン → 信号名 → FPGA メイン基板のボール(`gen/fpga_common.py` の割り当てで自動記入) |
 | quad_hdmi_tx/quad_hdmi_tx.kicad_pcb | 基板レイアウト rev B(6 層、115 × 38 mm の細長い基板)。`gen/gen_pcb.py` が配置・プレーン・事前配線を生成し、FreeRouting で自動配線 |
 | quad_hdmi_tx/drc.rpt | DRC レポート(pcbnew API) |
 | quad_hdmi_tx/fab/ | ガーバー、ドリル、CPL(部品座標)、各層の PDF(`gen/export_fab.sh`) |
 | quad_hdmi_tx/3d/ | STEP(基板のみ)、簡易 3D モデル(OBJ + テクスチャ)、three.js ビューア(`gen/gen_3d.py`、`gen/make_3d_textures.py`) |
-| gen/ | 生成スクリプト、ネットリスト検査、配線パイプライン |
+| gen/ | 生成スクリプト(両基板)、ネットリスト検査、配線パイプライン。`sch_common.py`(回路図共通部)、`fpga_common.py`(FPGA のボール割り当て) |
 
 ## 回路構成
 
@@ -57,7 +68,8 @@ J7 / J8 (2×40 SMD、裏面): 各チャネル 20 ピンずつ。J7 = D13-23 + D1
 - GND は ADV / TPD の真下の列(J7 列 4-7 下段、J8 列 4-7 上段)に置いている(表面がふさがっていて信号のビアが打てない位置)。リボンケーブル上では 4〜9 本おき。ケーブルは 15 cm 以下を推奨(148.5 MHz SDR)。
 - 3.3 V LVCMOS。FPGA ボードの該当バンクは VCCO = 3.3 V であること。
 - スタック高さは 30 mm 以下を推奨(148.5 MHz SDR)。FPGA 側で 22〜33 Ω の直列終端を入れられるとなお良い。
-- 使用する FPGA ボードのヘッダ ⇔ FPGA ピン対応を `fpga_header_pinmap.csv` の FPGA_pin 列に記入し、`python3 gen/gen_xdc.py quad_hdmi_tx/fpga_header_pinmap.csv > constraints/board.xdc` で XDC を作る。
+- 相手は FPGA メイン基板 `fpga_main/` のソケット J1(= J7)/ J2(= J8)。FPGA ピンは `fpga_main/fpga_pinmap.csv` と `fpga_header_pinmap.csv` の FPGA_pin 列にあり、`python3 gen/gen_xdc.py > constraints/board.xdc` で XDC を作る。
+- 市販 FPGA ボードにリボンケーブルで繋ぐ場合は `fpga_header_pinmap.csv` の FPGA_pin 列を書き換えて `gen/gen_xdc.py quad_hdmi_tx/fpga_header_pinmap.csv` を使う。
 
 ## 検証状況
 

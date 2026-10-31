@@ -15,3 +15,16 @@ hardware/quad_hdmi_tx/fab/gerber/
 hardware/quad_hdmi_tx/logs/
 hardware/quad_hdmi_tx/drc_try.rpt
 hardware/quad_hdmi_tx/3d/lay_*.png
+hardware/fpga_main/*-backups/
+hardware/fpga_main/*.kicad_prl
+hardware/fpga_main/fp-info-cache
+hardware/fpga_main/*.dsn
+hardware/fpga_main/*.ses
+hardware/fpga_main/freerouting*.log
+hardware/fpga_main/fab/gerber/
+hardware/fpga_main/logs/
+hardware/fpga_main/drc_try.rpt
+hardware/fpga_main/3d/lay_*.png
+hardware/gen/__pycache__/
+hardware/fpga_main/*_cont.dsn
+hardware/fpga_main/*_run*.ses

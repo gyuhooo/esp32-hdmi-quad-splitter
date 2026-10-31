@@ -13,7 +13,7 @@ Full HD のテスト映像を **1 台のデバイス内で生成し、HDMI 4 本
 | HDMI 送信 | ADI ADV7513 ×4(24bit RGB パラレル入力 → HDMI 1.4、1080p60 対応、資料公開) |
 | 出力 | 1080p / 720p / 480p × 29.97p / 59.94p / 30p / 60p を出力ごとに独立して設定 |
 | 画面 | 75% カラーバー、動くボックス(コマ落ち検出)、グレースケール、外枠、ラベル、6 桁フレームカウンタ、タイムコード |
-| 状態 | HDL 一式と iverilog シミュレーション済み。キャリア基板は回路図・6 層レイアウト(115 × 38 mm)・ガーバーまで生成済み(DRC 未接続 0 / クリアランス違反 0)。実機は未評価 |
+| 状態 | HDL 一式と iverilog シミュレーション済み。基板は 2 枚(FPGA メイン基板 115 × 72 mm + HDMI キャリア基板 115 × 38 mm、どちらも 6 層)で、回路図・レイアウト・ガーバーまで生成済み。実機は未評価 |
 
 ```
 100 MHz --> [Artix-7: MMCM x4 -> timing -> pattern] --24bit RGB--> [ADV7513] --> HDMI OUT1
@@ -36,10 +36,20 @@ Full HD のテスト映像を **1 台のデバイス内で生成し、HDMI 4 本
 cd sim && make MODE=1 FRAME=2     # iverilog で 1080p59.94 の 1 フレームを frame.ppm に保存
 ```
 
-### 回路図(hardware/)
+### 基板(hardware/)
 
-FPGA ボードに載せるキャリア基板(ADV7513 ×4、TPD12S016 ×4、HDMI ×4、USB-C 5 V 入力、3.3 V バック、1.8 V LDO ×4)。
-[hardware/README.md](hardware/README.md) に構成・検証状況・発注前チェックリストがある。
+2 枚構成。下が FPGA メイン基板(XC7A35T-1FTG256C、QSPI フラッシュ、JTAG、100 MHz、USB-C 5 V → 1.0 / 1.8 / 3.3 V)、
+上が HDMI キャリア基板(ADV7513 ×4、TPD12S016 ×4、HDMI ×4、USB-C 5 V 入力、3.3 V バック、1.8 V LDO ×4)で、2×40 ソケット 2 個で重ねる。
+[hardware/README.md](hardware/README.md)(キャリア基板)と [hardware/fpga_main/README.md](hardware/fpga_main/README.md)(メイン基板)に構成・検証状況・発注前チェックリストがある。
+FPGA のピン割り当ては生成済みで、`constraints/board.xdc` がそのまま Vivado で使える。
+
+FPGA メイン基板(6 層、115 × 72 mm、表面。上部 y < 38 mm にキャリア基板が重なる):
+
+![fpga main](docs/images/fpga-main-top.png)
+
+簡易 3D(`hardware/fpga_main/3d/viewer.html`):
+
+![fpga main 3d](docs/images/fpga-main-3d-iso.png)
 
 ![root](docs/images/sch-root.png)
 
@@ -57,7 +67,7 @@ FPGA ボードに載せるキャリア基板(ADV7513 ×4、TPD12S016 ×4、HDMI 
 
 | パス | 内容 |
 |---|---|
-| hardware/ | KiCad 7 回路図プロジェクト、BOM、ピン割り当て表、生成スクリプト |
+| hardware/ | KiCad 7 プロジェクト ×2(FPGA メイン基板、HDMI キャリア基板)、BOM、ピン割り当て表、生成スクリプト |
 | hdl/ | Verilog ソース(タイミング、パターン、文字重畳、MMCM、ADV7513 初期化、トップ) |
 | sim/ | iverilog テストベンチと Makefile |
 | constraints/ | Vivado 制約ファイルの例 |

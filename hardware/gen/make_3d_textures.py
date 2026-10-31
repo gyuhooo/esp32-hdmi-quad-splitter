@@ -3,14 +3,17 @@
 入力: 3d/board3d.json (gen_3d.py)、3d/lay_<layer>.png (kicad-cli で各層を白黒 PDF に出し pdftoppm -r 900 で変換したもの)
 使い方: python make_3d_textures.py   (Pillow と numpy が要る。pcbnew は不要)
     for L in F.Cu F.Mask F.SilkS B.Cu B.Mask B.SilkS Edge.Cuts; do
-      kicad-cli pcb export pdf --layers $L --black-and-white -o 3d/lay_$L.pdf quad_hdmi_tx.kicad_pcb; pdftoppm -r 900 -png -singlefile 3d/lay_$L.pdf 3d/lay_$L; done
+      kicad-cli pcb export pdf --layers $L --black-and-white -o 3d/lay_$L.pdf <project>.kicad_pcb; pdftoppm -r 900 -png -singlefile 3d/lay_$L.pdf 3d/lay_$L; done
+    (PCB_PROJECT=fpga_main で FPGA メイン基板)
 """
 import os, json, base64, io
 import numpy as np
 from PIL import Image, ImageDraw
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-D3 = os.path.normpath(os.path.join(HERE, "..", "quad_hdmi_tx", "3d"))
+PROJECT = os.environ.get("PCB_PROJECT", "quad_hdmi_tx")
+D3 = os.path.normpath(os.path.join(HERE, "..", PROJECT, "3d"))
+TITLE = {"quad_hdmi_tx": "Quad HDMI TX 3D", "fpga_main": "FPGA Main Board 3D"}.get(PROJECT, PROJECT)
 data = json.load(open(os.path.join(D3, "board3d.json")))
 BW, BH = data["board"]["w"], data["board"]["h"]
 PPM = 20                                   # テクスチャの解像度 (px/mm)
@@ -61,5 +64,6 @@ def datauri(im, q=80):
     return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
 html = open(os.path.join(HERE, "viewer_template.html")).read()
 html = html.replace("__BOARD_JSON__", json.dumps(data, separators=(",", ":"))).replace("__TEX_TOP__", datauri(top)).replace("__TEX_BOT__", datauri(bot))
+html = html.replace("Quad HDMI TX 3D", TITLE).replace("Quad HDMI TX carrier rev B", {"fpga_main": "FPGA main board rev A (XC7A35T-FTG256)"}.get(PROJECT, "Quad HDMI TX carrier rev B"))
 open(os.path.join(D3, "viewer.html"), "w").write(html)
 print("viewer.html", os.path.getsize(os.path.join(D3, "viewer.html")))

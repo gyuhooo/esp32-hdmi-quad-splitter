@@ -40,7 +40,7 @@ sim/ で make MODE=9 FRAME=2 -> frame.ppm
 
 | 部品 | 選定 | 理由 |
 |---|---|---|
-| FPGA | Xilinx Artix-7 XC7A35T 以上(FGG484 推奨) | 無償の Vivado で使える、MMCM 5 個以上、I/O が足りる |
+| FPGA | Xilinx Artix-7 XC7A35T-1FTG256C(メイン基板 `hardware/fpga_main/`) | 無償の Vivado で使える、MMCM 5 個、170 I/O(必要 141 本)。1.0 mm ピッチ BGA で 6 層基板に収まる |
 | HDMI 送信 | ADI ADV7513 ×4 | 1080p60 対応、データシート公開、Linux に adv7511 ドライバがあり設定値が確認できる |
 | 発振器 | 100 MHz ×1 | MMCM で 6 種類のピクセルクロックを誤差 1 ppm 以内で生成 |
 
@@ -52,19 +52,22 @@ sim/ で make MODE=9 FRAME=2 -> frame.ppm
 - 4 出力を 1 つの FPGA に入れず、**1 出力 = 小型 FPGA 1 個**(Artix-7 XC7A15T / Gowin GW1N + ADV7513)を
   4 枚並べる構成も、基板が単純になり最小構成として有効。
 
-## ピン数の見積もり(XC7A35T-FGG484: 250 I/O)
+## ピン割り当て(XC7A35T-FTG256: 170 I/O)
 
-| 信号 | 本数 |
-|---|---|
-| RGB 24bit ×4 | 96 |
-| CLK / DE / HS / VS ×4 | 16 |
-| I2C ×2 バス | 4 |
-| HPD ×4 | 4 |
-| 100 MHz、リセット、LED | 6 |
-| 合計 | 約 126 |
+| 信号 | 本数 | バンク / ボール |
+|---|---|---|
+| RGB 24bit ×4 | 96 | OUT1: 34/35、OUT2: 35、OUT3: 15、OUT4: 14/15(キャリア基板のヘッダ J7/J8 の列順に合わせて `hardware/gen/fpga_common.py` が決める) |
+| CLK / DE / HS / VS ×4 | 16 | 同上 |
+| HPD / INT ×4 | 8 | 同上(入力) |
+| I2C ×2 バス | 4 | バス 0 (OUT1/2): H4/H2、バス 1 (OUT3/4): E15/E16 |
+| 100 MHz | 1 | D4 (MRCC、バンク 35) |
+| リセット、LED ×4 | 5 | T3、R10/R11/T12/R12 |
+| QSPI フラッシュ | 5 | バンク 14 のコンフィグ兼用ピン(J13/J14/K15/K16/L12) |
+| 予備(DIP ×4、PMOD ×8) | 12 | T13/R13/T14/T15、E5/E6/F5/G5/H5/J5/K5/L5 |
+| 合計 | 147 | 未使用 I/O 21 本 |
 
-I/O が足りない小型パッケージ(FTG256 = 170 I/O)でも収まる。さらに減らしたい場合は ADV7513 の
-DDR 入力モード(12bit ×2 エッジ)を使えば RGB は 48 本になる。
+実際の対応は `hardware/fpga_main/fpga_pinmap.csv`、Vivado 用の制約は `constraints/board.xdc`(`hardware/gen/gen_xdc.py` が生成)。
+さらに減らしたい場合は ADV7513 の DDR 入力モード(12bit ×2 エッジ)を使えば RGB は 48 本になる。
 
 ## クロック生成
 
@@ -131,8 +134,9 @@ MMCME2_BASE(100 MHz 入力)の設定。`hdl/video_modes.vh` の関数で MODE �
 | hdl/top.v | 4 出力トップ |
 | hdl/font8x16.mem | フォント ROM(tools/make-font.py で生成) |
 | sim/ | iverilog テストベンチ。1 フレームを PPM に保存 |
-| constraints/example.xdc | 制約ファイルの例 |
-| hardware/ | キャリア基板の KiCad 7 回路図、BOM、J7/J8 ピン割り当て、XDC 生成 ([hardware/README.md](../hardware/README.md)) |
+| constraints/board.xdc | FPGA メイン基板 + キャリア基板の制約(生成物。`hardware/gen/gen_xdc.py`) |
+| constraints/example.xdc | 制約ファイルの例(他のボードに移植するとき用) |
+| hardware/ | FPGA メイン基板とキャリア基板の KiCad 7 プロジェクト、BOM、ピン割り当て、XDC 生成 ([hardware/README.md](../hardware/README.md)) |
 
 ## ビルドとシミュレーション
 
@@ -142,7 +146,7 @@ cd sim && make MODE=1 FRAME=2      # 1080p 59.94 の 3 フレーム目を frame.
 
 # Vivado
 #  1. hdl/*.v, hdl/video_modes.vh, hdl/font8x16.mem をソースに追加 (top = top)
-#  2. constraints/example.xdc をボードに合わせて編集して追加
+#  2. constraints/board.xdc を追加 (hardware/ の 2 枚構成用。他のボードなら example.xdc を編集)
 #  3. top の MODE0..3 を Settings > General > Generics/Parameters で設定
 #  4. Generate Bitstream
 ```
